@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppCore.Interfaces;
+using AppCore.Services;
+using Infrastructure;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +29,26 @@ namespace MvcClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<ElectronicsStoreContext>(options => options
+               .UseSqlite(Configuration.GetConnectionString("Connection"), x => x.MigrationsAssembly("Infrastructure")));
+
+            services.AddMvc();
+
+
+
+            //dependencies injection
+            services.AddScoped<IItemRepos, ItemRepos>();
+            services.AddScoped<IItemRelationRepos, ItemRelationRepos>();
+            services.AddScoped<ICustomerRepos, CustomerRepos>();
+            services.AddScoped<IOrderRepos, OrderRepos>();
+            services.AddScoped<IOrderDetailRepos, OrderDetailRepos>();
+            services.AddScoped<ISubOrderDetailRepos, SubOrderDetailRepos>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ISearchSortService, SearchSortService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
