@@ -29,8 +29,7 @@ namespace MvcClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<ElectronicsStoreContext>(options => options
-               .UseSqlite(Configuration.GetConnectionString("Connection"), x => x.MigrationsAssembly("Infrastructure")));
+            services.AddDbContext<ElectronicsStoreContext>();
 
             services.AddMvc();
 
