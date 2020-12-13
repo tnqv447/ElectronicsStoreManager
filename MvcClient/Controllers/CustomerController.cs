@@ -24,11 +24,16 @@ namespace MvcClient.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var model = new CustomerModel();
+            model.Customer = this._unitofwork.CustomerRepos.GetBy(2);
+            // model.Orders = this._unitofwork.OrderRepos.
+            return View(model);
         }
         public IActionResult Orders()
         {
-            return View();
+            var model = new CustomerModel();
+            model.Customer = this._unitofwork.CustomerRepos.GetBy(2);
+            return View(model);
         }
     }
 }
