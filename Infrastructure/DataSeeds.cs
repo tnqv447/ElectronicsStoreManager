@@ -52,18 +52,6 @@ namespace Infrastructure
                 context.SaveChanges();
             }
 
-            // Order
-            if (!context.Orders.Any())
-            {
-                context.Orders.AddRange(
-                    new Order(1, new DateTime(2020, 11, 12)),
-                    new Order(2, new DateTime(2020, 11, 30)),
-                    new Order(1, new DateTime(2020, 12, 1)),
-                    new Order(3, new DateTime(2020, 12, 6)),
-                    new Order(2, new DateTime(2020, 12, 13))
-                );
-                context.SaveChanges();
-            }
             // Order Combo
             if (!context.ItemRelations.Any())
             {
@@ -80,6 +68,20 @@ namespace Infrastructure
                 );
                 context.SaveChanges();
             }
+
+            // Order
+            if (!context.Orders.Any())
+            {
+                context.Orders.AddRange(
+                    new Order(1, new DateTime(2020, 11, 12)),
+                    new Order(2, new DateTime(2020, 11, 30)),
+                    new Order(1, new DateTime(2020, 12, 1)),
+                    new Order(3, new DateTime(2020, 12, 6)),
+                    new Order(2, new DateTime(2020, 12, 13))
+                );
+                context.SaveChanges();
+            }
+
 
             if (!context.OrderDetails.Any())
             {
