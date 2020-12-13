@@ -21,10 +21,10 @@ namespace Infrastructure.Repositories {
             return _context.Items.Where(m => !m.IsCombo).ToList();
         }
 
-        public Item AddCombo(Item combo, IList<Item> elements){
+        public Item AddCombo(Item combo, IList<ComboChild> elements){
             var tracked = base.Add(combo);
-            foreach(Item item in elements){
-                if(item.Id != 0) this.ItemRelationRepos.Add(new ItemRelation(tracked.Id, item.Id));
+            foreach(ComboChild ele in elements){
+                if(ele.Item.Id != 0) this.ItemRelationRepos.Add(new ItemRelation(tracked.Id, ele.Item.Id, ele.Amount));
             }
             return tracked;
         }

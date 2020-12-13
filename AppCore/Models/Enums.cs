@@ -11,6 +11,15 @@ namespace AppCore.Models
             Amount = amount;
         }
     }
+    public struct ComboChild{
+        public Item Item { get; set; }
+        public int Amount { get; set; }
+
+        public ComboChild(Item item, int amount){
+            Item = item;
+            Amount = amount;
+        }
+    }
     public class EnumConverter
     {
         public static string Convert(CUSTOMER_STATUS status)

@@ -26,7 +26,7 @@ namespace Infrastructure.Repositories
             if(tracked.Item.IsCombo){
                 foreach(ItemRelation relation in tracked.Item.ConsistOf){
                     var temp = relation.Child;
-                    this.SubOrderDetailRepos.Add(new SubOrderDetail(tracked.Id, temp.Id, temp.ComboAmount, temp.Name, temp.UnitPrice));
+                    this.SubOrderDetailRepos.Add(new SubOrderDetail(tracked.Id, temp.Id, relation.Amount, temp.Name, temp.UnitPrice));
                 }
             }
             return tracked;

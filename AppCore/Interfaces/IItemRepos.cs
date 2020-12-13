@@ -9,7 +9,7 @@ namespace AppCore.Interfaces {
         IList<Item> GetAllCombo();
         IList<Item> GetAllNotCombo();
 
-        Item AddCombo(Item combo, IList<Item> elements);
+        Item AddCombo(Item combo, IList<ComboChild> elements);
 
     }
 }

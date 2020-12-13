@@ -37,8 +37,7 @@ namespace Infrastructure.Migrations
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    InStock = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComboAmount = table.Column<int>(type: "INTEGER", nullable: false)
+                    InStock = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,7 +72,8 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ParentId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ChildId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ChildId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Amount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
