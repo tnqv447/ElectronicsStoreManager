@@ -45,7 +45,8 @@ namespace Infrastructure
                     new Customer("Nguyễn Văn Anh", "0123789456", "145 anee", SEX.MALE, "cus1", "12345"),
                     new Customer("Lê Cần Ba", "0987789456", "2385 asnee", SEX.MALE, "cus2", "12345"),
                     new Customer("Nguyễn Nhi Anh", "0123789147", "236 aneerr", SEX.FEMALE, "cus3", "12345"),
-                    new Customer("Trần Thị Bích", "0123258456", "789 cnehr", SEX.FEMALE, "cus4", "12345")
+                    new Customer("Trần Thị Bích", "0123258456", "789 cnehr", SEX.FEMALE, "cus4", "12345"),
+                    new Customer("Huỳnh Minh Huy ", "0278258456", "426 djeggdr", SEX.MALE, "cus5", "12345")
                 );
 
                 context.SaveChanges();
@@ -61,6 +62,7 @@ namespace Infrastructure
                     new Order(3, new DateTime(2020, 12, 6)),
                     new Order(2, new DateTime(2020, 12, 13))
                 );
+                context.SaveChanges();
             }
             // Order Combo
             if (!context.ItemRelations.Any())
@@ -76,6 +78,7 @@ namespace Infrastructure
                     new ItemRelation(2, 3)
 
                 );
+                context.SaveChanges();
             }
 
             if (!context.OrderDetails.Any())
@@ -97,6 +100,7 @@ namespace Infrastructure
 
                 // count 8
                 );
+                context.SaveChanges();
             }
 
             if (!context.SubOrderDetails.Any())
@@ -111,8 +115,8 @@ namespace Infrastructure
                     // order 5
                     new SubOrderDetail(7, 3, 1, "Chuột Có Dây Logitech B100", 69000)
                 );
+                context.SaveChanges();
             }
-
 
         }
     }
