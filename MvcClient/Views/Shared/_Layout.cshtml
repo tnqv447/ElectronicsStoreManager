@@ -51,7 +51,9 @@
                             <i class="fas fa-shopping-cart ml-1"></i>
                         </p>
                     </div>
-                    <partial name="_account"></partial>
+                    <div id="account_partial" class="col-lg-8 header-right mt-lg-0 mt-2">
+                        <partial name="_account"></partial>
+                    </div>
 
                 </div>
             </div>
@@ -67,318 +69,332 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="post">
+                        <form id="formLogin">
                             <div class="form-group">
                                 <label class="col-form-label">Username</label>
-                                <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                                <input id="userNameLogin" type="text" class="form-control" placeholder=" " name="Name"
+                                    required="">
+
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Password</label>
-                                <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                                <input id="pwLogin" type="password" class="form-control" placeholder=" " name="Password"
+                                    required="">
                             </div>
                             <div class="right-w3l">
-                                @* Nút submt nằm ở đây *@
-                                <input type="submit" asp-action="Login" asp-controller="Home" class="form-control"
-                                    value="Log in">
-                            </div>
-                            <div class="sub-w3l">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                    <label class="custom-control-label" for="customControlAutosizing">Remember
-                                        me?</label>
+                                @using (Html.BeginForm(null, null, FormMethod.Post, new
+                                                     {
+                                                         id = "__AjaxAntiForgeryForm"
+                                                     }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                }
+                                    @* Nút submt nằm ở đây *@
+                                    <button id="loginSubmit" data-request-url='@Url.Action("Login","Home")'
+                                        style="width:100%; font-size:18" class="btn btn-primary">Log
+                                        in</button>
+                                    <span id="err_login" style="color:red;font-size:12;font-weight:600;display:none"></span>
                                 </div>
-                            </div>
-                            <p class="text-center dont-do mt-3">Don't have an account?
-                                <a href="#" data-toggle="modal" data-target="#exampleModal2">
-                                    Register Now</a>
-                            </p>
-                        </form>
+                                <div class="sub-w3l">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                        <label class="custom-control-label" for="customControlAutosizing">Remember
+                                            me?</label>
+                                    </div>
+                                </div>
+                                <p class="text-center dont-do mt-3">Don't have an account?
+                                    <a href="#" data-toggle="modal" data-target="#exampleModal2">
+                                        Register Now</a>
+                                </p>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- register -->
-        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Register</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="post">
-                            <div class="form-group">
-                                <label class="col-form-label">Your Name</label>
-                                <input type="text" class="form-control" placeholder=" " name="Name" required="">
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">Email</label>
-                                <input type="email" class="form-control" placeholder=" " name="Email" required="">
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">Password</label>
-                                <input type="password" class="form-control" placeholder=" " name="Password"
-                                    id="password1" required="">
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">Confirm Password</label>
-                                <input type="password" class="form-control" placeholder=" " name="Confirm Password"
-                                    id="password2" required="">
-                            </div>
-                            <div class="right-w3l">
-                                @* Nút register nằm ở đây *@
-                                <input type="submit" asp-action="Register" asp-controller="Home" class="form-control"
-                                    value="Register">
-                            </div>
-                            <div class="sub-w3l">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
-                                    <label class="custom-control-label" for="customControlAutosizing2">I Accept to the
-                                        Terms & Conditions</label>
+            <!-- register -->
+            <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Register</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                    <label class="col-form-label">Your Name</label>
+                                    <input type="text" class="form-control" placeholder=" " name="Name" required="">
                                 </div>
-                            </div>
-                        </form>
+                                <div class="form-group">
+                                    <label class="col-form-label">Email</label>
+                                    <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Password</label>
+                                    <input type="password" class="form-control" placeholder=" " name="Password"
+                                        id="password1" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" placeholder=" " name="Confirm Password"
+                                        id="password2" required="">
+                                </div>
+                                <div class="right-w3l">
+                                    @* Nút register nằm ở đây *@
+                                    <input type="submit" asp-action="Register" asp-controller="Home" class="form-control"
+                                        value="Register">
+                                </div>
+                                <div class="sub-w3l">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
+                                        <label class="custom-control-label" for="customControlAutosizing2">I Accept to the
+                                            Terms & Conditions</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="header-bot">
-            <div class="container">
-                <div class="row header-bot_inner_wthreeinfo_header_mid">
-                    <!-- logo -->
-                    <div class="col-md-3 logo_agile">
-                        <h1 class="text-center">
-                            <a href="index.html" class="font-weight-bold font-italic">
-                                <img src="~/img/logo2.png" alt=" " class="img-fluid">Electro Store
-                            </a>
-                        </h1>
-                    </div>
-                    <!-- //logo -->
-                    <!-- header-bot -->
-                    <div class="col-md-9 header mt-4 mb-md-0 mb-4">
-                        <div class="row">
-                            <!-- search -->
-                            <div class="col-10 agileits_search">
-                                <form class="form-inline" action="#" method="post">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search"
-                                        aria-label="Search" required>
-                                    <button class="btn my-2 my-sm-0" type="submit">Search</button>
-                                </form>
-                            </div>
-                            <!-- //search -->
-                            <!-- cart details -->
-                            <div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
-                                <div class="wthreecartaits wthreecartaits2 cart cart box_1">
-                                    <form action="#" method="post" class="last">
-                                        <input type="hidden" name="cmd" value="_cart">
-                                        <input type="hidden" name="display" value="1">
-                                        <button class="btn w3view-cart" type="submit" name="submit" value="">
-                                            <i class="fas fa-cart-arrow-down"></i>
-                                        </button>
+            <div class="header-bot">
+                <div class="container">
+                    <div class="row header-bot_inner_wthreeinfo_header_mid">
+                        <!-- logo -->
+                        <div class="col-md-3 logo_agile">
+                            <h1 class="text-center">
+                                <a href="index.html" class="font-weight-bold font-italic">
+                                    <img src="~/img/logo2.png" alt=" " class="img-fluid">Electro Store
+                                </a>
+                            </h1>
+                        </div>
+                        <!-- //logo -->
+                        <!-- header-bot -->
+                        <div class="col-md-9 header mt-4 mb-md-0 mb-4">
+                            <div class="row">
+                                <!-- search -->
+                                <div class="col-10 agileits_search">
+                                    <form class="form-inline" action="#" method="post">
+                                        <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                            aria-label="Search" required>
+                                        <button class="btn my-2 my-sm-0" type="submit">Search</button>
                                     </form>
                                 </div>
-                            </div>
-                            <!-- //cart details -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="navbar-inner">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto text-center mr-xl-5">
-                            <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
-                                <a class="nav-link" href="index.html">Home
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <!-- Indicators-->
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item item1 active">
-                    <div class="container">
-                        <div class="w3l-space-banner">
-                            <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                                <p>Get flat
-                                    <span>10%</span> Cashback</p>
-                                <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">The
-                                    <span>Big</span>
-                                    Sale
-                                </h3>
-                                <a class="button2" href="product.html">Shop Now </a>
+                                <!-- //search -->
+                                <!-- cart details -->
+                                <div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
+                                    <div class="wthreecartaits wthreecartaits2 cart cart box_1">
+                                        <form action="#" method="post" class="last">
+                                            <input type="hidden" name="cmd" value="_cart">
+                                            <input type="hidden" name="display" value="1">
+                                            <button class="btn w3view-cart" type="submit" name="submit" value="">
+                                                <i class="fas fa-cart-arrow-down"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- //cart details -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item item2">
-                    <div class="container">
-                        <div class="w3l-space-banner">
-                            <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                                <p>advanced
-                                    <span>Wireless</span> earbuds</p>
-                                <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">Best
-                                    <span>Headphone</span>
-                                </h3>
-                                <a class="button2" href="product.html">Shop Now </a>
+            </div>
+            <div class="navbar-inner">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto text-center mr-xl-5">
+                                <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
+                                    <a class="nav-link" href="index.html">Home
+                                        <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <!-- Indicators-->
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item item1 active">
+                        <div class="container">
+                            <div class="w3l-space-banner">
+                                <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                                    <p>Get flat
+                                        <span>10%</span> Cashback
+                                    </p>
+                                    <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">The
+                                        <span>Big</span>
+                                        Sale
+                                    </h3>
+                                    <a class="button2" href="product.html">Shop Now </a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="carousel-item item2">
+                        <div class="container">
+                            <div class="w3l-space-banner">
+                                <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                                    <p>advanced
+                                        <span>Wireless</span> earbuds
+                                    </p>
+                                    <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">Best
+                                        <span>Headphone</span>
+                                    </h3>
+                                    <a class="button2" href="product.html">Shop Now </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </header>
+        </header>
 
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
 
 
-    <footer>
-        <div class="copy-right py-3">
-            <div class="container">
-                <p class="text-center text-white">© 2018 Electro Store. All rights reserved | Design by
-                    <a href="http://w3layouts.com"> W3layouts.</a>
-                </p>
+        <footer>
+            <div class="copy-right py-3">
+                <div class="container">
+                    <p class="text-center text-white">© 2018 Electro Store. All rights reserved | Design by
+                        <a href="http://w3layouts.com"> W3layouts.</a>
+                    </p>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
 
-    <!-- popup modal (for location)-->
-    <script src="~/lib/jquery/jquery.magnific-popup.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.popup-with-zoom-anim').magnificPopup({
-                type: 'inline',
-                fixedContentPos: false,
-                fixedBgPos: true,
-                overflowY: 'auto',
-                closeBtnInside: true,
-                preloader: false,
-                midClick: true,
-                removalDelay: 300,
-                mainClass: 'my-mfp-zoom-in'
+        <!-- popup modal (for location)-->
+        <script src="~/lib/jquery/jquery.magnific-popup.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.popup-with-zoom-anim').magnificPopup({
+                    type: 'inline',
+                    fixedContentPos: false,
+                    fixedBgPos: true,
+                    overflowY: 'auto',
+                    closeBtnInside: true,
+                    preloader: false,
+                    midClick: true,
+                    removalDelay: 300,
+                    mainClass: 'my-mfp-zoom-in'
+                });
+
             });
+        </script>
+        <!-- //popup modal (for location)-->
 
-        });
-    </script>
-    <!-- //popup modal (for location)-->
+        <!-- cart-js -->
+        <script src="~/js/minicart.js"></script>
+        <script>
+            paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
 
-    <!-- cart-js -->
-    <script src="~/js/minicart.js"></script>
-    <script>
-        paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
+            paypals.minicarts.cart.on('checkout', function (evt) {
+                var items = this.items(),
+                    len = items.length,
+                    total = 0,
+                    i;
 
-        paypals.minicarts.cart.on('checkout', function (evt) {
-            var items = this.items(),
-                len = items.length,
-                total = 0,
-                i;
+                // Count the number of each item in the cart
+                for (i = 0; i < len; i++) {
+                    total += items[i].get('quantity');
+                }
 
-            // Count the number of each item in the cart
-            for (i = 0; i < len; i++) {
-                total += items[i].get('quantity');
+                if (total < 3) {
+                    alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+                    evt.preventDefault();
+                }
+            });
+        </script>
+        <!-- //cart-js -->
+
+        <!-- password-script -->
+        <script>
+            window.onload = function () {
+                document.getElementById("password1").onchange = validatePassword;
+                document.getElementById("password2").onchange = validatePassword;
             }
 
-            if (total < 3) {
-                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-                evt.preventDefault();
+            function validatePassword() {
+                var pass2 = document.getElementById("password2").value;
+                var pass1 = document.getElementById("password1").value;
+                if (pass1 != pass2)
+                    document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+                else
+                    document.getElementById("password2").setCustomValidity('');
+                //empty string means no validation error
             }
-        });
-    </script>
-    <!-- //cart-js -->
+        </script>
+        <!-- //password-script -->
 
-    <!-- password-script -->
-    <script>
-        window.onload = function () {
-            document.getElementById("password1").onchange = validatePassword;
-            document.getElementById("password2").onchange = validatePassword;
-        }
-
-        function validatePassword() {
-            var pass2 = document.getElementById("password2").value;
-            var pass1 = document.getElementById("password1").value;
-            if (pass1 != pass2)
-                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-            else
-                document.getElementById("password2").setCustomValidity('');
-            //empty string means no validation error
-        }
-    </script>
-    <!-- //password-script -->
-
-    <!-- scroll seller -->
-    <script src="~/js/scroll.js"></script>
-    <!-- //scroll seller -->
+        <!-- scroll seller -->
+        <script src="~/js/scroll.js"></script>
+        <!-- //scroll seller -->
 
 
 
-    <!-- start-smooth-scrolling -->
-    <script src="~/js/move-top.js"></script>
-    <script src="~/js/easing.js"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
+        <!-- start-smooth-scrolling -->
+        <script src="~/js/move-top.js"></script>
+        <script src="~/js/easing.js"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                $(".scroll").click(function (event) {
+                    event.preventDefault();
 
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
+                    $('html,body').animate({
+                        scrollTop: $(this.hash).offset().top
+                    }, 1000);
+                });
             });
-        });
-    </script>
-    <!-- //end-smooth-scrolling -->
+        </script>
+        <!-- //end-smooth-scrolling -->
 
-    <!-- smooth-scrolling-of-move-up -->
-    <script>
-        $(document).ready(function () {
-            /*
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear' 
-            };
-            */
-            $().UItoTop({
-                easingType: 'easeOutQuart'
+        <!-- smooth-scrolling-of-move-up -->
+        <script>
+            $(document).ready(function () {
+                /*
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 1200,
+                    easingType: 'linear' 
+                };
+                */
+                $().UItoTop({
+                    easingType: 'easeOutQuart'
+                });
+
             });
+        </script>
+        <!-- //smooth-scrolling-of-move-up -->
 
-        });
-    </script>
-    <!-- //smooth-scrolling-of-move-up -->
+        <!-- for bootstrap working -->
+        <script src="~/js/bootstrap.js"></script>
+        <!-- //for bootstrap working -->
+        <!-- //js-files -->
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 
-    <!-- for bootstrap working -->
-    <script src="~/js/bootstrap.js"></script>
-    <!-- //for bootstrap working -->
-    <!-- //js-files -->
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-
-</html>
+    </html>

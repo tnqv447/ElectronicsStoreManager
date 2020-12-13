@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Đơn hàng";
+    ViewData["Title"] = "Orders";
 }
 <h1>Đơn hàng</h1>
 <div class="container-fluid container">
@@ -9,59 +9,57 @@
             <h4>Name</h4>
             <div class="sidenav">
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a asp-action="Index">Thông tin cá nhân</a></li>
+                    <li><a asp-action="Index">Profile</a></li>
                     <li class="active"><a asp-action="Orders">Đơn hàng</a></li>
                 </ul><br>
             </div>
 
         </div>
-
+        boo
         <div class="col-sm-9">
             <h4>Đơn hàng</h4>
             <br />
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                Collapsible Group 1</a>
-                        </h4>
+            <div id="accordion">
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                            Collapsible Group Item #1
+                        </a>
                     </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.</div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                Collapsible Group 2</a>
-                        </h4>
-                    </div>
-                    <div id="collapse2" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.</div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum..
+                        </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                Collapsible Group 3</a>
-                        </h4>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                            Collapsible Group Item #2
+                        </a>
                     </div>
-                    <div id="collapse3" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.</div>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum..
+                        </div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                            Collapsible Group Item #3
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum..
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
