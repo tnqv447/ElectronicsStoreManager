@@ -19,49 +19,81 @@
         <div class="col-sm-9">
             <h4>List Orders</h4>
             <br />
-            <div id="accordion">
-                @foreach (var item in Model.Orders)
+            <div id="orders">
+                @foreach (var order in Model.Customer.Orders)
                 {
+                    string href = "#Order" + order.Id;
+                    string idhref = "Order" + order.Id;
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link" data-toggle="collapse" href="@href">
+                                <div class="card-group">
+                                    <div class="card ">
+                                        <div class="card-body text-center">
+                                            <p class="card-text text-success">@order.Id</p>
+                                        </div>
+                                    </div>
+                                    <div class="card ">
+                                        <div class="card-body text-center">
+                                            <p class="card-text">@order.OrderDate.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                    </div>
+                                    <div class="card ">
+                                        <div class="card-body text-center">
+                                            <p class="card-text">@order.StatusName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div id="@idhref" class="collapse show" data-parent="#orders">
+                            <div class="card-body table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th>Name</th>
+                                        <th>Unit price</th>
+                                        <th>Amount</th>
+                                        <th>Total</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in order.OrderDetails)
+                                        {
+                                            if (!@detail.IsCombo)
+                                            {
+                                                <tr>
+                                                    <td>@detail.ItemName</td>
+                                                    <td>@detail.ItemUnitPrice</td>
+                                                    <td>@detail.Amount</td>
+                                                    <td>@detail.SumPrice</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                string hrefsub = "#OrderSub" + detail.Id;
+                                                string idhrefsub = "OrderSub" + detail.Id;
+                                                <a href="@hrefsub" data-toggle="collapse">
+                                                    <tr>
+                                                        <td>@detail.ItemName</td>
+                                                        <td>@detail.ItemUnitPrice</td>
+                                                        <td>@detail.Amount</td>
+                                                        <td>@detail.SumPrice</td>
+                                                    </tr>
+                                                </a>
+                                                <div id="@idhrefsub" class="collapse">
+                                                    @foreach (var sub in detail.SubOrderDetails)
+                                                    {
+                                                        <span>@sub.ItemName @sub.Amount</span>
+                                                    }
+                                                </div>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
                 }
-                <div class="card">
-                    <div class="card-header">
-                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                            Collapsible Group Item #1
-                        </a>
-                    </div>
-                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                        <div class="card-body">
-                            Lorem ipsum..
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-                            Collapsible Group Item #2
-                        </a>
-                    </div>
-                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                        <div class="card-body">
-                            Lorem ipsum..
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-                            Collapsible Group Item #3
-                        </a>
-                    </div>
-                    <div id="collapseThree" class="collapse" data-parent="#accordion">
-                        <div class="card-body">
-                            Lorem ipsum..
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
