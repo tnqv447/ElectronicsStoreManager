@@ -1,9 +1,5 @@
-@{
-    Layout = null;
-    @* hiện tại chưa có session nên để biến boolean true *@
-    var flag = true;
-}
-@if (flag)
+@using Microsoft.AspNetCore.Http
+@if (Context.Session.GetInt32("id") == null)
 {
     <!-- header lists -->
     <ul>
@@ -22,9 +18,13 @@ else
 {
     <!-- header lists -->
     <ul>
-        <li class="text-center border-right text-white">
-            <a href="#" class="text-white">
-                <i class="fas fa-sign-in-alt mr-2"></i> Chỗ này để user name </a>
+        <li class="text-center border-right text-white dropdown">
+            <a type="button" style="cursor:pointer" class="dropdown-toggle text-white" data-toggle="dropdown">
+                <i class="fas fa-sign-in-alt mr-2"></i> @Context.Session.GetString("name") </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item">Profile</a>
+                <a class="dropdown-item">Order</a>
+            </div>
         </li>
         <li class="text-center text-white">
             <a href="#" class="text-white">

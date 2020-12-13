@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using MvcClient.Models;
 using AppCore.Interfaces;
 using AppCore.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MvcClient.Controllers
 {
@@ -52,6 +53,8 @@ namespace MvcClient.Controllers
                     if (account.Status == CUSTOMER_STATUS.ACTIVE)
                     {
                         model.Message = "Đăng nhập thành công.";
+                        HttpContext.Session.SetInt32("id", account.Id);
+                        HttpContext.Session.SetString("name", account.Name);
                         return PartialView("_Account");
                         // session
                     }

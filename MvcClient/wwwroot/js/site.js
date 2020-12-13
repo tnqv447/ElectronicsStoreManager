@@ -34,7 +34,7 @@ $(document).ready(function(){
                         $('#err_login').css("display","block");
                     }
                     else{
-                        $('#partial').html(result);
+                        $('#account_partial').html(result);
                         $('#loginModal').modal('hide');
                     }
                 },
