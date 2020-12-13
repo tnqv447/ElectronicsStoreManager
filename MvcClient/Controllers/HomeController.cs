@@ -9,6 +9,7 @@ using MvcClient.Models;
 using AppCore.Interfaces;
 using AppCore.Models;
 using Microsoft.AspNetCore.Http;
+using AppCore.Services;
 
 namespace MvcClient.Controllers
 {
@@ -16,17 +17,46 @@ namespace MvcClient.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitofwork;
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitofwork)
+        private readonly ISearchSortService _service;
+        private IList<Item> items;
+        private IList<Item> combos;
+        private HomeViewModel view;
+        private PaginatedList<Item> item_paging;
+        private PaginatedList<Item> combo_paging;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitofwork, ISearchSortService service)
         {
             _logger = logger;
             _unitofwork = unitofwork;
+            _service = service;
+            items = _unitofwork.ItemRepos.GetAllNotCombo();
+            combos = _unitofwork.ItemRepos.GetAllCombo();
+
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, string searchString = null)
         {
-            return View();
-        }
+            view = GetViewModel();
 
+            return View(view);
+        }
+        public HomeViewModel GetViewModel(int pageNumber = 1, string searchString = null)
+        {
+            var pageSize = 3;
+
+            if (searchString == null || searchString == "")
+            {
+                item_paging = PaginatedList<Item>.Create(items, pageNumber, pageSize);
+                combo_paging = PaginatedList<Item>.Create(combos, pageNumber, pageSize);
+            }
+            else
+            {
+                // var item_search = _service.
+            }
+            var result = new HomeViewModel();
+            result.items = item_paging;
+            result.combos = combo_paging;
+            return result;
+        }
         public IActionResult Privacy()
         {
             return View();
