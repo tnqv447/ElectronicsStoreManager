@@ -9,7 +9,7 @@ namespace Infrastructure
     {
         var optionsBuilder = new DbContextOptionsBuilder<ElectronicsStoreContext>();
         optionsBuilder.UseLazyLoadingProxies()
-            .UseSqlite($"Data Source=electronics.db");
+            .UseSqlite($"Data Source=..\\Infrastructure\\electronics.db");
 
         return new ElectronicsStoreContext(optionsBuilder.Options);
     }

@@ -1,11 +1,13 @@
 using System.Linq;
 using AppCore.Models;
 using System;
+using AppCore.Interfaces;
+
 namespace Infrastructure
 {
     public class DataSeeds
     {
-        public static void Initialize(ElectronicsStoreContext context)
+        public static void Initialize(ElectronicsStoreContext context, IUnitOfWork unitOfWork)
         {
             context.Database.EnsureCreated();
 

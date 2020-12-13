@@ -22,7 +22,7 @@ namespace Infrastructure
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Data Source=electronics.db")
+            optionsBuilder.UseSqlite($"Data Source=..\\Infrastructure\\electronics.db")
                 .UseLazyLoadingProxies();
         }
 

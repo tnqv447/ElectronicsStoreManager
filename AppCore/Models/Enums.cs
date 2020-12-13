@@ -53,6 +53,10 @@ namespace AppCore.Models
             }
         }
     }
+    public enum ITEM_TYPE
+    {
+        
+    }
     
     public enum ORDER_STATUS
     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppCore.Interfaces;
 using Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,9 +22,10 @@ namespace MvcClient
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ElectronicsStoreContext>();
+                var unitOfWork = services.GetRequiredService<IUnitOfWork>();
                 try
                 {
-                    DataSeeds.Initialize(context);
+                    DataSeeds.Initialize(context, unitOfWork);
                 }
                 catch (Exception ex)
                 {
