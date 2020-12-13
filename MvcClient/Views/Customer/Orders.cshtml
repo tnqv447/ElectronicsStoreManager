@@ -1,26 +1,28 @@
+@model CustomerModel
 @{
     ViewData["Title"] = "Orders";
 }
-<h1>Đơn hàng</h1>
 <div class="container-fluid container">
     <div class="row content">
         <div class="col-sm-3 ">
             <img src="../img/profile.png" height="250px" width="300px" />
-            <h4>Name</h4>
+            <h4>@Model.Customer.Name</h4>
             <div class="sidenav">
                 <ul class="nav nav-pills nav-stacked">
                     <li><a asp-action="Index">Profile</a></li>
-                    <li class="active"><a asp-action="Orders">Đơn hàng</a></li>
+                    <li class="active"><a asp-action="Orders">Orders</a></li>
                 </ul><br>
             </div>
 
         </div>
-        boo
+
         <div class="col-sm-9">
-            <h4>Đơn hàng</h4>
+            <h4>List Orders</h4>
             <br />
             <div id="accordion">
-
+                @foreach (var item in Model.Orders)
+                {
+                }
                 <div class="card">
                     <div class="card-header">
                         <a class="card-link" data-toggle="collapse" href="#collapseOne">

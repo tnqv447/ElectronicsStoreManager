@@ -10,10 +10,10 @@ $(document).ready(function(){
         var token = $('input[name="__RequestVerificationToken"]').val();
         var username = $('#userNameLogin').val();
         var pw = $('#pwLogin').val();
-        if(username==null || username == "" || pw == null || pw==""){
+        if(username==null || pw == null || username.trim() == ""  || pw.trim() == ""){
             $('#err_login').text('Username and password not empty');
             $('#err_login').css("display","block");
-        } // m làm model r thì t làm model bth thôi
+        }
         else{
             $('#err_login').css('display','none');
             $.ajax({
@@ -27,7 +27,6 @@ $(document).ready(function(){
                         Message: ""
                     }
                 },
-                // đợi t suy nghĩ chút ok
                 success: function(result){
                     if(result.Message != null){
                         $('#err_login').text(result.Message);
