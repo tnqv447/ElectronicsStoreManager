@@ -11,6 +11,7 @@ namespace AppCore.Models {
 
         [DataType (DataType.Currency)]
         public decimal UnitPrice { get; set; }
+        public ITEM_TYPE Type { get; set; }
         public string Description { get; set; }
         public ITEM_STATUS Status { get; set; }
         
@@ -27,6 +28,8 @@ namespace AppCore.Models {
 
         //notmapped--------------------------------------------------
         [NotMapped]
+        public string TypeName { get { return EnumConverter.Convert(this.Type); } }
+        [NotMapped]
         public string StatusName { get { return EnumConverter.Convert(this.Status); } }
         [NotMapped]
         public bool IsCombo { get { return !(ConsistOf == null || ConsistOf.Count == 0); } }
@@ -34,8 +37,9 @@ namespace AppCore.Models {
         public bool IsPartOf { get { return !(PartOf == null || PartOf.Count == 0); } }
         //---------------------------------------------------------------
 
-        public Item (string name, decimal unitPrice, string description, int stock = 0, int comboAmount = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE) {
+        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, int comboAmount = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE) {
             Name = name;
+            Type = type;
             UnitPrice = unitPrice;
             Description = description;
             InStock = stock;
@@ -54,6 +58,7 @@ namespace AppCore.Models {
         
         public void Copy (Item item) {
             Name = item.Name;
+            Type = item.Type;
             UnitPrice = item.UnitPrice;
             Description = item.Description;
             InStock = item.InStock;

@@ -82,6 +82,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("TEXT");
 

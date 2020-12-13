@@ -34,6 +34,7 @@ namespace Infrastructure.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
                     InStock = table.Column<int>(type: "INTEGER", nullable: false),

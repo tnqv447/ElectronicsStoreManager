@@ -52,10 +52,42 @@ namespace AppCore.Models
                 default: return "";
             }
         }
+        public static string Convert(ITEM_TYPE type)
+        {
+            switch (type)
+            {
+                case ITEM_TYPE.MISC : return "Khác";
+                case ITEM_TYPE.COMBO: return "Combo";
+                case ITEM_TYPE.HOUSEWARE: return "Đồ điện gia dụng";
+                case ITEM_TYPE.LAPTOP: return "Laptop";
+                case ITEM_TYPE.SMART_PHONE: return "Điện thoại thông minh";
+                case ITEM_TYPE.MONITOR: return "Màn hình vi tính";
+                case ITEM_TYPE.TV: return "TV";
+                case ITEM_TYPE.MOUSE_AND_KEYBOARD: return "Chuột và vàn phím";
+                case ITEM_TYPE.PC: return "Máy tính để bàn";
+                case ITEM_TYPE.COMPUTER_COMPONENTS: return "Linh kiện máy tính";
+                case ITEM_TYPE.OFFICE_DEVICES: return "Thiết bị văn phòng";
+                case ITEM_TYPE.INTERNET_DEVICES: return "Thiết bị mạng, wifi";
+                case ITEM_TYPE.SOUND_DEVICES: return "Thiết bị âm thanh";
+                default: return "";
+            }
+        }
     }
     public enum ITEM_TYPE
     {
-        
+        MISC,
+        COMBO,
+        HOUSEWARE,
+        LAPTOP,
+        SMART_PHONE,
+        MONITOR,
+        TV,
+        MOUSE_AND_KEYBOARD,
+        PC,
+        COMPUTER_COMPONENTS,
+        OFFICE_DEVICES,
+        INTERNET_DEVICES,
+        SOUND_DEVICES
     }
     
     public enum ORDER_STATUS

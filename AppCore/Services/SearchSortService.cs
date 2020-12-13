@@ -11,6 +11,7 @@ namespace AppCore.Services
         public SearchSortService (IUnitOfWork unitOfWork) {
             _unitOfWork = unitOfWork;
         }
+        //search
 
         //sort
         public IList<Customer> Sort(IList<Customer> arr, SORT_TYPE type = SORT_TYPE.ID, SORT_ORDER order = SORT_ORDER.ASCENDING){

@@ -41,8 +41,9 @@ namespace Infrastructure.Repositories {
         }
 
         public virtual void AddRange (IList<T> entities) {
-            _context.Set<T> ().AddRange (entities);
-            _context.SaveChanges ();
+            foreach(T temp in entities){
+                Add(temp);
+            }
         }
         public virtual void UpdateRange (IList<T> entities){
             _context.Set<T> ().UpdateRange (entities);

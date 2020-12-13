@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ElectronicsStoreContext))]
-    [Migration("20201211192852_Init")]
+    [Migration("20201213085544_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("UnitPrice")
