@@ -2,7 +2,57 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<!-- banner -->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <!-- Indicators-->
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item item1 active">
+            <div class="container">
+                <div class="w3l-space-banner">
+                    <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                        <p>Get flat
+                            <span>10%</span> Cashback
+                        </p>
+                        <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">The
+                            <span>Big</span>
+                            Sale
+                        </h3>
+                        <a class="button2" href="product.html">Shop Now </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item item2">
+            <div class="container">
+                <div class="w3l-space-banner">
+                    <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                        <p>advanced
+                            <span>Wireless</span> earbuds
+                        </p>
+                        <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">Best
+                            <span>Headphone</span>
+                        </h3>
+                        <a class="button2" href="product.html">Shop Now </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<!-- //banner -->
 <div class="ads-grid py-sm-5 py-4">
     <div class="container py-xl-4 py-lg-2">
         <!-- tittle heading -->
@@ -25,10 +75,11 @@
                                 <div class="col-md-4 product-men mt-5">
                                     <div class="men-pro-item simpleCart_shelfItem">
                                         <div class="men-thumb-item text-center">
-                                            <img src="images/m1.jpg" alt="">
+                                            <img src="~/img/mk5.jpg" alt="">
                                             <div class="men-cart-pro">
                                                 <div class="inner-men-cart-pro">
-                                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                                    <a asp-action="Detail" asp-controller="shop"
+                            asp-route-itemId=@item.Id class="link-product-add-cart">Quick View</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -37,7 +88,7 @@
                                                 <a href="single.html">@item.Name</a>
                                             </h4>
                                             <div class="info-product-price my-2">
-                                                <span class="item_price">$@item.UnitPrice</span>
+                                                <span class="item_price">$@item.UnitPrice.ToString("N2")</span>
 
                                             </div>
                                             <div
@@ -72,7 +123,7 @@
                                 <div class="col-md-4 product-men mt-5">
                                     <div class="men-pro-item simpleCart_shelfItem">
                                         <div class="men-thumb-item text-center">
-                                            <img src="images/m7.jpg" alt="">
+                                            <img src="~/img/mk5.jpg" alt="">
                                             <div class="men-cart-pro">
                                                 <div class="inner-men-cart-pro">
                                                     <a href="single.html" class="link-product-add-cart">Quick View</a>
@@ -85,7 +136,7 @@
                                                 <a href="single.html">@item.Name</a>
                                             </h4>
                                             <div class="info-product-price my-2">
-                                                <span class="item_price">$@item.UnitPrice</span>
+                                                <span class="item_price">$@item.UnitPrice.ToString("N2")</span>
                                             </div>
                                             <div
                                                 class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">

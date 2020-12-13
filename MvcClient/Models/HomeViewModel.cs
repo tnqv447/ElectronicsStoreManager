@@ -7,5 +7,6 @@ namespace MvcClient.Models
     {
         public PaginatedList<Item> items { get; set; }
         public PaginatedList<Item> combos { get; set; }
+        public Item item { get; set; }
     }
 }
