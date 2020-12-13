@@ -27,7 +27,17 @@ namespace MvcClient.Controllers
         {
             return View();
         }
-
+        public IActionResult Login(){
+            
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Register(){
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Logout(){
+            return RedirectToAction(nameof(Index));
+        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
