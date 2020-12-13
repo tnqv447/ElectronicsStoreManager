@@ -8,9 +8,12 @@ namespace AppCore.Models {
         public int ChildId { get; set; }
         public virtual Item Child { get; set; }
 
-        public ItemRelation (int parentId, int childId) {
+        public int Amount { get; set; }
+
+        public ItemRelation (int parentId, int childId, int amount) {
             ParentId = parentId;
             ChildId = childId;
+            Amount = amount;
         }
 
         public ItemRelation () { }
@@ -22,6 +25,7 @@ namespace AppCore.Models {
         public void Copy (ItemRelation relation) {
             ParentId = relation.ParentId;
             ChildId = relation.ChildId;
+            Amount = relation.Amount;
         }
     }
 }

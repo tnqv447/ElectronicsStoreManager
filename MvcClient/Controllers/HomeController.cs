@@ -67,14 +67,13 @@ namespace MvcClient.Controllers
         {
             string user = model.Username;
             string pass = model.Password;
-            Console.WriteLine(user + " mk " + pass);
             Dictionary<string, string> temp = new Dictionary<string, string>();
             if (this._unitofwork.CustomerRepos.IsUserNameExists(user))
             {
                 Customer account = this._unitofwork.CustomerRepos.GetByAccount(user, pass);
                 if (account == null)
                 {
-                    model.Message = "Tài khoản hoặc mật khẩu bị sai.";
+                    model.Message = "Either Username or Password is incorrect.";
                     temp.Add("Message", model.Message);
                     return new JsonResult(temp);
                 }
@@ -82,15 +81,13 @@ namespace MvcClient.Controllers
                 {
                     if (account.Status == CUSTOMER_STATUS.ACTIVE)
                     {
-                        model.Message = "Đăng nhập thành công.";
                         HttpContext.Session.SetInt32("id", account.Id);
                         HttpContext.Session.SetString("name", account.Name);
                         return PartialView("_Account");
-                        // session
                     }
                     else
                     {
-                        model.Message = "Tài khoản này đã bị khóa.";
+                        model.Message = "This username is blocked.";
                         temp.Add("Message", model.Message);
                         return new JsonResult(temp);
                     }
@@ -98,7 +95,7 @@ namespace MvcClient.Controllers
             }
             else
             {
-                model.Message = "Tài khoản này không tồn tại.";
+                model.Message = "Username doesn't exist.";
                 temp.Add("Message", model.Message);
                 return new JsonResult(temp);
             }

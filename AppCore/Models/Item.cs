@@ -18,8 +18,6 @@ namespace AppCore.Models {
         //la so luong hien co trong kho hang
         public int InStock { get; set; }
 
-        //so luong su dung trong combo => stock = 0;
-        public int ComboAmount { get; set; }
 
         //combo bao gồm
         public virtual IList<ItemRelation> ConsistOf { get; set; }
@@ -37,13 +35,12 @@ namespace AppCore.Models {
         public bool IsPartOf { get { return !(PartOf == null || PartOf.Count == 0); } }
         //---------------------------------------------------------------
 
-        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, int comboAmount = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE) {
+        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE) {
             Name = name;
             Type = type;
             UnitPrice = unitPrice;
             Description = description;
             InStock = stock;
-            ComboAmount = comboAmount;
             Status = status;
         }
 
@@ -62,7 +59,6 @@ namespace AppCore.Models {
             UnitPrice = item.UnitPrice;
             Description = item.Description;
             InStock = item.InStock;
-            ComboAmount = item.ComboAmount;
             Status = item.Status;
         }
 
