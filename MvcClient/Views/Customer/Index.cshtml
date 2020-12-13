@@ -1,0 +1,26 @@
+@* @using *@
+@{
+    ViewData["Title"] = "Trang cá nhân";
+}
+<h1>Index</h1>
+<div class="container-fluid container">
+    <div class="row content">
+        <div class="col-sm-3 ">
+            <img src="../img/profile.png" height="250px" width="300px" />
+            <h4>Name</h4>
+            <div class="sidenav">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a asp-action="Index">Thông tin cá nhân</a></li>
+                    <li><a asp-action="Orders">Đơn hàng</a></li>
+                </ul><br>
+            </div>
+
+        </div>
+
+        <div class="col-sm-9">
+            <h4>Thông tin cá nhân</h4>
+
+        </div>
+    </div>
+
+</div>

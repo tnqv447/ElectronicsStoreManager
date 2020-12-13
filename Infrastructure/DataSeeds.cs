@@ -105,18 +105,18 @@ namespace Infrastructure
                     new OrderDetail(2, 3, 2, "Chuột Có Dây Logitech B100", 69000),
 
                     new OrderDetail(3, 6, 2, "Camera chống trộm Xiaomi Mi Home 360°", 619000),
-                    new OrderDetail(3, 4, 1, "Bàn Phím Có Dây Dell KB216", 153000), // combo 2 with id 5
 
-                    new OrderDetail(4, 9, 1, "Tai nghe gaming chụp tai (Headphone Gaming) cho game thủ cao cấp A66", 699000), // combo 3,4 with id 6
+                   new OrderDetail(4, 10, 1, "USB 3.0 SanDisk Ultra CZ48 16GB",  92000),
+                   new OrderDetail(4, 3, 3, "Chuột Có Dây Logitech B100", 69000),
 
-                    new OrderDetail(5, 2, 1, "Laptop Asus VivoBook 14 A412FA-EK1188T (Core i3-10110U/ 4GB/ 256GB SSD/ 14 FHD/ Win10)", 11049000), // combo 5 with id 7
                     new OrderDetail(5, 10, 3, "USB 3.0 SanDisk Ultra CZ48 16GB ", 92000)
 
                 // count 8
                 );
-                unitOfWork.OrderRepos.OrderDetailRepos.Add(new OrderDetail(6, 12, 1, "Combo gaming gear", 200000));
-                unitOfWork.OrderRepos.OrderDetailRepos.Add(new OrderDetail(7, 13, 1, "Combo gaming gear", 650000));
                 context.SaveChanges();
+                unitOfWork.OrderRepos.OrderDetailRepos.Add(new OrderDetail(6, 12, 1, "Combo gaming gear", 200000));
+                unitOfWork.OrderRepos.OrderDetailRepos.Add(new OrderDetail(7, 13, 1, "Combo thiết bị lưu trữ", 650000));
+                
             }
 
         }

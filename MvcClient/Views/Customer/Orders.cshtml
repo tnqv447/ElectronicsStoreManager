@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "Orders";
+}
+<h1>Đơn hàng</h1>
+<div class="container-fluid container">
+    <div class="row content">
+        <div class="col-sm-3 ">
+            <img src="../img/profile.png" height="250px" width="300px" />
+            <h4>Name</h4>
+            <div class="sidenav">
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a asp-action="Index">Profile</a></li>
+                    <li class="active"><a asp-action="Orders">Đơn hàng</a></li>
+                </ul><br>
+            </div>
+
+        </div>
+        boo
+        <div class="col-sm-9">
+            <h4>Đơn hàng</h4>
+            <br />
+            <div id="accordion">
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                            Collapsible Group Item #1
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum..
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                            Collapsible Group Item #2
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum..
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                            Collapsible Group Item #3
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum..
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
