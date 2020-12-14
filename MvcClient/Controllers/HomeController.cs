@@ -35,9 +35,9 @@ namespace MvcClient.Controllers
 
         public IActionResult Index(int pageNumber = 1, string searchString = null)
         {
-            Customer account = _unitofwork.CustomerRepos.GetByAccount("cus4", "12345");
-            HttpContext.Session.SetInt32("id", account.Id);
-            HttpContext.Session.SetString("name", account.Name);
+            // Customer account = _unitofwork.CustomerRepos.GetByAccount("cus4@gmail.com", "12345");
+            // HttpContext.Session.SetInt32("id", account.Id);
+            // HttpContext.Session.SetString("name", account.Name);
             view = GetViewModel();
 
             return View(view);
@@ -102,12 +102,25 @@ namespace MvcClient.Controllers
                 temp.Add("Message", model.Message);
                 return new JsonResult(temp);
             }
-
-
         }
-        public IActionResult Register()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(string name, string phone, string address, int sex, string username, string password)
         {
-            return RedirectToAction(nameof(Index));
+            Dictionary<string, string> temp = new Dictionary<string, string>();
+            if (this._unitofwork.CustomerRepos.IsUserNameExists(username))
+            {
+                temp.Add("Message", "Username has existed.");
+                return new JsonResult(temp);
+            }
+            else
+            {
+                SEX sexE = (SEX)sex;
+                var account = this._unitofwork.CustomerRepos.Add(new Customer(name, phone, address, sexE, username, password));
+                HttpContext.Session.SetInt32("id", account.Id);
+                HttpContext.Session.SetString("name", account.Name);
+                return PartialView("_Account");
+            }
         }
         public IActionResult Logout()
         {

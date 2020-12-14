@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Profile";
 }
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetInt32("id") == null)
+        Context.Response.Redirect(Url.Action("Index", "Home", null));
+}
 <br />
 <div class="container-fluid container">
     <div class="row content">

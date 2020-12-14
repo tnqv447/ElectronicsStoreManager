@@ -51,11 +51,11 @@ namespace Infrastructure
             if (!context.Customers.Any())
             {
                 context.Customers.AddRange(
-                    new Customer("Nguyễn Văn Anh", "0123789456", "145 anee", SEX.MALE, "cus1", "12345"),
-                    new Customer("Lê Cần Ba", "0987789456", "2385 asnee", SEX.MALE, "cus2", "12345"),
-                    new Customer("Nguyễn Nhi Anh", "0123789147", "236 aneerr", SEX.FEMALE, "cus3", "12345"),
-                    new Customer("Trần Thị Bích", "0123258456", "789 cnehr", SEX.FEMALE, "cus4", "12345"),
-                    new Customer("Huỳnh Minh Huy ", "0278258456", "426 djeggdr", SEX.MALE, "cus5", "12345")
+                    new Customer("Nguyễn Văn Anh", "0123789456", "145 anee", SEX.MALE, "cus1@gmail.com", "12345"),
+                    new Customer("Lê Cần Ba", "0987789456", "2385 asnee", SEX.MALE, "cus2@gmail.com", "12345"),
+                    new Customer("Nguyễn Nhi Anh", "0123789147", "236 aneerr", SEX.FEMALE, "cus3@gmail.com", "12345"),
+                    new Customer("Trần Thị Bích", "0123258456", "789 cnehr", SEX.FEMALE, "cus4@gmail.com", "12345"),
+                    new Customer("Huỳnh Minh Huy ", "0278258456", "426 djeggdr", SEX.MALE, "cus5@gmail.com", "12345")
                 );
 
                 context.SaveChanges();
@@ -106,7 +106,7 @@ namespace Infrastructure
 
                     new OrderDetail(3, 6, 2, "Camera chống trộm Xiaomi Mi Home 360°", 619000),
 
-                   new OrderDetail(4, 10, 1, "USB 3.0 SanDisk Ultra CZ48 16GB",  92000),
+                   new OrderDetail(4, 10, 1, "USB 3.0 SanDisk Ultra CZ48 16GB", 92000),
                    new OrderDetail(4, 3, 3, "Chuột Có Dây Logitech B100", 69000),
 
                     new OrderDetail(5, 10, 3, "USB 3.0 SanDisk Ultra CZ48 16GB ", 92000)
@@ -116,7 +116,7 @@ namespace Infrastructure
                 context.SaveChanges();
                 unitOfWork.OrderRepos.OrderDetailRepos.Add(new OrderDetail(6, 12, 1, "Combo gaming gear", 200000));
                 unitOfWork.OrderRepos.OrderDetailRepos.Add(new OrderDetail(7, 13, 1, "Combo thiết bị lưu trữ", 650000));
-                
+
             }
 
         }

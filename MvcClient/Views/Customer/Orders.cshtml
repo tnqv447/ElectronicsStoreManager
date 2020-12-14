@@ -1,3 +1,8 @@
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetInt32("id") == null)
+        Context.Response.Redirect(Url.Action("Index", "Home", null));
+}
 @model CustomerModel
 @{
     ViewData["Title"] = "Orders";
@@ -20,94 +25,101 @@
         <div class="col-sm-9">
             <h4>List Orders</h4>
             <br />
-            <div id="orders">
-                @foreach (var order in Model.Customer.Orders)
-                {
-                    string href = "#Order" + order.Id;
-                    string idhref = "Order" + order.Id;
-                    <div class="card">
-                        <div class="card-header">
-                            <a class="card-link" data-toggle="collapse" href="@href">
-                                <div class="card-group">
-                                    <div class="card ">
-                                        <div class="card-body text-center">
-                                            <p class="card-text text-success">@order.Id</p>
+            @if (Model.Customer.Orders == null || Model.Customer.Orders.Count() == 0)
+            {
+                <h3>Don't have any order</h3>
+            }
+            else
+            {
+                <div id="orders">
+                    @foreach (var order in Model.Customer.Orders)
+                    {
+                        string href = "#Order" + order.Id;
+                        string idhref = "Order" + order.Id;
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link" data-toggle="collapse" href="@href">
+                                    <div class="card-group">
+                                        <div class="card ">
+                                            <div class="card-body text-center">
+                                                <p class="card-text text-success">@order.Id</p>
+                                            </div>
+                                        </div>
+                                        <div class="card ">
+                                            <div class="card-body text-center">
+                                                <p class="card-text">@order.OrderDate.ToString("dd/MM/yyyy")</p>
+                                            </div>
+                                        </div>
+                                        <div class="card ">
+                                            <div class="card-body text-center">
+                                                <p class="card-text">@order.StatusName</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card ">
-                                        <div class="card-body text-center">
-                                            <p class="card-text">@order.OrderDate.ToString("dd/MM/yyyy")</p>
-                                        </div>
+                                </a>
+                            </div>
+                            <div id="@idhref" class="collapse show" data-parent="#orders">
+                                <div class="card-body">
+                                    <div class="row in-line" style="font-weight: bold;">
+                                        <div class="col-sm-4">Name</div>
+                                        <div class="col-sm-3">Unit price</div>
+                                        <div class="col-sm-2">Amount</div>
+                                        <div class="col-sm-3">Total</div>
                                     </div>
-                                    <div class="card ">
-                                        <div class="card-body text-center">
-                                            <p class="card-text">@order.StatusName</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div id="@idhref" class="collapse show" data-parent="#orders">
-                            <div class="card-body">
-                                <div class="row in-line" style="font-weight: bold;">
-                                    <div class="col-sm-4">Name</div>
-                                    <div class="col-sm-3">Unit price</div>
-                                    <div class="col-sm-2">Amount</div>
-                                    <div class="col-sm-3">Total</div>
-                                </div>
-                                @foreach (var detail in order.OrderDetails)
-                                {
-                                    <hr />
-                                    if (@detail.IsCombo == false)
+                                    @foreach (var detail in order.OrderDetails)
                                     {
-                                        <div class="row in-line">
-                                            <div class="col-sm-4">@detail.ItemName</div>
-                                            <div class="col-sm-3">@detail.ItemUnitPrice</div>
-                                            <div class="col-sm-2">@detail.Amount</div>
-                                            <div class="col-sm-3">@detail.SumPrice</div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        string hrefsub = "#OrderSub" + detail.Id;
-                                        string idhrefsub = "OrderSub" + detail.Id;
-                                        <a href="@hrefsub" data-toggle="collapse" style="text-decoration: none; color: #212529;">
+                                        <hr />
+                                        if (@detail.IsCombo == false)
+                                        {
                                             <div class="row in-line">
                                                 <div class="col-sm-4">@detail.ItemName</div>
                                                 <div class="col-sm-3">@detail.ItemUnitPrice</div>
                                                 <div class="col-sm-2">@detail.Amount</div>
                                                 <div class="col-sm-3">@detail.SumPrice</div>
                                             </div>
-                                        </a>
-                                        <br />
-                                        <div id="@idhrefsub" class="collapse">
-                                            <div class="row in-line" style="font-weight: bold;">
-                                                <div class="col-sm-2"></div>
-                                                <div class="col-sm-6">Name</div>
-                                                <div class="col-sm-4">Amount</div>
-                                            </div>
-                                            @foreach (var sub in detail.SubOrderDetails)
-                                            {
-                                                <div class="row">
+                                        }
+                                        else
+                                        {
+                                            string hrefsub = "#OrderSub" + detail.Id;
+                                            string idhrefsub = "OrderSub" + detail.Id;
+                                            <a href="@hrefsub" data-toggle="collapse" style="text-decoration: none; color: #212529;">
+                                                <div class="row in-line">
+                                                    <div class="col-sm-4">@detail.ItemName</div>
+                                                    <div class="col-sm-3">@detail.ItemUnitPrice</div>
+                                                    <div class="col-sm-2">@detail.Amount</div>
+                                                    <div class="col-sm-3">@detail.SumPrice</div>
+                                                </div>
+                                            </a>
+                                            <br />
+                                            <div id="@idhrefsub" class="collapse">
+                                                <div class="row in-line" style="font-weight: bold;">
                                                     <div class="col-sm-2"></div>
-                                                    <div class="col-sm-10">
-                                                        <hr />
-                                                        <div class="row">
-                                                            <div class="col-sm-8">@sub.ItemName</div>
-                                                            <div class="col-sm-4">@sub.Amount</div>
+                                                    <div class="col-sm-6">Name</div>
+                                                    <div class="col-sm-4">Amount</div>
+                                                </div>
+                                                @foreach (var sub in detail.SubOrderDetails)
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-sm-2"></div>
+                                                        <div class="col-sm-10">
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-sm-8">@sub.ItemName</div>
+                                                                <div class="col-sm-4">@sub.Amount</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            }
-                                        </div>
+                                                }
+                                            </div>
+                                        }
                                     }
-                                }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br />
-                }
-            </div>
+                        <br />
+                    }
+                </div>
+            }
         </div>
     </div>
 
