@@ -123,29 +123,53 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="post">
+                        <form id="formRegister">
                             <div class="form-group">
                                 <label class="col-form-label">Your Name</label>
-                                <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                                <input id="nameRegister" type="text" class="form-control" placeholder=" " required="">
+                                <span id="error_name" style="color:red;font-size:12;font-weight:600;display:none"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Phone Number</label>
+                                <input id="phoneRegister" type="text" class="form-control" placeholder=" " required="">
+                                <span id="error_phone" style="color:red;font-size:12;font-weight:600;display:none"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Address</label>
+                                <input id="addressRegister" type="text" class="form-control" placeholder=" " required="">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Gender</label>
+                                <select id="genderRegister" class="form-control">
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                    <option value="2">Others</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Email</label>
-                                <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                                <input id="usernameRegister" type="email" class="form-control" placeholder=" " required="">
+                                <span id="error_username"
+                                    style="color:red;font-size:12;font-weight:600;display:none"></span>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Password</label>
-                                <input type="password" class="form-control" placeholder=" " name="Password" id="password1"
+                                <input id="passwordRegister" type="password" class="form-control" placeholder=" "
                                     required="">
+                                <span id="error_password"
+                                    style="color:red;font-size:12;font-weight:600;display:none"></span>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Confirm Password</label>
-                                <input type="password" class="form-control" placeholder=" " name="Confirm Password"
-                                    id="password2" required="">
+                                <input id="confirmPasswordRegister" type="password" class="form-control" placeholder=" "
+                                    required="">
+                                <span id="error_confirmPassword"
+                                    style="color:red;font-size:12;font-weight:600;display:none"></span>
                             </div>
                             <div class="right-w3l">
-                                @* Nút register nằm ở đây *@
-                                <input type="submit" asp-action="Register" asp-controller="Home" class="form-control"
-                                    value="Register">
+                                <button id="registerSubmit" data-request-url='@Url.Action("Register","Home")'
+                                    style="width:100%; font-size:18" class="btn btn-primary">Register
+                                </button>
                             </div>
                             <div class="sub-w3l">
                                 <div class="custom-control custom-checkbox mr-sm-2">

@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using MvcClient.Models;
 using Infrastructure;
 using AppCore.Interfaces;
+using Microsoft.AspNetCore.Http;
+using AppCore.Models;
 
 namespace MvcClient.Controllers
 {
@@ -25,14 +27,31 @@ namespace MvcClient.Controllers
         public IActionResult Index()
         {
             var model = new CustomerModel();
-            model.Customer = this._unitofwork.CustomerRepos.GetBy(2);
-            // model.Orders = this._unitofwork.OrderRepos.
+            if (HttpContext.Session.GetInt32("id") == null)
+            {
+                model.Customer = new Customer();
+                Forbid();
+            }
+            else
+            {
+                int uid = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+                model.Customer = this._unitofwork.CustomerRepos.GetBy(uid);
+            }
             return View(model);
         }
         public IActionResult Orders()
         {
             var model = new CustomerModel();
-            model.Customer = this._unitofwork.CustomerRepos.GetBy(2);
+            if (HttpContext.Session.GetInt32("id") == null)
+            {
+                model.Customer = new Customer();
+                Forbid();
+            }
+            else
+            {
+                int uid = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+                model.Customer = this._unitofwork.CustomerRepos.GetBy(uid);
+            }
             return View(model);
         }
     }

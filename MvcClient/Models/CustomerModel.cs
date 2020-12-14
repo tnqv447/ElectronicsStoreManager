@@ -6,7 +6,7 @@ namespace MvcClient.Models
 {
     public class CustomerModel
     {
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } = null;
         public IList<Order> Orders { get; set; }
     }
 }

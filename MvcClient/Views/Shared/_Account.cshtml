@@ -22,12 +22,12 @@ else
             <a type="button" style="cursor:pointer" class="dropdown-toggle text-white" data-toggle="dropdown">
                 <i class="fas fa-sign-in-alt mr-2"></i> @Context.Session.GetString("name") </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item">Profile</a>
-                <a class="dropdown-item">Order</a>
+                <a class="dropdown-item" asp-controller="Customer" asp-action="Index">Profile</a>
+                <a class="dropdown-item" asp-controller="Customer" asp-action="Orders">Order</a>
             </div>
         </li>
         <li class="text-center text-white">
-            <a href="#" class="text-white">
+            <a asp-controller="Home" asp-action="Logout" class="text-white">
                 <i class="fas fa-sign-out-alt mr-2"></i>Log out </a>
         </li>
     </ul>
