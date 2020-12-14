@@ -35,6 +35,9 @@ namespace MvcClient.Controllers
 
         public IActionResult Index(int pageNumber = 1, string searchString = null)
         {
+            Customer account = _unitofwork.CustomerRepos.GetByAccount("cus4", "12345");
+            HttpContext.Session.SetInt32("id", account.Id);
+            HttpContext.Session.SetString("name", account.Name);
             view = GetViewModel();
 
             return View(view);
@@ -108,6 +111,7 @@ namespace MvcClient.Controllers
         }
         public IActionResult Logout()
         {
+            HttpContext.Session.Clear();
             return RedirectToAction(nameof(Index));
         }
 

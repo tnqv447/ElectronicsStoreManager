@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using MvcClient.Models;
 using Infrastructure;
 using AppCore.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace MvcClient.Controllers
 {
@@ -25,14 +26,15 @@ namespace MvcClient.Controllers
         public IActionResult Index()
         {
             var model = new CustomerModel();
-            model.Customer = this._unitofwork.CustomerRepos.GetBy(2);
-            // model.Orders = this._unitofwork.OrderRepos.
+            int uid = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            model.Customer = this._unitofwork.CustomerRepos.GetBy(uid);
             return View(model);
         }
         public IActionResult Orders()
         {
             var model = new CustomerModel();
-            model.Customer = this._unitofwork.CustomerRepos.GetBy(2);
+            int uid = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            model.Customer = this._unitofwork.CustomerRepos.GetBy(uid);
             return View(model);
         }
     }

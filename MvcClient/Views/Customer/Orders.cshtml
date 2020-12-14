@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Orders";
 }
+<br />
 <div class="container-fluid container">
     <div class="row content">
         <div class="col-sm-3 ">
@@ -48,8 +49,15 @@
                         </div>
                         <div id="@idhref" class="collapse show" data-parent="#orders">
                             <div class="card-body">
+                                <div class="row in-line" style="font-weight: bold;">
+                                    <div class="col-sm-4">Name</div>
+                                    <div class="col-sm-3">Unit price</div>
+                                    <div class="col-sm-2">Amount</div>
+                                    <div class="col-sm-3">Total</div>
+                                </div>
                                 @foreach (var detail in order.OrderDetails)
                                 {
+                                    <hr />
                                     if (@detail.IsCombo == false)
                                     {
                                         <div class="row in-line">
@@ -63,72 +71,38 @@
                                     {
                                         string hrefsub = "#OrderSub" + detail.Id;
                                         string idhrefsub = "OrderSub" + detail.Id;
-                                        <div class="row in-line">
-                                            <a href="@hrefsub" data-toggle="collapse">
-                                                <div class="card-body">
-                                                    <div class="col-sm-4">@detail.ItemName</div>
-                                                    <div class="col-sm-3">@detail.ItemUnitPrice</div>
-                                                    <div class="col-sm-2">@detail.Amount</div>
-                                                    <div class="col-sm-3">@detail.SumPrice</div>
-                                                </div>
-
-                                            </a>
-                                            <div id="@idhrefsub" class="collapse">
-                                                @foreach (var sub in detail.SubOrderDetails)
-                                                {
-                                                    <span>@sub.ItemName @sub.Amount</span>
-                                                }
+                                        <a href="@hrefsub" data-toggle="collapse" style="text-decoration: none; color: #212529;">
+                                            <div class="row in-line">
+                                                <div class="col-sm-4">@detail.ItemName</div>
+                                                <div class="col-sm-3">@detail.ItemUnitPrice</div>
+                                                <div class="col-sm-2">@detail.Amount</div>
+                                                <div class="col-sm-3">@detail.SumPrice</div>
                                             </div>
+                                        </a>
+                                        <br />
+                                        <div id="@idhrefsub" class="collapse">
+                                            <div class="row in-line" style="font-weight: bold;">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-6">Name</div>
+                                                <div class="col-sm-4">Amount</div>
+                                            </div>
+                                            @foreach (var sub in detail.SubOrderDetails)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-10">
+                                                        <hr />
+                                                        <div class="row">
+                                                            <div class="col-sm-8">@sub.ItemName</div>
+                                                            <div class="col-sm-4">@sub.Amount</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
                                     }
-
                                 }
-
                             </div>
-                            @* <div class="card-body table-responsive">
-                                <table class="table table-bordered">
-                                <thead>
-                                <th>Name</th>
-                                <th>Unit price</th>
-                                <th>Amount</th>
-                                <th>Total</th>
-                                </thead>
-                                <tbody>
-                                @foreach (var detail in order.OrderDetails)
-                                {
-                                if (!@detail.IsCombo)
-                                {
-                                <tr>
-                                <td>@detail.ItemName</td>
-                                <td>@detail.ItemUnitPrice</td>
-                                <td>@detail.Amount</td>
-                                <td>@detail.SumPrice</td>
-                                </tr>
-                                }
-                                else
-                                {
-                                string hrefsub = "#OrderSub" + detail.Id;
-                                string idhrefsub = "OrderSub" + detail.Id;
-                                @detail.IsCombo
-                                <a href="@hrefsub" data-toggle="collapse">
-                                <tr>
-                                <td>@detail.ItemName</td>
-                                <td>@detail.ItemUnitPrice</td>
-                                <td>@detail.Amount</td>
-                                <td>@detail.SumPrice</td>
-                                </tr>
-                                </a>
-                                <div id="@idhrefsub" class="collapse">
-                                @foreach (var sub in detail.SubOrderDetails)
-                                {
-                                <span>@sub.ItemName @sub.Amount</span>
-                                }
-                                </div>
-                                }
-                                }
-                                </tbody>
-                                </table>
-                                </div> *@
                         </div>
                     </div>
                     <br />
