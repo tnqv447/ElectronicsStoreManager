@@ -1,0 +1,122 @@
+@{
+    var i = 1;
+}
+@using Microsoft.AspNetCore.Http
+@model CartViewModel
+<intput type="hidden" id="UrlUpdateCart" value='@Url.Action("UpdateCart","Cart")' />
+@if(Model.Cart == null){
+    <tr>
+        <td colspan="7">
+            <span style="font-size:20;font-weight:600">Your cart is empty</span>
+        </td>
+    </tr>
+}
+else{
+    @if(!Model.GetInfo){
+        <div class="table-responsive">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th width="5%">SL No.</th>
+                            <th width="40%">Item Name</th>
+                            <th width="10%">Item Type</th>
+                            <th width="15%">Quantity</th>
+                            <th width="10%">Unit Price</th>
+                            <th width="10%">Total Price</th>
+                            <th width="10%">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Cart)
+                        {
+                            <tr>
+                                <td class="invert">@i</td>
+                                <td class="invert">
+                                    @item.Item.Name
+                                </td>
+                                <td class="invert">@item.Item.Type.ToString()</td>
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            <div  id="minus_@item.Item.Id" class="entry value-minus">&nbsp;</div>
+                                            <div class="entry value">
+                                                <span>@item.Quantity</span>
+                                            </div>
+                                            <div id="plus__@item.Item.Id" class="entry value-plus">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="invert">$@item.Item.Price.ToString("N2")</td>
+                                <td class="invert">$@item.TotalPrice.ToString("N2")</td>
+                                <td class="invert">
+                                    <div class="rem">
+                                        <div id="remov_@item.Item.Id" class="close1"> </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                            <input type="hidden" id="get_total_price" value='@Context.Session.GetString("TotalPrice")'/>
+
+                    </tbody>
+                </table>
+            </div>
+        
+    }
+    else{
+        <form asp-action="CheckOut" asp-controller="Cart" method="post" class="creditly-card-form agileinfo_form">
+            <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                <div class="information-wrapper">
+                    <div class="first-row">
+                        <div class="controls form-group">
+                            <input asp-route-CusName="@Model.Cus.Name" asp-for="@Model.Cus.Name" class="billing-address-name form-control" value="@Model.Cus.Name" type="text" name="name" placeholder="Full Name" required="">
+                        </div>
+                        <div class="w3_agileits_card_number_grids">
+                            <div class="w3_agileits_card_number_grid_left form-group">
+                                <div class="controls">
+                                    <input asp-route-CusPhone="@Model.Cus.PhoneNumber" asp-for="@Model.Cus.PhoneNumber" type="text" class="form-control" value="@Model.Cus.PhoneNumber" placeholder="Mobile Number" name="number" required="">
+                                </div>
+                            </div>
+                            <div class="w3_agileits_card_number_grid_right form-group">
+                                <div class="controls">
+                                    <input asp-route-CusAddress="@Model.Cus.Address"  asp-for="@Model.Cus.Address" type="text" class="form-control" value="@Model.Cus.Address" placeholder="Landmark" name="landmark" required="">
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button class="submit check_out btn">Delivery to this Address</button>
+                </div>
+            </div>
+        </form>
+    }
+    
+
+}
+<div class="checkout-right-basket">
+    @if (Context.Session.GetString("TotalPrice") == null)
+    {
+        <span id="cart_total_price">Total Price: $0</span>
+    }
+    else
+    {
+        <span id="cart_total_price">Total Price: $@Context.Session.GetString("TotalPrice")</span>
+    }
+
+</div>
+<div class="checkout-right-basket">
+    @if (Context.Session.GetInt32("id") == null)
+    {
+        <a href="#" id="login_for_cart" data-toggle="modal" data-target="#loginModal" class="text-white">
+            <i class="fas fa-sign-in-alt mr-2"></i> Please Login to continue </a>
+    }
+    else
+    {
+        @if(!Model.GetInfo && Model.Cart != null && Model.Cart.Count() > 0){
+            <a style="cursor:pointer;color:white" id="navigate">Next
+                <span class="far fa-hand-point-right"></span>
+            </a>
+        }
+        
+    }
+
+</div>

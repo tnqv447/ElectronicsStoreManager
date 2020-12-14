@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using MvcClient.Helpers
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -173,7 +175,7 @@
                     <div class="col-md-9 header mt-4 mb-md-0 mb-4">
                         <div class="row">
                             <!-- search -->
-                            <div class="col-10 agileits_search">
+                            <div class="col-7 agileits_search">
                                 <form class="form-inline" action="#" method="post">
                                     <input class="form-control mr-sm-2" type="search" placeholder="Search"
                                         aria-label="Search" required>
@@ -182,133 +184,138 @@
                             </div>
                             <!-- //search -->
                             <!-- cart details -->
-                            <div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
-                                <div class="wthreecartaits wthreecartaits2 cart cart box_1">
-                                    <form action="#" method="post" class="last">
-                                        <input type="hidden" name="cmd" value="_cart">
-                                        <input type="hidden" name="display" value="1">
-                                        <button class="btn w3view-cart" type="submit" name="submit" value="">
+                            <div class="col-5 top_nav_right text-center mt-sm-0 mt-2">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <a asp-action="Index" asp-controller="Cart" class="btn w3view-cart" name="submit">
                                             <i class="fas fa-cart-arrow-down"></i>
-                                        </button>
-                                    </form>
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>Total Item:
+                                            @if (SessionHelper.GetObjectFromJson<IList<CartItem>>(Context.Session, "cart")
+                                            == null)
+                                        {
+                                            <span id="totalItem"> 0 </span>
+                                        }
+                                        else
+                                        {
+                                            <span id="totalItem"> @Context.Session.GetInt32("TotalItem")</span>
+                                        }
+                                    </span>
+                                </div>
+                                <div class="col-5">
+                                    <span>
+                                        Total Price:
+                                        @if (SessionHelper.GetObjectFromJson<IList<CartItem>>(Context.Session, "cart")
+                                            == null)
+                                        {
+                                            <span id="totalPrice">$0</span>
+                                        }
+                                        else
+                                        {
+                                            <span id="totalPrice">$@Context.Session.GetString("TotalPrice")</span>
+                                        }
+
+                                    </span>
                                 </div>
                             </div>
-                            <!-- //cart details -->
                         </div>
+                        <!-- //cart details -->
                     </div>
                 </div>
+                <input type="hidden" id="addToCart" value='@Url.Action("AddToCart","Cart")'>
             </div>
         </div>
-        </div>
-        <partial name="_Categories"></partial>
+    </div>
+    <partial name="_Categories"></partial>
 
 
 
-        @RenderBody()
+    @RenderBody()
 
 
 
-        <footer>
-            <div class="copy-right py-3">
-                <div class="container">
-                    <p class="text-center text-white">© 2018 Electro Store. All rights reserved | Design by
-                        <a href="http://w3layouts.com"> W3layouts.</a>
-                    </p>
-                </div>
+    <footer>
+        <div class="copy-right py-3">
+            <div class="container">
+                <p class="text-center text-white">© 2018 Electro Store. All rights reserved | Design by
+                    <a href="http://w3layouts.com"> W3layouts.</a>
+                </p>
             </div>
-        </footer>
+        </div>
+    </footer>
 
 
-        <!-- cart-js -->
-        <script src="~/js/minicart.js"></script>
-        <script>
-            paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
+    <!-- cart-js -->
 
-            paypals.minicarts.cart.on('checkout', function (evt) {
-                var items = this.items(),
-                    len = items.length,
-                    total = 0,
-                    i;
 
-                // Count the number of each item in the cart
-                for (i = 0; i < len; i++) {
-                    total += items[i].get('quantity');
-                }
+    <!-- password-script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
 
-                if (total < 3) {
-                    alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-                    evt.preventDefault();
-                }
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- //password-script -->
+
+    <!-- scroll seller -->
+    <script src="~/js/scroll.js"></script>
+    <!-- //scroll seller -->
+
+
+
+    <!-- start-smooth-scrolling -->
+    <script src="~/js/move-top.js"></script>
+    <script src="~/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
             });
-        </script>
-        <!-- //cart-js -->
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
 
-        <!-- password-script -->
-        <script>
-            window.onload = function () {
-                document.getElementById("password1").onchange = validatePassword;
-                document.getElementById("password2").onchange = validatePassword;
-            }
-
-            function validatePassword() {
-                var pass2 = document.getElementById("password2").value;
-                var pass1 = document.getElementById("password1").value;
-                if (pass1 != pass2)
-                    document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-                else
-                    document.getElementById("password2").setCustomValidity('');
-                //empty string means no validation error
-            }
-        </script>
-        <!-- //password-script -->
-
-        <!-- scroll seller -->
-        <script src="~/js/scroll.js"></script>
-        <!-- //scroll seller -->
-
-
-
-        <!-- start-smooth-scrolling -->
-        <script src="~/js/move-top.js"></script>
-        <script src="~/js/easing.js"></script>
-        <script>
-            jQuery(document).ready(function ($) {
-                $(".scroll").click(function (event) {
-                    event.preventDefault();
-
-                    $('html,body').animate({
-                        scrollTop: $(this.hash).offset().top
-                    }, 1000);
-                });
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear' 
+            };
+            */
+            $().UItoTop({
+                easingType: 'easeOutQuart'
             });
-        </script>
-        <!-- //end-smooth-scrolling -->
 
-        <!-- smooth-scrolling-of-move-up -->
-        <script>
-            $(document).ready(function () {
-                /*
-                var defaults = {
-                    containerID: 'toTop', // fading element id
-                    containerHoverID: 'toTopHover', // fading element hover id
-                    scrollSpeed: 1200,
-                    easingType: 'linear' 
-                };
-                */
-                $().UItoTop({
-                    easingType: 'easeOutQuart'
-                });
+        });
+    </script>
+    <!-- //smooth-scrolling-of-move-up -->
 
-            });
-        </script>
-        <!-- //smooth-scrolling-of-move-up -->
+    <!-- for bootstrap working -->
+    <!-- //for bootstrap working -->
+    <!-- //js-files -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 
-        <!-- for bootstrap working -->
-        <!-- //for bootstrap working -->
-        <!-- //js-files -->
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)
-    </body>
-
-    </html>
+</html>

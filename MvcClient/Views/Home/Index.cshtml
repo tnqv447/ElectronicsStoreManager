@@ -85,23 +85,19 @@
                                         </div>
                                         <div class="item-info-product text-center border-top mt-4">
                                             <h4 class="pt-1">
-                                                <a href="single.html">@item.Name</a>
+                                                <a asp-action="Detail" asp-controller="shop"
+                            asp-route-itemId=@item.Id id="name_@item.Id">@item.Name</a>
                                             </h4>
                                             <div class="info-product-price my-2">
-                                                <span class="item_price">$@item.UnitPrice.ToString("N2")</span>
-
+                                                <span  class="item_price">$@item.UnitPrice.ToString("N2")</span>
                                             </div>
                                             <div
                                                 class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                                     <fieldset>
-                                                        <input type="hidden" name="cmd" value="_cart" />
-                                                        <input type="hidden" name="add" value="1" />
-                                                        <input type="hidden" name="item_name" value="@item.Name" />
-                                                        <input type="hidden" name="amount" value="@item.UnitPrice" />
-                                                        <input type="hidden" name="return" value=" " />
-                                                        <input type="hidden" name="currency_code" value="USD" />
-                                                        <input type="hidden" name="cancel_return" value=" " />
-                                                        <button name="submit" 
+                                                        <input type="hidden" id="price_@item.Id" value="@item.UnitPrice">
+                                                        <input type="hidden" id="type_@item.Id" value="@item.Type">
+
+                                                        <button name="submit" id="@item.Id" 
                                                             class="addCart button btn" >Add to cart
                                                         </button>
                                                     </fieldset>
@@ -133,22 +129,20 @@
                                         <span class="product-new-top">New</span>
                                         <div class="item-info-product text-center border-top mt-4">
                                             <h4 class="pt-1">
-                                                <a href="single.html">@item.Name</a>
+                                                <a id="name_@item.Id" asp-action="Detail" asp-controller="shop"
+                            asp-route-itemId=@item.Id>@item.Name</a>
                                             </h4>
                                             <div class="info-product-price my-2">
                                                 <span class="item_price">$@item.UnitPrice.ToString("N2")</span>
+                                                <input type="hidden" id="price_@item.Id" value="@item.UnitPrice">
+                                                <input type="hidden" id="type_@item.Id" value="@item.Type">
                                             </div>
                                             <div
                                                 class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                                     <fieldset>
-                                                        <input type="hidden" name="cmd" value="_cart" />
-                                                        <input type="hidden" name="add" value="1" />
-                                                        <input type="hidden" name="item_name" value="@item.Name" />
-                                                        <input type="hidden" name="amount" value="@item.UnitPrice" />
-                                                        <input type="hidden" name="currency_code" value="USD" />
-                                                        <input type="hidden" name="return" value=" " />
-                                                        <input type="hidden" name="cancel_return" value=" " />
-                                                        <button name="submit" value=""
+                                                        
+                                                        
+                                                        <button name="submit" id="@item.Id"
                                                             class="addCart button btn">
                                                         Add to cart
                                                         </button>

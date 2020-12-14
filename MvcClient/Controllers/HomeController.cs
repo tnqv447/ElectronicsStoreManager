@@ -41,7 +41,7 @@ namespace MvcClient.Controllers
         }
         public HomeViewModel GetViewModel(int pageNumber = 1, string searchString = null)
         {
-            var pageSize = 3;
+            var pageSize = 6;
 
             if (searchString == null || searchString == "")
             {

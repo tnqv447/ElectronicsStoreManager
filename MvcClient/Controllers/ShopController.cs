@@ -37,6 +37,7 @@ namespace MvcClient.Controllers
             view.item = item;
             return View(view);
         }
+        
         public HomeViewModel GetViewModel(int pageNumber = 1, string searchString = null)
         {
             var pageSize = 3;
