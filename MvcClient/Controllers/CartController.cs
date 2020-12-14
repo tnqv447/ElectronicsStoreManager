@@ -148,7 +148,7 @@ namespace MvcClient.Controllers
             else
             {
                 var CusId = HttpContext.Session.GetInt32("id").GetValueOrDefault();
-                var order = _unitofwork.OrderRepos.Add(new Order(CusId, DateTime.Now));
+                var order = _unitofwork.OrderRepos.Add(new Order(CusId, DateTime.Now, "asd", "1234567890"));
                 cart = SessionHelper.GetObjectFromJson<IList<CartItem>>(HttpContext.Session, "cart");
                 foreach (var item in cart)
                 {

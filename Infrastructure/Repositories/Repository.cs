@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories {
         public virtual T Add (T entity) {
             T toCreate = _context.Set<T>().CreateProxy();
             _context.Entry(toCreate).CurrentValues.SetValues(entity);
-            var tracked = _context.Set<T> ().Add (entity);
+            var tracked = _context.Set<T> ().Add (toCreate);
             _context.SaveChanges ();
 
             return tracked.Entity;

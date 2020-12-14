@@ -14,6 +14,11 @@ namespace AppCore.Models {
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyyy}")]
         public DateTime OrderDate { get; set; }
         
+        [Required(ErrorMessage = "Địa chỉ không được để trống")]
+        public string Address { get; set; }
+        [RegularExpression (@"^[0-9]{10}$", ErrorMessage = "Số điện thoại phải có 10 chữ số")]
+        public string PhoneNumber { get; set; }
+
         public ORDER_STATUS Status { get; set; }
 
         public virtual IList<OrderDetail> OrderDetails { get; set; }
@@ -33,9 +38,11 @@ namespace AppCore.Models {
             } }
         //---------------------------------------------------------------
 
-        public Order (int customerId, DateTime orderDate, ORDER_STATUS status = ORDER_STATUS.NEW) {
+        public Order (int customerId, DateTime orderDate, string address, string phoneNumber, ORDER_STATUS status = ORDER_STATUS.NEW) {
             CustomerId = customerId;
             OrderDate = orderDate;
+            Address = address;
+            PhoneNumber = phoneNumber;
             Status = status;
         }
 
@@ -47,6 +54,8 @@ namespace AppCore.Models {
         public void Copy (Order order) {
             CustomerId = order.CustomerId;
             OrderDate = order.OrderDate;
+            Address = order.Address;
+            PhoneNumber = order.PhoneNumber;
             Status = order.Status;
         }
 
