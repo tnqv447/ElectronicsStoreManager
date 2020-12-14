@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace AppCore.Models {
     public class Item {
@@ -60,6 +61,17 @@ namespace AppCore.Models {
             Description = item.Description;
             InStock = item.InStock;
             Status = item.Status;
+        }
+
+        public IList<ITEM_TYPE> GetComboType(){
+            var list = new List<ITEM_TYPE>();
+            if(this.Type.Equals(ITEM_TYPE.COMBO)){
+                foreach(ItemRelation temp in this.ConsistOf)
+                    list.Add(temp.Child.Type);
+            }else{
+                list.Add(this.Type);
+            }
+            return list.Distinct().ToList();
         }
 
     }
