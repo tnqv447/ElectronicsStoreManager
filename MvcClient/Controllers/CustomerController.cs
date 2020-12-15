@@ -39,6 +39,21 @@ namespace MvcClient.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(CustomerModel model)
+        {
+            Customer user = model.Customer;
+            if (ModelState.IsValid)
+            {
+                this._unitofwork.CustomerRepos.Update(model.Customer);
+                HttpContext.Session.SetString("name", model.Customer.Name);
+                // ViewBag.Message = "Cập nhật thông tin nhân viên " + oldUser.Name + " thành công!";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
         public IActionResult Orders()
         {
             var model = new CustomerModel();
