@@ -2,20 +2,24 @@ using System;
 using System.Linq.Expressions;
 namespace AppCore.Models
 {
-    public struct StorageChecker{
+    public struct StorageChecker
+    {
         public int ItemId { get; set; }
         public int Amount { get; set; }
 
-        public StorageChecker(int itemId, int amount){
+        public StorageChecker(int itemId, int amount)
+        {
             ItemId = itemId;
             Amount = amount;
         }
     }
-    public struct ComboChild{
+    public struct ComboChild
+    {
         public Item Item { get; set; }
         public int Amount { get; set; }
 
-        public ComboChild(Item item, int amount){
+        public ComboChild(Item item, int amount)
+        {
             Item = item;
             Amount = amount;
         }
@@ -26,8 +30,8 @@ namespace AppCore.Models
         {
             switch (status)
             {
-                case CUSTOMER_STATUS.ACTIVE: return "Mở";
-                case CUSTOMER_STATUS.DISABLED: return "Khóa";
+                case CUSTOMER_STATUS.ACTIVE: return "Activated";
+                case CUSTOMER_STATUS.DISABLED: return "Blocked";
                 default: return "";
             }
         }
@@ -35,8 +39,8 @@ namespace AppCore.Models
         {
             switch (status)
             {
-                case ITEM_STATUS.ACTIVE: return "Mở";
-                case ITEM_STATUS.DISABLED: return "Khóa";
+                case ITEM_STATUS.ACTIVE: return "Activated";
+                case ITEM_STATUS.DISABLED: return "Blocked";
                 default: return "";
             }
         }
@@ -44,10 +48,10 @@ namespace AppCore.Models
         {
             switch (status)
             {
-                case ORDER_STATUS.NEW: return "Chờ xác nhận";
-                case ORDER_STATUS.CHECKED: return "Đã xác nhận";
-                case ORDER_STATUS.DELIVERING: return "Đang giao hàng";
-                case ORDER_STATUS.DELIVERED: return "Đã giao hàng";
+                case ORDER_STATUS.NEW: return "Order received";
+                case ORDER_STATUS.CHECKED: return "Processed";
+                case ORDER_STATUS.DELIVERING: return "Shipping";
+                case ORDER_STATUS.DELIVERED: return "Completed";
                 default: return "";
             }
         }
@@ -55,9 +59,9 @@ namespace AppCore.Models
         {
             switch (sex)
             {
-                case SEX.FEMALE: return "Nữ";
-                case SEX.MALE: return "Nam";
-                case SEX.OTHER: return "Khác";
+                case SEX.FEMALE: return "Female";
+                case SEX.MALE: return "Male";
+                case SEX.OTHER: return "Others";
                 default: return "";
             }
         }
@@ -65,19 +69,19 @@ namespace AppCore.Models
         {
             switch (type)
             {
-                case ITEM_TYPE.MISC : return "Khác";
+                case ITEM_TYPE.MISC: return "Others";
                 case ITEM_TYPE.COMBO: return "Combo";
-                case ITEM_TYPE.HOUSEWARE: return "Đồ điện gia dụng";
+                case ITEM_TYPE.HOUSEWARE: return "Electric Houseware";
                 case ITEM_TYPE.LAPTOP: return "Laptop";
-                case ITEM_TYPE.SMART_PHONE: return "Điện thoại thông minh";
-                case ITEM_TYPE.MONITOR: return "Màn hình vi tính";
+                case ITEM_TYPE.SMART_PHONE: return "Cell Phone";
+                case ITEM_TYPE.MONITOR: return "Computer Screen";
                 case ITEM_TYPE.TV: return "TV";
-                case ITEM_TYPE.MOUSE_AND_KEYBOARD: return "Chuột và vàn phím";
-                case ITEM_TYPE.PC: return "Máy tính để bàn";
-                case ITEM_TYPE.COMPUTER_COMPONENTS: return "Linh kiện máy tính";
-                case ITEM_TYPE.OFFICE_DEVICES: return "Thiết bị văn phòng";
-                case ITEM_TYPE.INTERNET_DEVICES: return "Thiết bị mạng, wifi";
-                case ITEM_TYPE.SOUND_DEVICES: return "Thiết bị âm thanh";
+                case ITEM_TYPE.MOUSE_AND_KEYBOARD: return "Mouse and Keyboard";
+                case ITEM_TYPE.PC: return "Desktop";
+                case ITEM_TYPE.COMPUTER_COMPONENTS: return "Computer Components";
+                case ITEM_TYPE.OFFICE_DEVICES: return "Office Equipment";
+                case ITEM_TYPE.INTERNET_DEVICES: return "Network equipment, wifi";
+                case ITEM_TYPE.SOUND_DEVICES: return "Audio equipments";
                 default: return "";
             }
         }
@@ -98,7 +102,7 @@ namespace AppCore.Models
         INTERNET_DEVICES,
         SOUND_DEVICES
     }
-    
+
     public enum ORDER_STATUS
     {
         NEW,

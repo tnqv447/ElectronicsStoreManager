@@ -68,17 +68,17 @@ else{
                 <div class="information-wrapper">
                     <div class="first-row">
                         <div class="controls form-group">
-                            <input asp-route-CusName="@Model.Cus.Name" asp-for="@Model.Cus.Name" class="billing-address-name form-control" value="@Model.Cus.Name" type="text" name="name" placeholder="Full Name" required="">
+                            <input  asp-for="@Model.Cus.Name" class="billing-address-name form-control" value="@Model.Cus.Name" type="text"  placeholder="Full Name" required="">
                         </div>
                         <div class="w3_agileits_card_number_grids">
                             <div class="w3_agileits_card_number_grid_left form-group">
                                 <div class="controls">
-                                    <input asp-route-CusPhone="@Model.Cus.PhoneNumber" asp-for="@Model.Cus.PhoneNumber" type="text" class="form-control" value="@Model.Cus.PhoneNumber" placeholder="Mobile Number" name="number" required="">
+                                    <input  asp-for="@Model.Cus.PhoneNumber" type="text" class="form-control" value="@Model.Cus.PhoneNumber" placeholder="Mobile Number"  required="">
                                 </div>
                             </div>
                             <div class="w3_agileits_card_number_grid_right form-group">
                                 <div class="controls">
-                                    <input asp-route-CusAddress="@Model.Cus.Address"  asp-for="@Model.Cus.Address" type="text" class="form-control" value="@Model.Cus.Address" placeholder="Landmark" name="landmark" required="">
+                                    <input   asp-for="@Model.Cus.Address" type="text" class="form-control" value="@Model.Cus.Address" placeholder="Landmark" required="">
                                 </div>
                             </div>
                         </div>
@@ -113,6 +113,11 @@ else{
     {
         @if(!Model.GetInfo && Model.Cart != null && Model.Cart.Count() > 0){
             <a style="cursor:pointer;color:white" id="navigate">Next
+                <span class="far fa-hand-point-right"></span>
+            </a>
+        }
+        else{
+            <a style="cursor:pointer;color:white" id="back">Back
                 <span class="far fa-hand-point-right"></span>
             </a>
         }

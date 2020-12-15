@@ -109,6 +109,16 @@ $(document).ready(function(){
             }
         })
     })
+    $(document).on('click','#back',function(){
+        $.ajax({
+            type:"POST",
+            url:'/Cart/UpdateCart',
+            success:function(data){
+                $('#partial').html(data);
+            },
+            
+        })
+    })
     $('#formRegister').submit(function(e){
         e.preventDefault();
     })
