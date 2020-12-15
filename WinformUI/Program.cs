@@ -26,10 +26,10 @@ namespace Winform {
             ConfigureServices ();
 
             /// seed data
-            var context = ServiceProvider.GetRequiredService<ElectronicsStoreContext> ();
+            /*var context = ServiceProvider.GetRequiredService<ElectronicsStoreContext> ();
             var unitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork> ();
             DataSeeds.Initialize (context, unitOfWork);
-            context.SaveChanges ();
+            context.SaveChanges ();*/
 
             ///run forms
             var mainForm = ServiceProvider.GetRequiredService<MainForm> ();
@@ -55,8 +55,9 @@ namespace Winform {
 
             services.AddScoped<IOrderService, OrderService> ();
 
-            var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\Infrastructure\\electronics.db" ;
-            services.AddDbContext<ElectronicsStoreContext> (options => options.UseSqlite ($"Data Source=" + db_path).UseLazyLoadingProxies ());
+            //var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\Infrastructure\\electronics.db";
+            //services.AddDbContext<ElectronicsStoreContext> (options => options.UseSqlite ($"Data Source=" + db_path).UseLazyLoadingProxies ());
+            services.AddDbContext<ElectronicsStoreContext> ();
             //services.AddDbContext<ManageToursContext>(options => options.UseSqlite($"Data Source=D:\\Code\\Visual Studio\\ManageToursDemo\\ManageToursDemo\\Presentation\\tours.db", x => x.MigrationsAssembly("Presentation.Migrations")));
             //services.AddDbContext<ManageToursContext>(options => options.UseSqlite($"..\\ManageToursDemo\\Presentation\\tours.db", x => x.MigrationsAssembly("Presentation.Migrations")));
             ServiceProvider = services.BuildServiceProvider ();

@@ -1,30 +1,26 @@
+using System.IO;
 using AppCore.Models;
 using Infrastructure.Configs;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
-{
-    public class ElectronicsStoreContext : DbContext
-    {
-        public ElectronicsStoreContext(DbContextOptions<ElectronicsStoreContext> options) : base(options)
-        {
-        }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.ApplyConfiguration(new ItemConfig());
-            builder.ApplyConfiguration(new CustomerConfig());
-            builder.ApplyConfiguration(new ItemRelationConfig());
-            builder.ApplyConfiguration(new OrderDetailConfig());
-            builder.ApplyConfiguration(new OrderConfig());
-            builder.ApplyConfiguration(new SubOrderDetailConfig());
+namespace Infrastructure {
+    public class ElectronicsStoreContext : DbContext {
+        public ElectronicsStoreContext (DbContextOptions<ElectronicsStoreContext> options) : base (options) { }
+        protected override void OnModelCreating (ModelBuilder builder) {
+            builder.ApplyConfiguration (new ItemConfig ());
+            builder.ApplyConfiguration (new CustomerConfig ());
+            builder.ApplyConfiguration (new ItemRelationConfig ());
+            builder.ApplyConfiguration (new OrderDetailConfig ());
+            builder.ApplyConfiguration (new OrderConfig ());
+            builder.ApplyConfiguration (new SubOrderDetailConfig ());
 
-            base.OnModelCreating(builder);
+            base.OnModelCreating (builder);
         }
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite($"Data Source=..\\Infrastructure\\electronics.db")
-                .UseLazyLoadingProxies();
-        }*/
+        protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder) {
+            var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\electronics.db";
+            optionsBuilder.UseSqlite ($"Data Source=" + db_path)
+                .UseLazyLoadingProxies ();
+        }
 
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemRelation> ItemRelations { get; set; }

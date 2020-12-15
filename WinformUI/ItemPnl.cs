@@ -37,22 +37,24 @@ namespace Winform {
             this.gridItem.Columns["TypeName"].HeaderText = "Loại";
             this.gridItem.Columns["TypeName"].Width = 150;
 
-            if (_comboView) this.gridItem.Columns["InStock"].Visible = false;
-            else {
+            if (!_comboView) {
+                this.gridItem.Columns["InStock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 this.gridItem.Columns["InStock"].DisplayIndex = 3;
                 this.gridItem.Columns["InStock"].HeaderText = "Tồn kho";
+                this.gridItem.Columns["InStock"].Width = 100;
             }
 
             this.gridItem.Columns["UnitPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.gridItem.Columns["UnitPrice"].DisplayIndex = 3;
+            this.gridItem.Columns["UnitPrice"].DisplayIndex = 4;
             this.gridItem.Columns["UnitPrice"].HeaderText = "Đơn giá";
             this.gridItem.Columns["UnitPrice"].Width = 120;
             this.gridItem.Columns["UnitPrice"].DefaultCellStyle.Format = "##,#";
 
-            this.gridItem.Columns["Description"].DisplayIndex = 4;
+            this.gridItem.Columns["Description"].DisplayIndex = 5;
             this.gridItem.Columns["Description"].HeaderText = "Mô tả";
 
-            this.gridItem.Columns["StatusName"].DisplayIndex = 5;
+            this.gridItem.Columns["StatusName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            this.gridItem.Columns["StatusName"].DisplayIndex = 6;
             this.gridItem.Columns["StatusName"].HeaderText = "Trạng thái";
             this.gridItem.Columns["StatusName"].Width = 50;
 
@@ -73,9 +75,10 @@ namespace Winform {
                 this.EnableItemButton (false);
             } else {
                 this.gridItem.Rows[selectedIndex].Selected = true;
-
-                this.SetUpGridItem ();
+                
             }
+            this.SetUpGridItem ();
+            
         }
         private void LoadItemInfo () {
             if (this.gridItem.SelectedRows.Count > 0) {
@@ -123,7 +126,7 @@ namespace Winform {
             _unitOfWork = unitOfWork;
             LoadItemData ();
             LoadGridItem ();
-            SetUpGridItem ();
+            //SetUpGridItem ();
 
             this.numberFrom.Minimum = 0;
             this.numberTo.Minimum = 0;
@@ -136,7 +139,7 @@ namespace Winform {
             var index = e.RowIndex;
             var cell = gridItem.Rows[index].Cells["Status"];
             var subCell = gridItem.Rows[index].Cells["StatusName"];
-            if (cell.Value.ToString ().Equals (ITEM_STATUS.ACTIVE)) subCell.Style.BackColor = Color.Green;
+            if (((ITEM_STATUS)cell.Value).Equals (ITEM_STATUS.ACTIVE)) subCell.Style.BackColor = Color.Green;
             else subCell.Style.BackColor = Color.Red;
         }
 
