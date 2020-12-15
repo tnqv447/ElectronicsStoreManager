@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using AppCore.Models;
 using System;
+using AppCore.Services;
 
 namespace MvcClient.Controllers
 {
@@ -15,14 +16,17 @@ namespace MvcClient.Controllers
     {
         private readonly ILogger<CartController> _logger;
         private readonly IUnitOfWork _unitofwork;
+        private readonly IOrderService _service;
         private CartViewModel view;
         private IList<CartItem> cart;
         private int TotalItem;
 
-        public CartController(ILogger<CartController> logger, IUnitOfWork unitofwork)
+
+        public CartController(ILogger<CartController> logger, IUnitOfWork unitofwork, IOrderService service)
         {
             _logger = logger;
             _unitofwork = unitofwork;
+            _service = service;
             view = new CartViewModel();
             TotalItem = 0;
         }
@@ -90,42 +94,50 @@ namespace MvcClient.Controllers
             var item = cart.FirstOrDefault(m => m.Item.Id.Equals(ItemId));
             var TotalPrice = HttpContext.Session.GetString("TotalPrice");
             decimal d = decimal.Parse(TotalPrice);
-            switch (Action)
+            if (Action == null)
             {
-                case "minus":
-                    if (item.Quantity > 1)
-                    {
-                        item.Quantity -= 1;
-                        item.TotalPrice -= item.Item.Price;
-                        d = d - item.TotalPrice;
-                    }
-
-                    break;
-                case "plus_":
-                    item.Quantity += 1;
-                    item.TotalPrice += item.Item.Price;
-                    d = d + item.TotalPrice;
-                    break;
-                case "remov":
-                    d = d - item.TotalPrice;
-                    item.TotalPrice -= item.Item.Price;
-                    cart.Remove(item);
-
-                    break;
-            }
-            if (cart.Count.Equals(0))
-            {
-                HttpContext.Session.Remove("cart");
+                return PartialView("_Cart", view);
             }
             else
             {
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                HttpContext.Session.SetString("TotalPrice", d.ToString("N2"));
+                switch (Action)
+                {
+                    case "minus":
+                        if (item.Quantity > 1)
+                        {
+                            item.Quantity -= 1;
+                            item.TotalPrice -= item.Item.Price;
+                            d = d - item.TotalPrice;
+                        }
 
-                view.Cart = cart;
+                        break;
+                    case "plus_":
+                        item.Quantity += 1;
+                        item.TotalPrice += item.Item.Price;
+                        d = d + item.TotalPrice;
+                        break;
+                    case "remov":
+                        d = d - item.TotalPrice;
+                        item.TotalPrice -= item.Item.Price;
+                        cart.Remove(item);
+
+                        break;
+                }
+                if (cart.Count.Equals(0))
+                {
+                    HttpContext.Session.Remove("cart");
+                }
+                else
+                {
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                    HttpContext.Session.SetString("TotalPrice", d.ToString("N2"));
+
+                    view.Cart = cart;
+                }
+
+                return PartialView("_Cart", view);
             }
 
-            return PartialView("_Cart", view);
         }
         [HttpGet]
         public IActionResult GetInfor()
@@ -139,7 +151,7 @@ namespace MvcClient.Controllers
             return PartialView("_Cart", view);
         }
         [HttpPost]
-        public IActionResult CheckOut(int CusPhone, string CusName, string CusAddress)
+        public IActionResult CheckOut(CartViewModel viewModel)
         {
             if (HttpContext.Session.GetInt32("id") == null)
             {
@@ -148,16 +160,18 @@ namespace MvcClient.Controllers
             else
             {
                 var CusId = HttpContext.Session.GetInt32("id").GetValueOrDefault();
-                var order = _unitofwork.OrderRepos.Add(new Order(CusId, DateTime.Now, "asd", "1234567890"));
+                var order = _unitofwork.OrderRepos.Add(new Order(CusId, DateTime.Now, viewModel.Cus.Address, viewModel.Cus.PhoneNumber));
+
                 cart = SessionHelper.GetObjectFromJson<IList<CartItem>>(HttpContext.Session, "cart");
                 foreach (var item in cart)
                 {
-                    Console.WriteLine(item.Item.Id);
+
                     var temp = new OrderDetail(order.Id, item.Item.Id, item.Quantity, item.Item.Name, item.Item.Price);
                     _unitofwork.OrderRepos.OrderDetailRepos.Add(temp);
                 }
+                HttpContext.Session.Remove("cart");
+                return View();
             }
-            return View();
         }
     }
 }
