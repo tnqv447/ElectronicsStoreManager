@@ -20,11 +20,11 @@ namespace Infrastructure
 
             base.OnModelCreating(builder);
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Data Source=..\\Infrastructure\\electronics.db")
                 .UseLazyLoadingProxies();
-        }
+        }*/
 
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemRelation> ItemRelations { get; set; }

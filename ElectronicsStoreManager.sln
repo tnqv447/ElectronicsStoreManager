@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{63FF619F-E60
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{42F4CC77-9F8E-4865-A818-3962CF805F0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinformUI", "WinformUI\WinformUI.csproj", "{CBDC31AF-16C9-4DAE-BA4E-1226FE970009}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform", "WinformUI\Winform.csproj", "{CBDC31AF-16C9-4DAE-BA4E-1226FE970009}"
 	ProjectSection(ProjectDependencies) = postProject
 		{42F4CC77-9F8E-4865-A818-3962CF805F0C} = {42F4CC77-9F8E-4865-A818-3962CF805F0C}
 	EndProjectSection

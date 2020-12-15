@@ -8,8 +8,6 @@ namespace Infrastructure
     public ElectronicsStoreContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ElectronicsStoreContext>();
-        optionsBuilder.UseLazyLoadingProxies()
-            .UseSqlite($"Data Source=..\\Infrastructure\\electronics.db");
 
         return new ElectronicsStoreContext(optionsBuilder.Options);
     }
