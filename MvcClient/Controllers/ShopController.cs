@@ -46,7 +46,7 @@ namespace MvcClient.Controllers
 
         public HomeViewModel GetViewModel(IList<EnumCheckBox> CheckBoxValues, int pageNumber = 1, string searchString = null)
         {
-            var pageSize = 6;
+            var pageSize = 100;
             var itemSearch = items;
             var comboSearch = combos;
             var listTypes = CheckBoxValues.Where(m => m.IsSelected.Equals(true)).Select(m => m.types).ToList();

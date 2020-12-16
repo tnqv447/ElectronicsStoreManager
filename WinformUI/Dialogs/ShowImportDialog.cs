@@ -16,7 +16,7 @@ namespace Winform.Dialogs
     public partial class ShowImportDialog : Form
     {
         private readonly IUnitOfWork _unitOfWork;
-        
+
         private IList<Import> _imports = new List<Import>();
         private IList<Import> _importSearch = new List<Import>();
         private void SetUpGridImport()
@@ -36,9 +36,12 @@ namespace Winform.Dialogs
             this.gridImport.Columns["Amount"].Width = 120;
 
         }
-        private void LoadImportData () {
-            _imports = _unitOfWork.ImportRepos.GetAll();
-            _importSearch = _imports.ToList ();
+        private void LoadImportData()
+        {
+            var _imports = _unitOfWork.ImportRepos.GetAll()
+                .GroupBy(m => new { m.ItemId, m.ImportDate.Date })
+                .Select(o => new Import(o.First().ItemId, o.Sum(m => m.Amount), o.First().ImportDate.Date));
+            _importSearch = _imports.ToList();
         }
         public void Reload()
         {
@@ -46,17 +49,22 @@ namespace Winform.Dialogs
             LoadGridImport();
         }
 
-        private void LoadGridImport (int selectedIndex = -1) {
-            TblImport tbl = new TblImport (_unitOfWork, _importSearch);
+        private void LoadGridImport(int selectedIndex = -1)
+        {
+            TblImport tbl = new TblImport(_unitOfWork, _importSearch);
             this.gridImport.DataSource = tbl;
-            if (selectedIndex < 0) {
+            if (selectedIndex < 0)
+            {
                 this.gridImport.ClearSelection();
-            } else {
+            }
+            else
+            {
                 this.gridImport.Rows[selectedIndex].Selected = true;
             }
-            SetUpGridImport ();
+            SetUpGridImport();
         }
-        private void SearchImport () {
+        private void SearchImport()
+        {
             DateTime dateFrom = dateStart.Value.Date;
             DateTime dateTo = dateEnd.Value.Date;
 

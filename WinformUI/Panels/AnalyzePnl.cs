@@ -15,7 +15,7 @@ using Winform.DataTables;
 
 namespace Winform
 {
-    public partial class AnalyzePnl: UserControl
+    public partial class AnalyzePnl : UserControl
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISearchSortService _searchSortService;
@@ -28,8 +28,9 @@ namespace Winform
         private IList<Item> _itemSearch;
         private int _selectedIndex = -1;
 
-        private void LoadCheckBoxType () {
-            checkedTypeBox.Items.Clear ();
+        private void LoadCheckBoxType()
+        {
+            checkedTypeBox.Items.Clear();
 
             checkedTypeBox.DataSource = ListEnum.GetListItemType();
             checkedTypeBox.DisplayMember = "TypeName";
@@ -58,16 +59,18 @@ namespace Winform
             this.gridLog.Columns["ImportAmount"].HeaderText = "Số lượng nhập vào";
             this.gridLog.Columns["ImportAmount"].Width = 140;
         }
-        private void LoadGridLog (IList<StorageLog> arr) {
-            TblStorageLog tbl = new TblStorageLog (_unitOfWork, arr);
+        private void LoadGridLog(IList<StorageLog> arr)
+        {
+            TblStorageLog tbl = new TblStorageLog(_unitOfWork, arr);
 
             this.gridLog.DataSource = tbl;
-            this.gridLog.ClearSelection ();
-            this.SetUpGridLog ();
+            this.gridLog.ClearSelection();
+            this.SetUpGridLog();
 
         }
-        
-        private void SetUpGridItem () {
+
+        private void SetUpGridItem()
+        {
             this.gridItem.Columns["Id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.gridItem.Columns["Id"].DisplayIndex = 0;
             this.gridItem.Columns["Id"].HeaderText = "ID";
@@ -81,11 +84,11 @@ namespace Winform
             this.gridItem.Columns["TypeName"].HeaderText = "Loại";
             this.gridItem.Columns["TypeName"].Width = 150;
 
-                this.gridItem.Columns["InStock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                this.gridItem.Columns["InStock"].DisplayIndex = 3;
-                this.gridItem.Columns["InStock"].HeaderText = "Tồn kho";
-                this.gridItem.Columns["InStock"].Width = 100;
-            
+            this.gridItem.Columns["InStock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            this.gridItem.Columns["InStock"].DisplayIndex = 3;
+            this.gridItem.Columns["InStock"].HeaderText = "Tồn kho";
+            this.gridItem.Columns["InStock"].Width = 100;
+
 
             this.gridItem.Columns["UnitPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.gridItem.Columns["UnitPrice"].DisplayIndex = 4;
@@ -103,9 +106,11 @@ namespace Winform
 
             this.gridItem.Columns["Status"].Visible = false;
         }
-        private void LoadItemData () {
+        private void LoadItemData()
+        {
             _items = _unitOfWork.ItemRepos.GetAllNotCombo();
             _itemSearch = _items.ToList();
+            _logs = _analyzeService.Logs();
         }
         public void Reload()
         {
@@ -114,24 +119,30 @@ namespace Winform
             LoadGridItem();
         }
 
-        private void LoadGridItem (int selectedIndex = -1) {
-            TblItem tbl = new TblItem (_itemSearch);
+        private void LoadGridItem(int selectedIndex = -1)
+        {
+            TblItem tbl = new TblItem(_itemSearch);
 
             this.gridItem.DataSource = tbl;
-            if (selectedIndex < 0) {
-                this.gridItem.ClearSelection ();
-            } else {
+            if (selectedIndex < 0)
+            {
+                this.gridItem.ClearSelection();
+            }
+            else
+            {
                 this.gridItem.Rows[selectedIndex].Selected = true;
             }
-            SetUpGridItem ();
+            SetUpGridItem();
         }
-        private void LoadItemInfo () {
-            if (this.gridItem.SelectedRows.Count > 0) {
+        private void LoadItemInfo()
+        {
+            if (this.gridItem.SelectedRows.Count > 0)
+            {
                 var row = this.gridItem.SelectedRows[0];
                 _selectedIndex = row.Index;
 
-                var itemId = (Int32) row.Cells["Id"].Value;
-                var item = _items.Where (m => m.Id.Equals (itemId)).First ();
+                var itemId = (Int32)row.Cells["Id"].Value;
+                var item = _items.Where(m => m.Id.Equals(itemId)).First();
                 _subLogs = _analyzeService.CalculateLogStock(_logs, item);
                 LoadGridLog(_subLogs);
             }
@@ -142,21 +153,23 @@ namespace Winform
                 gridLog.DataSource = null;
             }
         }
-        private void SearchItem () {
+        private void SearchItem()
+        {
             var search = this.txtSearch.Text;
             var priceFrom = this.numberFrom.Value;
             var priceTo = this.numberTo.Value;
-            var types = this.checkedTypeBox.CheckedItems.OfType<ItemType> ().Select (m => m.Type).ToList ();
+            var types = this.checkedTypeBox.CheckedItems.OfType<ItemType>().Select(m => m.Type).ToList();
 
-            _itemSearch = _searchSortService.Search (_items, search, types, priceFrom, priceTo);
+            _itemSearch = _searchSortService.Search(_items, search, types, priceFrom, priceTo);
         }
-        private void SearchLog () {
+        private void SearchLog()
+        {
             DateTime dateFrom = dateStart.Value.Date;
             DateTime dateTo = dateEnd.Value.Date;
 
             _subLogSearch = _subLogSearch.Where(m => DateTime.Compare(m.LogDate.Date, dateFrom) >= 0 && DateTime.Compare(m.LogDate.Date, dateTo) <= 0).ToList();
         }
-        public AnalyzePnl(IUnitOfWork unitOfWork, ISearchSortService searchSortService,  IAnalyzeService analyzeService)
+        public AnalyzePnl(IUnitOfWork unitOfWork, ISearchSortService searchSortService, IAnalyzeService analyzeService)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -188,15 +201,15 @@ namespace Winform
             var index = e.RowIndex;
             var cell = gridItem.Rows[index].Cells["Status"];
             var subCell = gridItem.Rows[index].Cells["StatusName"];
-            if (((ITEM_STATUS) cell.Value).Equals (ITEM_STATUS.ACTIVE)) subCell.Style.BackColor = Color.Green;
+            if (((ITEM_STATUS)cell.Value).Equals(ITEM_STATUS.ACTIVE)) subCell.Style.BackColor = Color.Green;
             else subCell.Style.BackColor = Color.Red;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            LoadItemData ();
-            this.SearchItem ();
-            this.LoadGridItem ();
+            LoadItemData();
+            this.SearchItem();
+            this.LoadGridItem();
         }
 
         private void dateStart_ValueChanged(object sender, EventArgs e)

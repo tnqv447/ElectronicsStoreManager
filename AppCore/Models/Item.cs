@@ -39,10 +39,27 @@ namespace AppCore.Models
         public bool IsCombo { get { return !(ConsistOf == null || ConsistOf.Count == 0); } }
         [NotMapped]
         public bool IsPartOf { get { return !(PartOf == null || PartOf.Count == 0); } }
+        [NotMapped]
+        public decimal SumPrice
+        {
+            get
+            {
+                decimal sum = 0;
+                if (ConsistOf == null || ConsistOf.Count == 0) return this.UnitPrice;
+
+                foreach (ItemRelation temp in ConsistOf)
+                {
+                    sum += temp.Amount * temp.Child.UnitPrice;
+                }
+
+                return sum;
+            }
+        }
 
         //---------------------------------------------------------------
 
-        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE, bool outOfStock = false) {
+        public Item(string name, ITEM_TYPE type, decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE, bool outOfStock = false)
+        {
             Name = name;
             Type = type;
             UnitPrice = unitPrice;
@@ -87,6 +104,16 @@ namespace AppCore.Models
                 list.Add(this.Type);
             }
             return list.Distinct().ToList();
+        }
+        public decimal GetSumPrice(IList<ItemRelation> relations)
+        {
+            decimal sum = 0;
+            if (relations == null || relations.Count == 0) return 0;
+            foreach (ItemRelation temp in relations)
+            {
+                sum += temp.Amount * temp.Child.UnitPrice;
+            }
+            return sum;
         }
 
     }

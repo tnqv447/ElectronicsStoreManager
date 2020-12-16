@@ -11,13 +11,14 @@ namespace AppCore.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IOrderService _orderService;
-        public AnalyzeService (IUnitOfWork unitOfWork, IOrderService orderService) {
+        public AnalyzeService(IUnitOfWork unitOfWork, IOrderService orderService)
+        {
             _unitOfWork = unitOfWork;
             _orderService = orderService;
         }
 
         public IList<StorageLog> Logs()
-        {
+        {///  from to date
             var stores = _orderService.GetAllStorageChecker();
             var imports = _unitOfWork.ImportRepos.GetAll()
                 .GroupBy(m => new { m.ItemId, m.ImportDate.Date })

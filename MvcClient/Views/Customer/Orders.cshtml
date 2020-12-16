@@ -37,7 +37,7 @@
             else
             {
                 <div id="orders">
-                    @foreach (var order in Model.Customer.Orders)
+                    @foreach (var order in Model.Customer.Orders.Reverse())
                     {
                         string href = "#Order" + order.Id;
                         string idhref = "Order" + order.Id;
@@ -100,7 +100,7 @@
                                                 <div class="row in-line" style="font-weight: bold;">
                                                     <div class="col-sm-2"></div>
                                                     <div class="col-sm-6">Name</div>
-                                                    <div class="col-sm-4">Amount</div>
+                                                    <div class="col-sm-4">Amount/Combo</div>
                                                 </div>
                                                 @foreach (var sub in detail.SubOrderDetails)
                                                 {
@@ -121,6 +121,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <br />
                     }
                 </div>
