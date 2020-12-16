@@ -56,6 +56,13 @@ namespace MvcClient.Controllers
                 // var item_search = _service.
             }
             var result = new HomeViewModel();
+            var list_types = (ITEM_TYPE[])Enum.GetValues(typeof(ITEM_TYPE));
+            result.ItemTypes = new List<EnumCheckBox>();
+            foreach (var t in list_types)
+            {
+                result.ItemTypes.Add(new EnumCheckBox(t, false));
+            }
+
             result.items = item_paging;
             result.combos = combo_paging;
             return result;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AppCore.Interfaces;
 using AppCore.Models;
+using AppCore.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcClient.Models;
@@ -12,20 +13,22 @@ namespace MvcClient.Controllers
     {
         private readonly ILogger<ShopController> _logger;
         private readonly IUnitOfWork _unitofwork;
+        private readonly ISearchSortService _service;
         private IList<Item> items;
         private IList<Item> combos;
         private HomeViewModel view;
         private PaginatedList<Item> item_paging;
         private PaginatedList<Item> combo_paging;
 
-        public ShopController(ILogger<ShopController> logger, IUnitOfWork unitofwork)
+        public ShopController(ILogger<ShopController> logger, IUnitOfWork unitofwork, ISearchSortService service)
         {
             _logger = logger;
             _unitofwork = unitofwork;
+            _service = service;
             items = _unitofwork.ItemRepos.GetAllNotCombo();
             combos = _unitofwork.ItemRepos.GetAllCombo();
         }
-        public IActionResult Index()
+        public IActionResult Index(IList<EnumCheckBox> ItemTypes = null, int pageNumber = 1, string searchString = null)
         {
             return View();
         }
@@ -37,7 +40,7 @@ namespace MvcClient.Controllers
             view.item = item;
             return View(view);
         }
-        
+
         public HomeViewModel GetViewModel(int pageNumber = 1, string searchString = null)
         {
             var pageSize = 3;
