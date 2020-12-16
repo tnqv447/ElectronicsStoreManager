@@ -11,13 +11,16 @@ namespace MvcClient.Models
         public PaginatedList<Item> combos { get; set; }
 
         public Item item { get; set; }
-        public IList<EnumCheckBox> ItemTypes { get; set; }
+        public IList<EnumCheckBox> CheckBoxValues { get; set; }
     }
     public class EnumCheckBox
     {
         public ITEM_TYPE types { get; set; }
         public bool IsSelected { get; set; }
+        public EnumCheckBox()
+        {
 
+        }
         public EnumCheckBox(ITEM_TYPE types, bool isSelected)
         {
             this.types = types;

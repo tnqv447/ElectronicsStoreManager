@@ -76,7 +76,7 @@
                                 <div class="col-md-4 product-men mt-5">
                                     <div class="men-pro-item simpleCart_shelfItem">
                                         <div class="men-thumb-item text-center">
-                                            <img src="~/img/mk5.jpg" alt="">
+                                            <img src="~/img/mk4.jpg" alt="">
                                             <div class="men-cart-pro">
                                                 <div class="inner-men-cart-pro">
                                                     <a asp-action="Detail" asp-controller="shop" asp-route-itemId=@item.Id
@@ -120,10 +120,11 @@
                                 <div class="col-md-4 product-men mt-5">
                                     <div class="men-pro-item simpleCart_shelfItem">
                                         <div class="men-thumb-item text-center">
-                                            <img src="~/img/mk5.jpg" alt="">
+                                            <img src="~/img/mk4.jpg" alt="">
                                             <div class="men-cart-pro">
                                                 <div class="inner-men-cart-pro">
-                                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                                    <a asp-action="Detail" asp-controller="shop"
+                                                        asp-route-itemId="@item.Id" class="link-product-add-cart">Quick View</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -131,7 +132,7 @@
                                         <div class="item-info-product text-center border-top mt-4">
                                             <h4 class="pt-1">
                                                 <a id="name_@item.Id" asp-action="Detail" asp-controller="shop"
-                                                    asp-route-itemId=@item.Id>@item.Name</a>
+                                                    asp-route-itemId="@item.Id">@item.Name</a>
                                             </h4>
                                             <div class="info-product-price my-2">
                                                 <span class="item_price">$@item.UnitPrice.ToString("N2")</span>
@@ -166,20 +167,27 @@
                 <div class="side-bar p-sm-4 p-3">
                     <div class="search-hotel border-bottom py-2">
                         <h3 class="agileits-sear-head mb-3">Search Here..</h3>
-                        <form action="#" method="post">
-                            <input type="search" placeholder="Product name..." name="search" required="">
+                        <form asp-action="Index" asp-controller="Shop" method="post">
+                            <input type="search" placeholder="Product name..." name="searchString">
                             <input type="submit" value=" ">
 
                             <div class="left-side py-2">
                                 <ul>
-                                    @for (var i = 0; i < Model.ItemTypes.Count; i++)
+                                    @for (var i = 0; i < Model.CheckBoxValues.Count; i++)
                                     {
-                                        <li>
-
-                                            @Html.CheckBoxFor(m => m.ItemTypes[i].IsSelected)
-                                            @Html.DisplayFor(m => m.ItemTypes[i].types)
-                                            @Html.HiddenFor(m => m.ItemTypes[i].types)
-                                        </li>
+                                        
+                                            @if(!Model.CheckBoxValues[i].types.Equals(ITEM_TYPE.COMBO)){
+                                                <li>
+                                                    @Html.CheckBoxFor(m => m.CheckBoxValues[i].IsSelected)
+                                                    @Html.DisplayFor(m => m.CheckBoxValues[i].types)
+                                                    @Html.HiddenFor(m => m.CheckBoxValues[i].types)
+                                                </li>
+												
+											}
+                                            else{
+                                                <input type="hidden" name="CheckBoxValues[1].IsSelected" value="false" />
+                                                <input type="hidden" name="CheckBoxValues[1].types" value="COMBO" />	
+                                            }
                                     }
 
 

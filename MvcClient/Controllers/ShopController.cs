@@ -5,7 +5,7 @@ using AppCore.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcClient.Models;
-
+using System.Linq;
 namespace MvcClient.Controllers
 {
 
@@ -28,9 +28,12 @@ namespace MvcClient.Controllers
             items = _unitofwork.ItemRepos.GetAllNotCombo();
             combos = _unitofwork.ItemRepos.GetAllCombo();
         }
-        public IActionResult Index(IList<EnumCheckBox> ItemTypes = null, int pageNumber = 1, string searchString = null)
+        public IActionResult Index(IList<EnumCheckBox> CheckBoxValues, int pageNumber = 1, string searchString = null)
         {
-            return View();
+            ViewData["Title"] = "All";
+            view = GetViewModel(CheckBoxValues, pageNumber, searchString);
+
+            return View(view);
         }
         [Route("Shop/Detail/{itemId:int}")]
         public IActionResult Detail(int itemId)
@@ -41,22 +44,44 @@ namespace MvcClient.Controllers
             return View(view);
         }
 
-        public HomeViewModel GetViewModel(int pageNumber = 1, string searchString = null)
+        public HomeViewModel GetViewModel(IList<EnumCheckBox> CheckBoxValues, int pageNumber = 1, string searchString = null)
         {
-            var pageSize = 3;
+            var pageSize = 6;
+            var itemSearch = items;
+            var comboSearch = combos;
+            var listTypes = CheckBoxValues.Where(m => m.IsSelected.Equals(true)).Select(m => m.types).ToList();
+            if (listTypes != null && listTypes.Count() > 0)
+            {
+                itemSearch = _service.Search(items, null, listTypes);
+                comboSearch = _service.Search(combos, null, listTypes);
+                ViewData["Title"] = "";
+                foreach (var type in listTypes)
+                {
+                    if (!type.Equals(ITEM_TYPE.COMBO))
+                    {
+                        if (listTypes.IndexOf(type).Equals(listTypes.Count() - 1))
+                        {
+                            ViewData["Title"] += EnumConverter.Convert(type);
+                        }
+                        else
+                        {
+                            ViewData["Title"] += EnumConverter.Convert(type) + "/ ";
+                        }
+                    }
+                }
+            }
+            if (searchString != null)
+            {
+                itemSearch = _service.Search(itemSearch, searchString);
+                comboSearch = _service.Search(comboSearch, searchString);
 
-            if (searchString == null || searchString == "")
-            {
-                item_paging = PaginatedList<Item>.Create(items, pageNumber, pageSize);
-                combo_paging = PaginatedList<Item>.Create(combos, pageNumber, pageSize);
             }
-            else
-            {
-                // var item_search = _service.
-            }
+            item_paging = PaginatedList<Item>.Create(itemSearch, pageNumber, pageSize);
+            combo_paging = PaginatedList<Item>.Create(comboSearch, pageNumber, pageSize);
             var result = new HomeViewModel();
             result.items = item_paging;
             result.combos = combo_paging;
+            result.CheckBoxValues = CheckBoxValues;
             return result;
         }
     }

@@ -3,19 +3,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace AppCore.Models {
-    public class Item {
+namespace AppCore.Models
+{
+    public class Item
+    {
         public int Id { get; set; }
 
-        [Required (ErrorMessage = "Không được để trống tên")]
+        [Required(ErrorMessage = "Không được để trống tên")]
         public string Name { get; set; }
 
-        [DataType (DataType.Currency)]
+        [DataType(DataType.Currency)]
         public decimal UnitPrice { get; set; }
         public ITEM_TYPE Type { get; set; }
         public string Description { get; set; }
         public ITEM_STATUS Status { get; set; }
-        
+
         //la so luong hien co trong kho hang
         public int InStock { get; set; }
 
@@ -34,9 +36,11 @@ namespace AppCore.Models {
         public bool IsCombo { get { return !(ConsistOf == null || ConsistOf.Count == 0); } }
         [NotMapped]
         public bool IsPartOf { get { return !(PartOf == null || PartOf.Count == 0); } }
+
         //---------------------------------------------------------------
 
-        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE) {
+        public Item(string name, ITEM_TYPE type, decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE)
+        {
             Name = name;
             Type = type;
             UnitPrice = unitPrice;
@@ -45,16 +49,19 @@ namespace AppCore.Models {
             Status = status;
         }
 
-        public Item () { }
-        public Item (Item item) {
-            this.Copy (item);
+        public Item() { }
+        public Item(Item item)
+        {
+            this.Copy(item);
         }
-        public Item (Item item, int id) {
-            this.Copy (item);
+        public Item(Item item, int id)
+        {
+            this.Copy(item);
             item.Id = id;
         }
-        
-        public void Copy (Item item) {
+
+        public void Copy(Item item)
+        {
             Name = item.Name;
             Type = item.Type;
             UnitPrice = item.UnitPrice;
@@ -63,12 +70,16 @@ namespace AppCore.Models {
             Status = item.Status;
         }
 
-        public IList<ITEM_TYPE> GetComboType(){
+        public IList<ITEM_TYPE> GetComboType()
+        {
             var list = new List<ITEM_TYPE>();
-            if(this.Type.Equals(ITEM_TYPE.COMBO)){
-                foreach(ItemRelation temp in this.ConsistOf)
+            if (this.Type.Equals(ITEM_TYPE.COMBO))
+            {
+                foreach (ItemRelation temp in this.ConsistOf)
                     list.Add(temp.Child.Type);
-            }else{
+            }
+            else
+            {
                 list.Add(this.Type);
             }
             return list.Distinct().ToList();
