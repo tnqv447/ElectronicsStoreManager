@@ -11,5 +11,24 @@ namespace Infrastructure.Repositories {
             OrderDetailRepos = new OrderDetailRepos (_context);
             
         }
+
+        public void Check (Order order){
+            this.UpdateStatus(order, ORDER_STATUS.CHECKED);
+        }
+        public void Delivering (Order order){
+            this.UpdateStatus(order, ORDER_STATUS.DELIVERING);
+        }
+        public void Delivered (Order order){
+            this.UpdateStatus(order, ORDER_STATUS.DELIVERED);
+        }
+        public void Cancel(Order order){
+            this.UpdateStatus(order, ORDER_STATUS.CANCELLED);
+        }
+
+        private void UpdateStatus(Order order, ORDER_STATUS status)
+        {
+            order.Status = status;
+            this.Update(order);
+        }
     }
 }

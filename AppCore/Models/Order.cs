@@ -27,6 +27,8 @@ namespace AppCore.Models {
         [NotMapped]
         public string StatusName { get { return EnumConverter.Convert(this.Status); } }
         [NotMapped]
+        public IList<StorageChecker> StorageCheckers { get; private set; } = null;
+        [NotMapped]
         public decimal SumPrice { 
             get {
                 decimal sum = 0;
@@ -75,6 +77,7 @@ namespace AppCore.Models {
                         }
                 }
             }
+            this.StorageCheckers = list;
             return list;
         }
 

@@ -5,6 +5,7 @@ namespace AppCore.Interfaces
         IItemRepos ItemRepos { get; }
         ICustomerRepos CustomerRepos { get; }
         IOrderRepos OrderRepos { get; }
+        IImportRepos ImportRepos { get; }
         int Complete();
     }
 }

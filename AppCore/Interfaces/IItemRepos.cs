@@ -11,5 +11,8 @@ namespace AppCore.Interfaces {
 
         Item AddCombo(Item combo, IList<ComboChild> elements);
 
+        void Activate (Item item);
+        void Disable (Item item);
+
     }
 }

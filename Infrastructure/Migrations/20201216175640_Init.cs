@@ -37,7 +37,8 @@ namespace Infrastructure.Migrations
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    InStock = table.Column<int>(type: "INTEGER", nullable: false)
+                    InStock = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsOutOfStock = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,6 +64,27 @@ namespace Infrastructure.Migrations
                         name: "FK_Orders_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Imports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ItemId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Amount = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImportDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Imports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Imports_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -159,6 +181,11 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Imports_ItemId",
+                table: "Imports",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ItemRelations_ChildId",
                 table: "ItemRelations",
                 column: "ChildId");
@@ -196,6 +223,9 @@ namespace Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Imports");
+
             migrationBuilder.DropTable(
                 name: "ItemRelations");
 

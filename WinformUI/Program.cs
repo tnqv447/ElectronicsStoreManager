@@ -51,8 +51,11 @@ namespace Winform {
             services.AddScoped<IOrderDetailRepos, OrderDetailRepos> ();
             services.AddScoped<ICustomerRepos, CustomerRepos> ();
             services.AddScoped<ISubOrderDetailRepos, SubOrderDetailRepos> ();
+            services.AddScoped<IImportRepos, ImportRepos> ();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
+            services.AddScoped<ISearchSortService, SearchSortService> ();
             services.AddScoped<IOrderService, OrderService> ();
 
             //var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\Infrastructure\\electronics.db";

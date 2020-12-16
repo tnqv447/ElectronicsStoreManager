@@ -15,7 +15,7 @@ namespace AppCore.Services
         //search
         public IList<Customer> Search(IList<Customer> customers, string searchString = null, SEX? sex = null, CUSTOMER_STATUS? status = null)
         {
-            var arr = customers;
+            var arr = customers.ToList();
             if (status.HasValue)
             {
                 arr = arr.Where(m => m.Status.Equals(status.Value)).ToList();
@@ -31,7 +31,7 @@ namespace AppCore.Services
         
         public IList<Order> Search(IList<Order> orders, DateTime? start, DateTime? end, ORDER_STATUS? status = null)
         {
-            var arr = orders;
+            var arr = orders.ToList();
             if (status.HasValue)
             {
                 arr = arr.Where(m => m.Status.Equals(status.Value)).ToList();
@@ -51,12 +51,12 @@ namespace AppCore.Services
         }
         public IList<Item> Search(IList<Item> items, string searchString = null, IList<ITEM_TYPE> types = null,decimal? priceFrom= null, decimal? priceTo = null, ITEM_STATUS? status = null)
         {
-            var arr = items;
+            var arr = items.ToList();
             if (status.HasValue)
             {
                 arr = arr.Where(m => m.Status.Equals(status.Value)).ToList();
             }
-            if(!(priceFrom.HasValue) && !(priceTo.HasValue)){
+            if(priceFrom.HasValue || priceTo.HasValue){
                 var tempStart = new decimal(0);
                 var tempEnd = new decimal(10000000000);
 
@@ -67,7 +67,7 @@ namespace AppCore.Services
 
                 arr = arr.Where(m => m.UnitPrice >= tempStart && m.UnitPrice <= tempEnd).ToList();
             }
-            if(!(types is null)){
+            if(!(types is null) && types.Count != 0){
                 arr = arr.Where(m => !m.GetComboType().Except(types).Any()).ToList();
             }
             

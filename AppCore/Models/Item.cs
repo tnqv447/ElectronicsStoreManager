@@ -18,12 +18,15 @@ namespace AppCore.Models {
         
         //la so luong hien co trong kho hang
         public int InStock { get; set; }
+        public bool IsOutOfStock { get; set; }
 
 
         //combo bao gồm
         public virtual IList<ItemRelation> ConsistOf { get; set; }
         //thuôc combo nào
         public virtual IList<ItemRelation> PartOf { get; set; }
+
+        public virtual IList<Import> Imports { get; set; }
 
         //notmapped--------------------------------------------------
         [NotMapped]
@@ -36,13 +39,14 @@ namespace AppCore.Models {
         public bool IsPartOf { get { return !(PartOf == null || PartOf.Count == 0); } }
         //---------------------------------------------------------------
 
-        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE) {
+        public Item (string name, ITEM_TYPE type,  decimal unitPrice, string description, int stock = 0, ITEM_STATUS status = ITEM_STATUS.ACTIVE, bool outOfStock = false) {
             Name = name;
             Type = type;
             UnitPrice = unitPrice;
             Description = description;
             InStock = stock;
             Status = status;
+            IsOutOfStock = outOfStock;
         }
 
         public Item () { }
@@ -61,6 +65,7 @@ namespace AppCore.Models {
             Description = item.Description;
             InStock = item.InStock;
             Status = item.Status;
+            IsOutOfStock = item.IsOutOfStock;
         }
 
         public IList<ITEM_TYPE> GetComboType(){

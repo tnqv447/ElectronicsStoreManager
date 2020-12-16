@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Linq.Expressions;
 namespace AppCore.Models
@@ -22,6 +23,38 @@ namespace AppCore.Models
         {
             Item = item;
             Amount = amount;
+        }
+    }
+    public struct ItemType
+    {
+        public ITEM_TYPE Type { get; set; }
+        public string TypeName { get; set; }
+
+        public ItemType(ITEM_TYPE type, string typeName)
+        {
+            Type = type;
+            TypeName = typeName;
+        }
+    }
+    public class ListEnum
+    {
+        public static IList<ItemType> GetListItemType(){
+            var list = new List<ItemType>();
+
+            list.Add(new ItemType(ITEM_TYPE.HOUSEWARE, EnumConverter.Convert(ITEM_TYPE.HOUSEWARE)));
+            list.Add(new ItemType(ITEM_TYPE.LAPTOP, EnumConverter.Convert(ITEM_TYPE.LAPTOP)));
+            list.Add(new ItemType(ITEM_TYPE.SMART_PHONE, EnumConverter.Convert(ITEM_TYPE.SMART_PHONE)));
+            list.Add(new ItemType(ITEM_TYPE.MONITOR, EnumConverter.Convert(ITEM_TYPE.MONITOR)));
+            list.Add(new ItemType(ITEM_TYPE.TV, EnumConverter.Convert(ITEM_TYPE.TV)));
+            list.Add(new ItemType(ITEM_TYPE.MOUSE_AND_KEYBOARD, EnumConverter.Convert(ITEM_TYPE.MOUSE_AND_KEYBOARD)));
+            list.Add(new ItemType(ITEM_TYPE.PC, EnumConverter.Convert(ITEM_TYPE.PC)));
+            list.Add(new ItemType(ITEM_TYPE.COMPUTER_COMPONENTS, EnumConverter.Convert(ITEM_TYPE.COMPUTER_COMPONENTS)));
+            list.Add(new ItemType(ITEM_TYPE.OFFICE_DEVICES, EnumConverter.Convert(ITEM_TYPE.OFFICE_DEVICES)));
+            list.Add(new ItemType(ITEM_TYPE.INTERNET_DEVICES, EnumConverter.Convert(ITEM_TYPE.INTERNET_DEVICES)));
+            list.Add(new ItemType(ITEM_TYPE.SOUND_DEVICES, EnumConverter.Convert(ITEM_TYPE.SOUND_DEVICES)));
+            list.Add(new ItemType(ITEM_TYPE.MISC, EnumConverter.Convert(ITEM_TYPE.MISC)));
+            
+            return list;
         }
     }
     public class EnumConverter
@@ -52,6 +85,7 @@ namespace AppCore.Models
                 case ORDER_STATUS.CHECKED: return "Processed";
                 case ORDER_STATUS.DELIVERING: return "Shipping";
                 case ORDER_STATUS.DELIVERED: return "Completed";
+                case ORDER_STATUS.CANCELLED: return "Canceled";
                 default: return "";
             }
         }
@@ -109,6 +143,7 @@ namespace AppCore.Models
         CHECKED,
         DELIVERING,
         DELIVERED,
+        CANCELLED
     }
     public enum SEX
     {

@@ -60,6 +60,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("AppCore.Models.Import", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ImportDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Imports");
+                });
+
             modelBuilder.Entity("AppCore.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -70,6 +92,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("InStock")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsOutOfStock")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -203,6 +228,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("SubOrderDetails");
                 });
 
+            modelBuilder.Entity("AppCore.Models.Import", b =>
+                {
+                    b.HasOne("AppCore.Models.Item", "Item")
+                        .WithMany("Imports")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("AppCore.Models.ItemRelation", b =>
                 {
                     b.HasOne("AppCore.Models.Item", "Child")
@@ -279,6 +315,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("AppCore.Models.Item", b =>
                 {
                     b.Navigation("ConsistOf");
+
+                    b.Navigation("Imports");
 
                     b.Navigation("PartOf");
                 });

@@ -13,10 +13,10 @@ namespace Infrastructure.Repositories
         }
 
         public void Activate (Customer customer){
-
+            this.UpdateStatus(customer, CUSTOMER_STATUS.ACTIVE);
         }
         public void Disable (Customer customer){
-
+            this.UpdateStatus(customer, CUSTOMER_STATUS.DISABLED);
         }
         private void UpdateStatus(Customer customer, CUSTOMER_STATUS status)
         {

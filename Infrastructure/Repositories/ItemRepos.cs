@@ -60,5 +60,16 @@ namespace Infrastructure.Repositories
             }
             this.DeleteRange(items);
         }
+        public void Activate (Item item){
+            this.UpdateStatus(item, ITEM_STATUS.ACTIVE);
+        }
+        public void Disable (Item item){
+            this.UpdateStatus(item, ITEM_STATUS.DISABLED);
+        }
+        private void UpdateStatus(Item item, ITEM_STATUS status)
+        {
+            item.Status = status;
+            this.Update(item);
+        }
     }
 }

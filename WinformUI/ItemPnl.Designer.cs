@@ -47,25 +47,23 @@ namespace Winform
             this.groupSubItem = new System.Windows.Forms.GroupBox();
             this.gridSubItem = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtType = new System.Windows.Forms.TextBox();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.checkIsOutOfStock = new System.Windows.Forms.CheckBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnChangeStatus = new System.Windows.Forms.Button();
-            this.comboType = new System.Windows.Forms.ComboBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.txtDescription = new System.Windows.Forms.RichTextBox();
             this.txtInStock = new System.Windows.Forms.TextBox();
             this.txtUnitPrice = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblStock = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnAddRelation = new System.Windows.Forms.Button();
-            this.btnEditRelation = new System.Windows.Forms.Button();
-            this.btnDeleteRelation = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberTo)).BeginInit();
@@ -124,19 +122,20 @@ namespace Winform
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(9, 96);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(217, 599);
+            this.groupBox2.Size = new System.Drawing.Size(217, 537);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lọc";
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(49, 484);
+            this.btnSearch.Location = new System.Drawing.Point(45, 446);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(125, 56);
             this.btnSearch.TabIndex = 8;
             this.btnSearch.Text = "LỌC";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // label4
             // 
@@ -150,6 +149,7 @@ namespace Winform
             // checkedTypeBox
             // 
             this.checkedTypeBox.BackColor = System.Drawing.SystemColors.Control;
+            this.checkedTypeBox.CheckOnClick = true;
             this.checkedTypeBox.FormattingEnabled = true;
             this.checkedTypeBox.Location = new System.Drawing.Point(6, 157);
             this.checkedTypeBox.Name = "checkedTypeBox";
@@ -245,7 +245,7 @@ namespace Winform
             this.groupSubItem.Controls.Add(this.gridSubItem);
             this.groupSubItem.Location = new System.Drawing.Point(235, 492);
             this.groupSubItem.Name = "groupSubItem";
-            this.groupSubItem.Size = new System.Drawing.Size(913, 203);
+            this.groupSubItem.Size = new System.Drawing.Size(913, 141);
             this.groupSubItem.TabIndex = 3;
             this.groupSubItem.TabStop = false;
             this.groupSubItem.Text = "Chi tiết combo";
@@ -266,21 +266,22 @@ namespace Winform
             this.gridSubItem.RowHeadersVisible = false;
             this.gridSubItem.RowTemplate.Height = 25;
             this.gridSubItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSubItem.Size = new System.Drawing.Size(907, 181);
+            this.gridSubItem.Size = new System.Drawing.Size(907, 119);
             this.gridSubItem.TabIndex = 0;
-            this.gridSubItem.SelectionChanged += new System.EventHandler(this.gridSubItem_SelectionChanged);
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.txtType);
+            this.groupBox5.Controls.Add(this.btnImport);
+            this.groupBox5.Controls.Add(this.checkIsOutOfStock);
             this.groupBox5.Controls.Add(this.btnEdit);
             this.groupBox5.Controls.Add(this.btnChangeStatus);
-            this.groupBox5.Controls.Add(this.comboType);
-            this.groupBox5.Controls.Add(this.richTextBox1);
+            this.groupBox5.Controls.Add(this.txtDescription);
             this.groupBox5.Controls.Add(this.txtInStock);
             this.groupBox5.Controls.Add(this.txtUnitPrice);
             this.groupBox5.Controls.Add(this.txtName);
             this.groupBox5.Controls.Add(this.txtId);
-            this.groupBox5.Controls.Add(this.label10);
+            this.groupBox5.Controls.Add(this.lblStock);
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.label7);
@@ -293,42 +294,66 @@ namespace Winform
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Thông tin chi tiết";
             // 
+            // txtType
+            // 
+            this.txtType.Location = new System.Drawing.Point(61, 90);
+            this.txtType.Name = "txtType";
+            this.txtType.ReadOnly = true;
+            this.txtType.Size = new System.Drawing.Size(227, 23);
+            this.txtType.TabIndex = 16;
+            // 
+            // btnImport
+            // 
+            this.btnImport.Enabled = false;
+            this.btnImport.Location = new System.Drawing.Point(735, 63);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(110, 36);
+            this.btnImport.TabIndex = 15;
+            this.btnImport.Text = "NHẬP THÊM";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // checkIsOutOfStock
+            // 
+            this.checkIsOutOfStock.AutoSize = true;
+            this.checkIsOutOfStock.Enabled = false;
+            this.checkIsOutOfStock.Location = new System.Drawing.Point(359, 126);
+            this.checkIsOutOfStock.Name = "checkIsOutOfStock";
+            this.checkIsOutOfStock.Size = new System.Drawing.Size(94, 19);
+            this.checkIsOutOfStock.TabIndex = 14;
+            this.checkIsOutOfStock.Text = "Đặt hết hàng";
+            this.checkIsOutOfStock.UseVisualStyleBackColor = true;
+            // 
             // btnEdit
             // 
             this.btnEdit.Enabled = false;
-            this.btnEdit.Location = new System.Drawing.Point(735, 100);
+            this.btnEdit.Location = new System.Drawing.Point(735, 105);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(111, 40);
             this.btnEdit.TabIndex = 13;
             this.btnEdit.Text = "CẬP NHẬT";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnChangeStatus
             // 
             this.btnChangeStatus.Enabled = false;
-            this.btnChangeStatus.Location = new System.Drawing.Point(736, 38);
+            this.btnChangeStatus.Location = new System.Drawing.Point(735, 21);
             this.btnChangeStatus.Name = "btnChangeStatus";
             this.btnChangeStatus.Size = new System.Drawing.Size(110, 36);
             this.btnChangeStatus.TabIndex = 12;
             this.btnChangeStatus.Text = "ẨN";
             this.btnChangeStatus.UseVisualStyleBackColor = true;
+            this.btnChangeStatus.Click += new System.EventHandler(this.btnChangeStatus_Click);
             // 
-            // comboType
+            // txtDescription
             // 
-            this.comboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboType.FormattingEnabled = true;
-            this.comboType.Location = new System.Drawing.Point(61, 93);
-            this.comboType.Name = "comboType";
-            this.comboType.Size = new System.Drawing.Size(227, 23);
-            this.comboType.TabIndex = 11;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(378, 58);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(175, 96);
-            this.richTextBox1.TabIndex = 10;
-            this.richTextBox1.Text = "";
+            this.txtDescription.Location = new System.Drawing.Point(378, 58);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ReadOnly = true;
+            this.txtDescription.Size = new System.Drawing.Size(279, 58);
+            this.txtDescription.TabIndex = 10;
+            this.txtDescription.Text = "";
             // 
             // txtInStock
             // 
@@ -342,6 +367,7 @@ namespace Winform
             // 
             this.txtUnitPrice.Location = new System.Drawing.Point(378, 29);
             this.txtUnitPrice.Name = "txtUnitPrice";
+            this.txtUnitPrice.ReadOnly = true;
             this.txtUnitPrice.Size = new System.Drawing.Size(175, 23);
             this.txtUnitPrice.TabIndex = 8;
             // 
@@ -349,6 +375,7 @@ namespace Winform
             // 
             this.txtName.Location = new System.Drawing.Point(61, 61);
             this.txtName.Name = "txtName";
+            this.txtName.ReadOnly = true;
             this.txtName.Size = new System.Drawing.Size(227, 23);
             this.txtName.TabIndex = 7;
             // 
@@ -360,14 +387,14 @@ namespace Winform
             this.txtId.Size = new System.Drawing.Size(78, 23);
             this.txtId.TabIndex = 6;
             // 
-            // label10
+            // lblStock
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 125);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 15);
-            this.label10.TabIndex = 5;
-            this.label10.Text = "Tồn kho:";
+            this.lblStock.AutoSize = true;
+            this.lblStock.Location = new System.Drawing.Point(6, 125);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(53, 15);
+            this.lblStock.TabIndex = 5;
+            this.lblStock.Text = "Tồn kho:";
             // 
             // label9
             // 
@@ -422,59 +449,12 @@ namespace Winform
             this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "THÊM";
             this.btnAdd.UseVisualStyleBackColor = true;
-            // 
-            // btnAddRelation
-            // 
-            this.btnAddRelation.Enabled = false;
-            this.btnAddRelation.Location = new System.Drawing.Point(1154, 511);
-            this.btnAddRelation.Name = "btnAddRelation";
-            this.btnAddRelation.Size = new System.Drawing.Size(66, 58);
-            this.btnAddRelation.TabIndex = 6;
-            this.btnAddRelation.Text = "THÊM";
-            this.btnAddRelation.UseVisualStyleBackColor = true;
-            this.btnAddRelation.Visible = false;
-            // 
-            // btnEditRelation
-            // 
-            this.btnEditRelation.Enabled = false;
-            this.btnEditRelation.Location = new System.Drawing.Point(1154, 577);
-            this.btnEditRelation.Name = "btnEditRelation";
-            this.btnEditRelation.Size = new System.Drawing.Size(66, 58);
-            this.btnEditRelation.TabIndex = 7;
-            this.btnEditRelation.Text = "SỬA";
-            this.btnEditRelation.UseVisualStyleBackColor = true;
-            this.btnEditRelation.Visible = false;
-            // 
-            // btnDeleteRelation
-            // 
-            this.btnDeleteRelation.Enabled = false;
-            this.btnDeleteRelation.Location = new System.Drawing.Point(1154, 644);
-            this.btnDeleteRelation.Name = "btnDeleteRelation";
-            this.btnDeleteRelation.Size = new System.Drawing.Size(66, 58);
-            this.btnDeleteRelation.TabIndex = 8;
-            this.btnDeleteRelation.Text = "XÓA";
-            this.btnDeleteRelation.UseVisualStyleBackColor = true;
-            this.btnDeleteRelation.Visible = false;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(1154, 253);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(66, 58);
-            this.btnDelete.TabIndex = 9;
-            this.btnDelete.Text = "XÓA";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Visible = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // ItemPnl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnDeleteRelation);
-            this.Controls.Add(this.btnEditRelation);
-            this.Controls.Add(this.btnAddRelation);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupSubItem);
@@ -482,7 +462,7 @@ namespace Winform
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ItemPnl";
-            this.Size = new System.Drawing.Size(1232, 709);
+            this.Size = new System.Drawing.Size(1232, 645);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -523,20 +503,18 @@ namespace Winform
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboType;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox txtDescription;
         private System.Windows.Forms.TextBox txtInStock;
         private System.Windows.Forms.TextBox txtUnitPrice;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtId;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnChangeStatus;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnAddRelation;
-        private System.Windows.Forms.Button btnEditRelation;
-        private System.Windows.Forms.Button btnDeleteRelation;
-        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.CheckBox checkIsOutOfStock;
+        private System.Windows.Forms.TextBox txtType;
     }
 }

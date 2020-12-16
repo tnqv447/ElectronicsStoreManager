@@ -56,6 +56,7 @@ namespace MvcClient {
             services.AddScoped<IOrderRepos, OrderRepos> ();
             services.AddScoped<IOrderDetailRepos, OrderDetailRepos> ();
             services.AddScoped<ISubOrderDetailRepos, SubOrderDetailRepos> ();
+            services.AddScoped<IImportRepos, ImportRepos> ();
 
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
