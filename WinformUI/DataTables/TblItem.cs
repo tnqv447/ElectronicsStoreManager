@@ -6,7 +6,7 @@ using System.Text;
 using AppCore;
 using AppCore.Models;
 
-namespace Presentation.ViewModels.DataTables {
+namespace Winform.DataTables {
     class TblItem : DataTable {
         public TblItem () {
             this.Create ();
@@ -21,7 +21,6 @@ namespace Presentation.ViewModels.DataTables {
                 this.Columns.Add ("Id", typeof (int));
                 this.Columns.Add ("Name", typeof (string));
                 this.Columns.Add ("TypeName", typeof (string));
-                this.Columns.Add("IsOutOfStock", typeof(bool));
                 this.Columns.Add ("UnitPrice", typeof (decimal));
                 this.Columns.Add ("Description", typeof (string));
             }
@@ -30,7 +29,6 @@ namespace Presentation.ViewModels.DataTables {
                 this.Columns.Add ("Name", typeof (string));
                 this.Columns.Add ("TypeName", typeof (string));
                 if (!comboView) this.Columns.Add ("InStock", typeof (int));
-                this.Columns.Add("IsOutOfStock", typeof(bool));
                 this.Columns.Add ("UnitPrice", typeof (decimal));
                 this.Columns.Add ("Description", typeof (string));
                 this.Columns.Add ("Status", typeof (ITEM_STATUS));
@@ -42,10 +40,10 @@ namespace Presentation.ViewModels.DataTables {
             if (arr == null) return;
             foreach (var t in arr) {
                 if(simple){
-                    this.Rows.Add(t.Id, t.Name, t.TypeName, t.IsOutOfStock, t.UnitPrice, t.Description);
+                    this.Rows.Add(t.Id, t.Name, t.TypeName, t.UnitPrice, t.Description);
                 }
-                if (comboView) this.Rows.Add (t.Id, t.Name, t.TypeName, t.IsOutOfStock, t.UnitPrice, t.Description, t.Status, "");
-                else this.Rows.Add (t.Id, t.Name, t.TypeName, t.InStock, t.IsOutOfStock, t.UnitPrice, t.Description, t.Status, "");
+                if (comboView) this.Rows.Add (t.Id, t.Name, t.TypeName, t.UnitPrice, t.Description, t.Status, "");
+                else this.Rows.Add (t.Id, t.Name, t.TypeName, t.InStock,  t.UnitPrice, t.Description, t.Status, "");
             }
         }
 

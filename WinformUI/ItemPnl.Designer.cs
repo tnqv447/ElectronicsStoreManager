@@ -49,7 +49,6 @@ namespace Winform
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtType = new System.Windows.Forms.TextBox();
             this.btnImport = new System.Windows.Forms.Button();
-            this.checkIsOutOfStock = new System.Windows.Forms.CheckBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnChangeStatus = new System.Windows.Forms.Button();
             this.txtDescription = new System.Windows.Forms.RichTextBox();
@@ -273,7 +272,6 @@ namespace Winform
             // 
             this.groupBox5.Controls.Add(this.txtType);
             this.groupBox5.Controls.Add(this.btnImport);
-            this.groupBox5.Controls.Add(this.checkIsOutOfStock);
             this.groupBox5.Controls.Add(this.btnEdit);
             this.groupBox5.Controls.Add(this.btnChangeStatus);
             this.groupBox5.Controls.Add(this.txtDescription);
@@ -313,17 +311,6 @@ namespace Winform
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
-            // checkIsOutOfStock
-            // 
-            this.checkIsOutOfStock.AutoSize = true;
-            this.checkIsOutOfStock.Enabled = false;
-            this.checkIsOutOfStock.Location = new System.Drawing.Point(359, 126);
-            this.checkIsOutOfStock.Name = "checkIsOutOfStock";
-            this.checkIsOutOfStock.Size = new System.Drawing.Size(94, 19);
-            this.checkIsOutOfStock.TabIndex = 14;
-            this.checkIsOutOfStock.Text = "Đặt hết hàng";
-            this.checkIsOutOfStock.UseVisualStyleBackColor = true;
-            // 
             // btnEdit
             // 
             this.btnEdit.Enabled = false;
@@ -348,10 +335,10 @@ namespace Winform
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(378, 58);
+            this.txtDescription.Location = new System.Drawing.Point(430, 58);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
-            this.txtDescription.Size = new System.Drawing.Size(279, 58);
+            this.txtDescription.Size = new System.Drawing.Size(227, 87);
             this.txtDescription.TabIndex = 10;
             this.txtDescription.Text = "";
             // 
@@ -365,7 +352,7 @@ namespace Winform
             // 
             // txtUnitPrice
             // 
-            this.txtUnitPrice.Location = new System.Drawing.Point(378, 29);
+            this.txtUnitPrice.Location = new System.Drawing.Point(430, 29);
             this.txtUnitPrice.Name = "txtUnitPrice";
             this.txtUnitPrice.ReadOnly = true;
             this.txtUnitPrice.Size = new System.Drawing.Size(175, 23);
@@ -376,7 +363,7 @@ namespace Winform
             this.txtName.Location = new System.Drawing.Point(61, 61);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
-            this.txtName.Size = new System.Drawing.Size(227, 23);
+            this.txtName.Size = new System.Drawing.Size(288, 23);
             this.txtName.TabIndex = 7;
             // 
             // txtId
@@ -399,7 +386,7 @@ namespace Winform
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(318, 64);
+            this.label9.Location = new System.Drawing.Point(373, 61);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(41, 15);
             this.label9.TabIndex = 4;
@@ -408,7 +395,7 @@ namespace Winform
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(318, 32);
+            this.label8.Location = new System.Drawing.Point(373, 32);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(51, 15);
             this.label8.TabIndex = 3;
@@ -514,7 +501,6 @@ namespace Winform
         private System.Windows.Forms.Button btnChangeStatus;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.CheckBox checkIsOutOfStock;
         private System.Windows.Forms.TextBox txtType;
     }
 }

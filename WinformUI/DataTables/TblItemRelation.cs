@@ -4,16 +4,19 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using AppCore;
+using AppCore.Interfaces;
 using AppCore.Models;
 
-namespace Presentation.ViewModels.DataTables {
+namespace Winform.DataTables {
     class TblItemRelation : DataTable {
+        private readonly IUnitOfWork _unit;
         public TblItemRelation () {
             this.Create ();
         }
-        public TblItemRelation (IList<ItemRelation> arr) {
+        public TblItemRelation (IUnitOfWork unit, IList<ItemRelation> arr) {
             this.Create ();
             this.Fill (arr);
+            _unit = unit;
         }
 
         public void Create (bool comboView = false, bool simple = false) {  
@@ -28,7 +31,9 @@ namespace Presentation.ViewModels.DataTables {
         public void Fill (IList<ItemRelation> arr) {
             if (arr == null) return;
             foreach (var t in arr) {
-                var child = t.Child;
+                Item child = null;
+                if (t.Child is null) child = _unit.ItemRepos.GetBy(t.ChildId);
+                else child = t.Child;
                 this.Rows.Add(t.ChildId, child.Name, child.TypeName, t.Amount, child.UnitPrice);
             }
         }

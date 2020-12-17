@@ -26,10 +26,10 @@ namespace Winform {
             ConfigureServices ();
 
             /// seed data
-            /*var context = ServiceProvider.GetRequiredService<ElectronicsStoreContext> ();
+            var context = ServiceProvider.GetRequiredService<ElectronicsStoreContext> ();
             var unitOfWork = ServiceProvider.GetRequiredService<IUnitOfWork> ();
             DataSeeds.Initialize (context, unitOfWork);
-            context.SaveChanges ();*/
+            context.SaveChanges ();
 
             ///run forms
             var mainForm = ServiceProvider.GetRequiredService<MainForm> ();

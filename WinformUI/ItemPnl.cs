@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using AppCore.Interfaces;
 using AppCore.Models;
 using AppCore.Services;
-using Presentation.ViewModels.DataTables;
+using Winform.DataTables;
+using Winform.Dialogs;
 
 namespace Winform {
     public partial class ItemPnl : UserControl {
@@ -20,28 +21,20 @@ namespace Winform {
         private IList<Item> _items;
         private IList<Item> _itemSearch;
         private IList<ItemType> _types;
+        private Item _model = null;
 
         private int _selectedIndex = -1;
         private bool _comboView = false;
-        
-        // private void LoadComboItemType()
-        // {
-        //     comboType.Items.Clear();
 
-        //     comboType.DisplayMember = "TypeName";
-        //     comboType.ValueMember = "Type";
-        //     comboType.DataSource = _types;
-        // }
-        private void LoadCheckBoxType()
-        {
-            checkedTypeBox.Items.Clear();
-            
+        private void LoadCheckBoxType () {
+            checkedTypeBox.Items.Clear ();
+
             checkedTypeBox.DataSource = _types;
             checkedTypeBox.DisplayMember = "TypeName";
             checkedTypeBox.ValueMember = "Type";
-            
+
         }
-         private void SetUpGridSubItem () {
+        private void SetUpGridSubItem () {
             this.gridSubItem.Columns["ChildId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.gridSubItem.Columns["ChildId"].DisplayIndex = 0;
             this.gridSubItem.Columns["ChildId"].HeaderText = "ID";
@@ -55,10 +48,10 @@ namespace Winform {
             this.gridSubItem.Columns["TypeName"].HeaderText = "Loại";
             this.gridSubItem.Columns["TypeName"].Width = 150;
 
-            this.gridSubItem.Columns["UnitPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.gridSubItem.Columns["UnitPrice"].DisplayIndex = 3;
-            this.gridSubItem.Columns["UnitPrice"].HeaderText = "Số lượng";
-            this.gridSubItem.Columns["UnitPrice"].Width = 120;
+            this.gridSubItem.Columns["Amount"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            this.gridSubItem.Columns["Amount"].DisplayIndex = 3;
+            this.gridSubItem.Columns["Amount"].HeaderText = "Số lượng";
+            this.gridSubItem.Columns["Amount"].Width = 120;
 
             this.gridSubItem.Columns["UnitPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.gridSubItem.Columns["UnitPrice"].DisplayIndex = 4;
@@ -67,12 +60,12 @@ namespace Winform {
             this.gridSubItem.Columns["UnitPrice"].DefaultCellStyle.Format = "##,#";
         }
         private void LoadGridSubItem (IList<ItemRelation> relations) {
-            TblItemRelation tbl = new TblItemRelation (relations);
+            TblItemRelation tbl = new TblItemRelation (_unitOfWork, relations);
 
             this.gridSubItem.DataSource = tbl;
             this.gridSubItem.ClearSelection ();
             this.SetUpGridSubItem ();
-            
+
         }
         private void SetUpGridItem () {
             this.gridItem.Columns["Id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
@@ -94,11 +87,6 @@ namespace Winform {
                 this.gridItem.Columns["InStock"].HeaderText = "Tồn kho";
                 this.gridItem.Columns["InStock"].Width = 100;
             }
-
-            this.gridItem.Columns["IsOutOfStock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.gridItem.Columns["IsOutOfStock"].DisplayIndex = 4;
-            this.gridItem.Columns["IsOutOfStock"].HeaderText = "Hết hàng";
-            this.gridItem.Columns["IsOutOfStock"].Width = 50;
 
             this.gridItem.Columns["UnitPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             this.gridItem.Columns["UnitPrice"].DisplayIndex = 5;
@@ -131,10 +119,7 @@ namespace Winform {
                 this.EnableItemButton (false);
             } else {
                 this.gridItem.Rows[selectedIndex].Selected = true;
-                
             }
-            this.SetUpGridItem ();
-            
         }
         private void LoadItemInfo () {
             if (this.gridItem.SelectedRows.Count > 0) {
@@ -150,40 +135,42 @@ namespace Winform {
                 }
 
                 var itemId = (Int32) row.Cells["Id"].Value;
-                var item = _items.Where(m => m.Id.Equals(itemId)).First();
-                var subItems = item.ConsistOf;
-                LoadModel(item);
-                LoadGridSubItem(subItems);
+                _model = _items.Where (m => m.Id.Equals (itemId)).First ();
+                LoadModel (_model);
+
+                if (_comboView) {
+                    var subItems = _model.ConsistOf;
+                    LoadGridSubItem (subItems);
+                }
             } else {
-                LoadModel(null);
+                _model = null;
+                LoadModel (_model);
                 this.gridSubItem.DataSource = null;
+                if (_comboView) gridSubItem.DataSource = null;
                 this.EnableSubItemButton (false);
             }
         }
-        private void LoadModel(Item item){
-            if(item is null){
+        private void LoadModel (Item item) {
+            if (item is null) {
                 this.txtId.Text = "";
                 this.txtName.Text = "";
                 this.txtType.Text = "";
-                if(!_comboView){
+                if (!_comboView) {
                     this.txtInStock.Text = "";
                 }
-                checkIsOutOfStock.Checked = false;
 
                 this.txtUnitPrice.Text = "";
                 this.txtDescription.Text = "";
                 return;
             }
-            this.txtId.Text = item.Id.ToString();
+            this.txtId.Text = item.Id.ToString ();
             this.txtName.Text = item.Name;
             this.txtType.Text = item.TypeName;
-            if(!_comboView){
-                this.txtInStock.Text = item.InStock.ToString();
+            if (!_comboView) {
+                this.txtInStock.Text = item.InStock.ToString ();
             }
-            if(item.IsOutOfStock) this.checkIsOutOfStock.Checked = true;
-            else checkIsOutOfStock.Checked = false;
 
-            this.txtUnitPrice.Text = item.UnitPrice.ToString("#,##0.00");
+            this.txtUnitPrice.Text = item.UnitPrice.ToString ("#,##0.00");
             this.txtDescription.Text = item.Description;
         }
         private void EnableItemButton (bool b) {
@@ -192,17 +179,16 @@ namespace Winform {
             btnImport.Enabled = b;
         }
         private void EnableSubItemButton (bool b) {
-            
+
         }
-        private void SearchItem()
-        {
+        private void SearchItem () {
             var search = this.txtSearch.Text;
             var priceFrom = this.numberFrom.Value;
             var priceTo = this.numberTo.Value;
-            var types = this.checkedTypeBox.CheckedItems.OfType<ItemType>().Select(m => m.Type).ToList();
-            MessageBox.Show(priceFrom + " " + priceTo);
+            var types = this.checkedTypeBox.CheckedItems.OfType<ItemType> ().Select (m => m.Type).ToList ();
+            MessageBox.Show (priceFrom + " " + priceTo);
 
-            _itemSearch = _searchSortService.Search(_items, search, types, priceFrom, priceTo);
+            _itemSearch = _searchSortService.Search (_items, search, types, priceFrom, priceTo);
         }
 
         public ItemPnl (IUnitOfWork unitOfWork, ISearchSortService searchSortService) {
@@ -211,11 +197,11 @@ namespace Winform {
 
             _unitOfWork = unitOfWork;
             _searchSortService = searchSortService;
-            _types = ListEnum.GetListItemType();
-            LoadCheckBoxType();
+            _types = ListEnum.GetListItemType ();
+            LoadCheckBoxType ();
             LoadItemData ();
             LoadGridItem ();
-            //SetUpGridItem ();
+            SetUpGridItem ();
 
             this.numberFrom.Minimum = 0;
             this.numberTo.Minimum = 0;
@@ -228,10 +214,9 @@ namespace Winform {
             var index = e.RowIndex;
             var cell = gridItem.Rows[index].Cells["Status"];
             var subCell = gridItem.Rows[index].Cells["StatusName"];
-            if (((ITEM_STATUS)cell.Value).Equals (ITEM_STATUS.ACTIVE)) subCell.Style.BackColor = Color.Green;
+            if (((ITEM_STATUS) cell.Value).Equals (ITEM_STATUS.ACTIVE)) subCell.Style.BackColor = Color.Green;
             else subCell.Style.BackColor = Color.Red;
 
-            
         }
 
         private void radItem_CheckedChanged (object sender, EventArgs e) {
@@ -248,65 +233,86 @@ namespace Winform {
         }
         private void showSubItem (bool b) {
             this.groupSubItem.Visible = b;
-            this.lblStock.Visible = b;
-            this.txtInStock.Visible = b;
+            this.lblStock.Visible = !b;
+            this.txtInStock.Visible = !b;
+            this.btnImport.Visible = !b;
         }
 
         private void gridItem_SelectionChanged (object sender, EventArgs e) {
             LoadItemInfo ();
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            LoadItemData();
-            this.SearchItem();
-            this.LoadGridItem();
+        private void btnSearch_Click (object sender, EventArgs e) {
+            LoadItemData ();
+            this.SearchItem ();
+            this.LoadGridItem ();
         }
 
-        private void btnChangeStatus_Click(object sender, EventArgs e)
-        {
-            var toShow = btnChangeStatus.Text.Equals("ẨN") ? false : true;
+        private void btnChangeStatus_Click (object sender, EventArgs e) {
+            var toShow = btnChangeStatus.Text.Equals ("ẨN") ? false : true;
             DialogResult check;
             string temp = _comboView ? "combo" : "sản phẩm";
-            if (toShow)
-            {
-                check = MessageBox.Show("Kích hoạt " + temp + " này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            }
-            else check = MessageBox.Show("Ẩn "+ temp +" này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (toShow) {
+                check = MessageBox.Show ("Kích hoạt " + temp + " này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            } else check = MessageBox.Show ("Ẩn " + temp + " này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if(check == DialogResult.Yes)
-            {
+            if (check == DialogResult.Yes) {
                 var row = gridItem.Rows[_selectedIndex];
-                var item = _unitOfWork.ItemRepos.GetBy(Int32.Parse(row.Cells[0].Value.ToString()));
+                var item = _unitOfWork.ItemRepos.GetBy (Int32.Parse (row.Cells[0].Value.ToString ()));
 
-                if (!toShow)
-                {
-                    _unitOfWork.ItemRepos.Disable(item);
-                }
-                else
-                {
-                    _unitOfWork.ItemRepos.Activate(item);
+                if (!toShow) {
+                    _unitOfWork.ItemRepos.Disable (item);
+                } else {
+                    _unitOfWork.ItemRepos.Activate (item);
                 }
 
-                LoadItemData();
-                this.SearchItem();
-                this.LoadGridItem(_selectedIndex);
+                LoadItemData ();
+                this.SearchItem ();
+                this.LoadGridItem (_selectedIndex);
             }
         }
 
-        private void btnImport_Click(object sender, EventArgs e)
-        {
+        private void btnImport_Click (object sender, EventArgs e) {
+            var dialog = new ImportDialog (_unitOfWork, _model);
+            var check = dialog.ShowDialog ();
 
+            if (check.Equals (DialogResult.OK)) {
+                MessageBox.Show ("Nhập hàng thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadItemData ();
+                this.SearchItem ();
+                this.LoadGridItem (_selectedIndex);
+                this.LoadModel (_model);
+            }
+            dialog.Dispose ();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
+        private void btnEdit_Click (object sender, EventArgs e) {
+            var dialog = new ItemDialog (_unitOfWork, _comboView, _model);
+            var check = dialog.ShowDialog ();
 
+            if (check.Equals (DialogResult.OK)) {
+                MessageBox.Show ("Sửa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            LoadItemData ();
+                this.SearchItem ();
+                this.LoadGridItem (_selectedIndex);
+                this.LoadModel (_model);
+            dialog.Dispose ();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
+        private void btnAdd_Click (object sender, EventArgs e) {
+            var dialog = new ItemDialog (_unitOfWork, _comboView);
+            var check = dialog.ShowDialog ();
 
+            if (check.Equals (DialogResult.OK)) {
+                MessageBox.Show ("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LoadItemData ();
+                this.SearchItem ();
+                this.LoadGridItem (_selectedIndex);
+                this.LoadModel (_model);
+            dialog.Dispose ();
         }
     }
 }
