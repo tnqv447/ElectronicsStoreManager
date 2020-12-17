@@ -1,6 +1,8 @@
 @using AppCore.Models
 @{
-    var types = Enum.GetValues(typeof(ITEM_TYPE)).Cast<ITEM_TYPE>().ToList();
+    var types = (ITEM_TYPE[])Enum.GetValues(typeof(ITEM_TYPE));
+    var types_name = Html.GetEnumSelectList<ITEM_TYPE>().ToList();
+
 }
 <div class="navbar-inner">
     <div class="container">
@@ -21,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav text-center" style="margin-left: 10px">
                     <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
-                        <a class="nav-link" href="index.html">Home
+                        <a class="nav-link" asp-action="Index" asp-controller="Home">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -40,7 +42,7 @@
                                             @for (int i = 0; i < 8; i++)
                                             {
                                                 <li>
-                                                    <a asp-action="" asp-controller="Shop">@types[i].ToString()</a>
+                                                    <a asp-action="" asp-controller="Shop">@types_name[i].Text</a>
                                                 </li>
                                             }
                                         </ul>
@@ -48,10 +50,10 @@
 
                                     <div class="col-sm-6 multi-gd-img">
                                         <ul class="multi-column-dropdown">
-                                            @for (int i = 8; i < types.Count; i++)
+                                            @for (int i = 8; i < types.Count(); i++)
                                             {
                                                 <li>
-                                                    <a asp-action="" asp-controller="Shop">@types[i].ToString()</a>
+                                                    <a asp-action="" asp-controller="Shop">@types_name[i].Text</a>
                                                 </li>
                                             }
                                         </ul>

@@ -53,19 +53,45 @@
                 <p class="mb-3">
                     <span class="item_price">$@Model.item.UnitPrice.ToString("N2")</span>
                 </p>
-
                 <div class="product-single-w3l">
-
                     <ul>
                         <li class="mb-1">
                             @Model.item.Description
                         </li>
-
                     </ul>
                 </div>
+                @if (Model.item.IsCombo)
+                {
+                    <div class="product-single-w3l">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var it in Model.item.ConsistOf)
+                                {
+                                <tr>
+                                    <td>
+                                        @it.Child.Name
+                                    </td>
+                                    <td>
+                                        @it.Amount
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                }
+
+
                 <div class="occasion-cart">
                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                        <form action="#" method="post">
+                        
                             <fieldset>
                                 <input type="hidden" id="price_@Model.item.Id" value="@Model.item.UnitPrice">
                                 <input type="hidden" id="type_@Model.item.Type" value="@Model.item.Type">
@@ -73,7 +99,7 @@
                                 <button name="submit" id="@Model.item.Id" class="addCart button btn">Add to cart
                                 </button>
                             </fieldset>
-                        </form>
+                        
                     </div>
                 </div>
             </div>

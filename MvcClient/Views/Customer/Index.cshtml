@@ -15,10 +15,15 @@
             <img src="../img/profile.png" height="250px" width="300px" />
             <h4>@Model.Customer.Name</h4>
             <span asp-validation-for="Customer.Name" class="text-danger"></span>
-            <div class="sidenav">
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a asp-action="Index">Profile</a></li>
-                    <li class="active"><a asp-action="Orders">Orders</a></li>
+            <br />
+            <div>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-action="Index">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Orders">Orders</a>
+                    </li>
                 </ul><br>
             </div>
 

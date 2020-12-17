@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
 namespace AppCore.Models
 {
     public struct StorageChecker
@@ -107,7 +110,7 @@ namespace AppCore.Models
                 case ITEM_TYPE.COMBO: return "Combo";
                 case ITEM_TYPE.HOUSEWARE: return "Electric Houseware";
                 case ITEM_TYPE.LAPTOP: return "Laptop";
-                case ITEM_TYPE.SMART_PHONE: return "Cell Phone";
+                case ITEM_TYPE.SMART_PHONE: return "Smart Phone";
                 case ITEM_TYPE.MONITOR: return "Computer Screen";
                 case ITEM_TYPE.TV: return "TV";
                 case ITEM_TYPE.MOUSE_AND_KEYBOARD: return "Mouse and Keyboard";
@@ -115,25 +118,38 @@ namespace AppCore.Models
                 case ITEM_TYPE.COMPUTER_COMPONENTS: return "Computer Components";
                 case ITEM_TYPE.OFFICE_DEVICES: return "Office Equipment";
                 case ITEM_TYPE.INTERNET_DEVICES: return "Network equipment, wifi";
-                case ITEM_TYPE.SOUND_DEVICES: return "Audio equipments";
+                case ITEM_TYPE.SOUND_DEVICES: return "Audio Devices";
                 default: return "";
             }
         }
     }
     public enum ITEM_TYPE
     {
+        [Display(Name = "Other")]
         MISC,
+        [Display(Name = "Combo")]
         COMBO,
+        [Display(Name = "Houseware")]
         HOUSEWARE,
+        [Display(Name = "Laptop")]
         LAPTOP,
+        [Display(Name = "Smart Phone")]
         SMART_PHONE,
+        [Display(Name = "Computer Screen")]
         MONITOR,
+        [Display(Name = "TV")]
         TV,
+        [Display(Name = "Mouse and Keyboard")]
         MOUSE_AND_KEYBOARD,
+        [Display(Name = "Desktop")]
         PC,
+        [Display(Name = "Computer Components")]
         COMPUTER_COMPONENTS,
+        [Display(Name = "Office Equipment")]
         OFFICE_DEVICES,
+        [Display(Name = "Network equipment, wifi")]
         INTERNET_DEVICES,
+        [Display(Name = "Audio Devices")]
         SOUND_DEVICES
     }
 
