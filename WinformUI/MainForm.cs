@@ -17,22 +17,28 @@ namespace Winform {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISearchSortService _searchSortService;
         private readonly IOrderService _orderService;
+        private readonly IAnalyzeService _analyzeService;
 
         private ItemPnl pnItem;
         private OrderPnl pnOrder;
+        private AnalyzePnl pnAnalyze;
 
-        public MainForm (IUnitOfWork unitOfWork,  ISearchSortService searchSortService, IOrderService orderService) {
+        public MainForm (IUnitOfWork unitOfWork,  ISearchSortService searchSortService, IAnalyzeService analyzeService, IOrderService orderService) {
             InitializeComponent ();
 
             _unitOfWork = unitOfWork;
             _searchSortService = searchSortService;
             _orderService = orderService;
+            _analyzeService = analyzeService;
 
             pnItem = new ItemPnl(_unitOfWork, _searchSortService);
             tabItem.Controls.Add(pnItem);
 
             pnOrder = new OrderPnl(_unitOfWork, _searchSortService, _orderService);
             tabOrder.Controls.Add(pnOrder);
+
+            pnAnalyze = new AnalyzePnl(_unitOfWork,_searchSortService, _analyzeService);
+            tabAnalyze.Controls.Add(pnAnalyze);
 
         }
 
@@ -45,6 +51,10 @@ namespace Winform {
             if (tabControl.SelectedTab.Equals(tabOrder))
             {
                 pnOrder.Reload();
+            }
+            if (tabControl.SelectedTab.Equals(tabAnalyze))
+            {
+                pnAnalyze.Reload();
             }
         }
     }

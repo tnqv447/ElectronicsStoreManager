@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -43,9 +44,9 @@ namespace AppCore.Models {
             ItemUnitPrice = detail.ItemUnitPrice;
         }
         
-        public StorageChecker? GetStorageChecker(){
+        public StorageChecker GetStorageChecker(){
             if(this.Id == 0) return null;
-            return new StorageChecker(this.SubItemId, this.Amount);
+            return new StorageChecker(this.SubItemId, this.Amount, DateTime.Today);
         }
     }
 }

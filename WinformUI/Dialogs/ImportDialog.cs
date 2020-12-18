@@ -36,6 +36,7 @@ namespace Winform.Dialogs {
 
             _unitOfWork.ImportRepos.Add (new Import (_model.Id, amount, DateTime.Today));
             _model.InStock += amount;
+            _unitOfWork.ItemRepos.Update(_model);
 
             this.DialogResult = DialogResult.OK;
             this.Close ();

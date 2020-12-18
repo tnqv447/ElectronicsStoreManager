@@ -6,15 +6,17 @@ using System.Reflection;
 
 namespace AppCore.Models
 {
-    public struct StorageChecker
+    public class StorageChecker
     {
         public int ItemId { get; set; }
         public int Amount { get; set; }
+        public DateTime OrderDate { get; set; }
 
-        public StorageChecker(int itemId, int amount)
+        public StorageChecker(int itemId, int amount, DateTime date)
         {
             ItemId = itemId;
             Amount = amount;
+            OrderDate = date;
         }
     }
     public struct ComboChild

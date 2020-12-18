@@ -62,15 +62,16 @@ namespace AppCore.Models {
             if(IsCombo){
                 foreach(SubOrderDetail sub in SubOrderDetails){
                     var temp = sub.GetStorageChecker();
-                    if(temp.HasValue){
-                        var res = list.Where(m => m.ItemId.Equals(temp.Value.ItemId)).ToList();
+                    if(temp != null){
+                        var res = list.Where(m => m.ItemId.Equals(temp.ItemId)).ToList();
                         if(res.Any()){
                             var s = res.First();
-                            s.Amount += this.Amount * temp.Value.Amount;
+                            s.Amount += this.Amount * temp.Amount;
+                            s.OrderDate = this.Order.OrderDate;
                         }
                         else
                         {
-                            list.Add(new StorageChecker(temp.Value.ItemId, this.Amount * temp.Value.Amount));
+                            list.Add(new StorageChecker(temp.ItemId, this.Amount * temp.Amount, this.Order.OrderDate));
                         }
                     }
                 }
@@ -80,9 +81,10 @@ namespace AppCore.Models {
                 if(res.Any()){
                     var s = res.First();
                     s.Amount += this.Amount;
+                    s.OrderDate = this.Order.OrderDate;
                 }
                 else{
-                    list.Add(new StorageChecker(this.ItemId, this.Amount));
+                    list.Add(new StorageChecker(this.ItemId, this.Amount, this.Order.OrderDate));
                 }
             }
             return list;

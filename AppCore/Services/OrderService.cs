@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using AppCore.Interfaces;
 using AppCore.Models;
 
@@ -38,6 +41,28 @@ namespace AppCore.Services
                 _unitOfWork.ItemRepos.Update(item);
             }
             return true;
+        }
+        public IList<StorageChecker> GetAllStorageChecker()
+        {
+            var orders = _unitOfWork.OrderRepos.GetAll().Where(m => m.Status.Equals(ORDER_STATUS.CHECKED)
+                                                                                                                    || m.Status.Equals(ORDER_STATUS.DELIVERING)
+                                                                                                                    || m.Status.Equals(ORDER_STATUS.DELIVERED)).ToList();
+            var list = new List<StorageChecker>();
+            foreach (Order order in orders)
+            {
+                var tempArr = order.GetStorageChecker();
+                foreach (StorageChecker store in tempArr)
+                {
+                    var res = list.Where(m => m.ItemId.Equals(store.ItemId) && DateTime.Compare(m.OrderDate, store.OrderDate) == 0);
+                    if (res.Any())
+                    {
+                        var temp = res.First();
+                        temp.Amount += store.Amount;
+                    }
+                    else list.Add(store);
+                }
+            }
+            return list;
         }
     }
 }

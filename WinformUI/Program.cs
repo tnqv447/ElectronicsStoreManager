@@ -56,7 +56,8 @@ namespace Winform {
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
             services.AddScoped<ISearchSortService, SearchSortService> ();
-            services.AddScoped<IOrderService, OrderService> ();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IAnalyzeService, AnalyzeService> ();
 
             //var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\Infrastructure\\electronics.db";
             //services.AddDbContext<ElectronicsStoreContext> (options => options.UseSqlite ($"Data Source=" + db_path).UseLazyLoadingProxies ());
