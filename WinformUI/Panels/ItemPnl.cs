@@ -324,5 +324,12 @@ namespace Winform {
             
             dialog.Dispose ();
         }
+
+        private void btnShowImport_Click(object sender, EventArgs e)
+        {
+            var dialog = new ShowImportDialog(_unitOfWork);
+            dialog.ShowDialog();
+            dialog.Dispose();
+        }
     }
 }

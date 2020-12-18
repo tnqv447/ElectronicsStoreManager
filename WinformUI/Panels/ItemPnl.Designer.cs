@@ -63,6 +63,7 @@ namespace Winform
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnShowImport = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberTo)).BeginInit();
@@ -438,10 +439,21 @@ namespace Winform
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnShowImport
+            // 
+            this.btnShowImport.Location = new System.Drawing.Point(1151, 20);
+            this.btnShowImport.Name = "btnShowImport";
+            this.btnShowImport.Size = new System.Drawing.Size(75, 122);
+            this.btnShowImport.TabIndex = 6;
+            this.btnShowImport.Text = "LỊCH SỬ NHẬP HÀNG";
+            this.btnShowImport.UseVisualStyleBackColor = true;
+            this.btnShowImport.Click += new System.EventHandler(this.btnShowImport_Click);
+            // 
             // ItemPnl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnShowImport);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupSubItem);
@@ -502,5 +514,6 @@ namespace Winform
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.TextBox txtType;
+        private System.Windows.Forms.Button btnShowImport;
     }
 }

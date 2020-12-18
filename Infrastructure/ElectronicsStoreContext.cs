@@ -22,8 +22,6 @@ namespace Infrastructure {
             //var db_path = "D:\\Code\\Visual Studio\\ElectronicsStoreManager\\electronics.db";
             optionsBuilder.UseSqlite ($"Data Source=" + db_path)
                 .UseLazyLoadingProxies ();
-
-        
         }
 
         public DbSet<Item> Items { get; set; }
