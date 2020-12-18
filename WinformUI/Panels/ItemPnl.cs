@@ -110,6 +110,11 @@ namespace Winform {
 
             _itemSearch = _items.ToList ();
         }
+        public void Reload()
+        {
+            LoadItemData();
+            LoadGridItem();
+        }
 
         private void LoadGridItem (int selectedIndex = -1) {
             TblItem tbl = new TblItem (_itemSearch, _comboView);
@@ -150,8 +155,8 @@ namespace Winform {
                 _selectedIndex = -1;
                 _model = null;
                 LoadModel (_model);
-                this.gridSubItem.DataSource = null;
                 if (_comboView) gridSubItem.DataSource = null;
+                this.EnableItemButton (false);
                 this.EnableSubItemButton (false);
             }
         }

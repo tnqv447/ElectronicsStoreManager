@@ -35,7 +35,7 @@ namespace AppCore.Models {
             if(IsCombo) {
                     decimal sum = 0;
                     foreach(SubOrderDetail sub in SubOrderDetails) sum += sub.SumPrice;
-                    return sum;
+                    return Amount * sum;
                 }
             return Amount * ItemUnitPrice; } }
         
@@ -66,9 +66,11 @@ namespace AppCore.Models {
                         var res = list.Where(m => m.ItemId.Equals(temp.Value.ItemId)).ToList();
                         if(res.Any()){
                             var s = res.First();
-                            s.Amount += temp.Value.Amount;
-                        }else{
-                            list.Add(temp.Value);
+                            s.Amount += this.Amount * temp.Value.Amount;
+                        }
+                        else
+                        {
+                            list.Add(new StorageChecker(temp.Value.ItemId, this.Amount * temp.Value.Amount));
                         }
                     }
                 }

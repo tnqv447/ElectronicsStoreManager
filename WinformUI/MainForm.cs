@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Transactions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,27 +16,35 @@ namespace Winform {
     public partial class MainForm : Form {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISearchSortService _searchSortService;
+        private readonly IOrderService _orderService;
 
         private ItemPnl pnItem;
-        
-        public MainForm (IUnitOfWork unitOfWork,  ISearchSortService searchSortService) {
+        private OrderPnl pnOrder;
+
+        public MainForm (IUnitOfWork unitOfWork,  ISearchSortService searchSortService, IOrderService orderService) {
             InitializeComponent ();
 
             _unitOfWork = unitOfWork;
             _searchSortService = searchSortService;
+            _orderService = orderService;
 
             pnItem = new ItemPnl(_unitOfWork, _searchSortService);
             tabItem.Controls.Add(pnItem);
 
+            pnOrder = new OrderPnl(_unitOfWork, _searchSortService, _orderService);
+            tabOrder.Controls.Add(pnOrder);
+
         }
 
-        private void tabControl_TabIndexChanged(object sender, EventArgs e)
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl.SelectedTab.Equals(tabItem))
             {
-                tabItem.Controls.Remove(pnItem);
-                pnItem = new ItemPnl(_unitOfWork, _searchSortService);
-                tabItem.Controls.Add(pnItem);
+                pnItem.Reload();
+            }
+            if (tabControl.SelectedTab.Equals(tabOrder))
+            {
+                pnOrder.Reload();
             }
         }
     }

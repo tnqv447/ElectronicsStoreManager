@@ -36,14 +36,14 @@ namespace AppCore.Services
             {
                 arr = arr.Where(m => m.Status.Equals(status.Value)).ToList();
             }
-            if(!(start.HasValue) && !(end.HasValue)){
+            if(start.HasValue || end.HasValue){
                 var tempStart = new DateTime();
                 var tempEnd = new DateTime();
 
-                if(start.HasValue)  tempStart = start.Value;
-                else tempStart = DateTime.MinValue;
-                if(end.HasValue)  tempEnd = end.Value;
-                else tempEnd = DateTime.MaxValue;
+                if(start.HasValue)  tempStart = start.Value.Date;
+                else tempStart = DateTime.MinValue.Date;
+                if(end.HasValue)  tempEnd = end.Value.Date;
+                else tempEnd = DateTime.MaxValue.Date;
 
                 arr = arr.Where(m => DateTime.Compare(m.OrderDate, tempStart) >= 0 && DateTime.Compare(m.OrderDate, tempEnd) <= 0).ToList();
             }

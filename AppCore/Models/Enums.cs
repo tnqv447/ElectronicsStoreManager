@@ -39,6 +39,17 @@ namespace AppCore.Models
             TypeName = typeName;
         }
     }
+    public struct OrderStatus
+    {
+        public ORDER_STATUS? Status { get; set; }
+        public string StatusName { get; set; }
+
+        public OrderStatus(ORDER_STATUS? status, string statusName)
+        {
+            Status = status;
+            StatusName = statusName;
+        }
+    }
     public class ListEnum
     {
         public static IList<ItemType> GetListItemType(){
@@ -56,6 +67,18 @@ namespace AppCore.Models
             list.Add(new ItemType(ITEM_TYPE.INTERNET_DEVICES, EnumConverter.Convert(ITEM_TYPE.INTERNET_DEVICES)));
             list.Add(new ItemType(ITEM_TYPE.SOUND_DEVICES, EnumConverter.Convert(ITEM_TYPE.SOUND_DEVICES)));
             list.Add(new ItemType(ITEM_TYPE.MISC, EnumConverter.Convert(ITEM_TYPE.MISC)));
+            
+            return list;
+        }
+        public static IList<OrderStatus> GetListOrderStatus(bool forSearch = false){
+            var list = new List<OrderStatus>();
+            if(forSearch) list.Add(new OrderStatus(null, "All"));
+            list.Add(new OrderStatus(ORDER_STATUS.NEW, EnumConverter.Convert(ORDER_STATUS.NEW)));
+            list.Add(new OrderStatus(ORDER_STATUS.CHECKED, EnumConverter.Convert(ORDER_STATUS.CHECKED)));
+            list.Add(new OrderStatus(ORDER_STATUS.DELIVERING, EnumConverter.Convert(ORDER_STATUS.DELIVERING)));
+            list.Add(new OrderStatus(ORDER_STATUS.DELIVERED, EnumConverter.Convert(ORDER_STATUS.DELIVERED)));
+            list.Add(new OrderStatus(ORDER_STATUS.CANCELLED, EnumConverter.Convert(ORDER_STATUS.CANCELLED)));
+            list.Add(new OrderStatus(ORDER_STATUS.CANCELLED_DELIVERY, EnumConverter.Convert(ORDER_STATUS.CANCELLED_DELIVERY)));
             
             return list;
         }
@@ -89,6 +112,7 @@ namespace AppCore.Models
                 case ORDER_STATUS.DELIVERING: return "Shipping";
                 case ORDER_STATUS.DELIVERED: return "Completed";
                 case ORDER_STATUS.CANCELLED: return "Canceled";
+                case ORDER_STATUS.CANCELLED_DELIVERY: return "Cancelled shipping";
                 default: return "";
             }
         }
@@ -159,7 +183,8 @@ namespace AppCore.Models
         CHECKED,
         DELIVERING,
         DELIVERED,
-        CANCELLED
+        CANCELLED,
+        CANCELLED_DELIVERY
     }
     public enum SEX
     {

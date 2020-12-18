@@ -116,6 +116,7 @@ namespace Winform.Dialogs
             this.Controls.Add(this.numberAmount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox3);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AddItemRelationDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Thêm chi tiết";

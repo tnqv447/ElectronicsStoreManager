@@ -129,7 +129,12 @@ namespace Winform.Dialogs {
 
         private void btnOK_Click (object sender, EventArgs e) {
             if(String.IsNullOrWhiteSpace(txtName.Text)){
-                MessageBox.Show ("Tên không được để trống", "Cánh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Tên không được để trống", "Cánh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(_isForCombo && _relations.Count == 0){
+                MessageBox.Show("Combo không được để trống", "Cánh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             var check = MessageBox.Show ("Xác nhận thao tác?", "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (check.Equals (DialogResult.Cancel)) return;

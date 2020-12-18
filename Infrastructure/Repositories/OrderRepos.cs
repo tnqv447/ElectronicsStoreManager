@@ -24,6 +24,9 @@ namespace Infrastructure.Repositories {
         public void Cancel(Order order){
             this.UpdateStatus(order, ORDER_STATUS.CANCELLED);
         }
+        public void CancelDelivery(Order order){
+            this.UpdateStatus(order, ORDER_STATUS.CANCELLED_DELIVERY);
+        }
 
         private void UpdateStatus(Order order, ORDER_STATUS status)
         {

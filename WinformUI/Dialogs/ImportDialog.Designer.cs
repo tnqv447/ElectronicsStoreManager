@@ -81,6 +81,7 @@ namespace Winform.Dialogs
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.numberAmount);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ImportDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nhập hàng";

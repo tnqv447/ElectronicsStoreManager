@@ -46,7 +46,7 @@ namespace Winform
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1240, 673);
             this.tabControl.TabIndex = 0;
-            this.tabControl.TabIndexChanged += new System.EventHandler(this.tabControl_TabIndexChanged);
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabItem
             // 
@@ -74,7 +74,7 @@ namespace Winform
             this.tabAnalyze.Name = "tabAnalyze";
             this.tabAnalyze.Padding = new System.Windows.Forms.Padding(3);
             this.tabAnalyze.Size = new System.Drawing.Size(1232, 645);
-            this.tabAnalyze.TabIndex = 3;
+            this.tabAnalyze.TabIndex = 2;
             this.tabAnalyze.Text = "Thống kê";
             this.tabAnalyze.UseVisualStyleBackColor = true;
             // 
@@ -84,6 +84,9 @@ namespace Winform
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 694);
             this.Controls.Add(this.tabControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lí cửa hàng đồ điện tử";

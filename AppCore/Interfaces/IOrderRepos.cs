@@ -9,5 +9,6 @@ namespace AppCore.Interfaces {
         void Delivering (Order order);
         void Delivered (Order order);
         void Cancel(Order order);
+        void CancelDelivery(Order order);
     }
 }

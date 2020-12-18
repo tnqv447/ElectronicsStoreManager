@@ -27,7 +27,12 @@ namespace Winform.Dialogs {
         }
 
         private void btnOk_Click (object sender, EventArgs e) {
-            var amount = (int) this.numberAmount.Value;
+            var amount = (int)this.numberAmount.Value;
+            if (amount <= 0)
+            {
+                MessageBox.Show("Số lượng phải lớn hơn 0", "Cánh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var check = MessageBox.Show ("Xác nhận số lượng nhập là " + amount + " ?", "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (check.Equals (DialogResult.Cancel)) return;
 
