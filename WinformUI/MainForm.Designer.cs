@@ -85,6 +85,7 @@ namespace Winform
             this.ClientSize = new System.Drawing.Size(1264, 694);
             this.Controls.Add(this.tabControl);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lí cửa hàng đồ điện tử";
             this.tabControl.ResumeLayout(false);
             this.ResumeLayout(false);

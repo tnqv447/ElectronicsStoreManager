@@ -14,9 +14,11 @@ namespace Winform.Dialogs {
     public partial class EditItemRelationDialog : Form {
         private readonly IUnitOfWork _unitOfWork;
         private ItemRelation _model;
-        public EditItemRelationDialog (IUnitOfWork unitOfWork, ItemRelation relation) {
+        private IList<ItemRelation> _modifieds;
+        public EditItemRelationDialog (IUnitOfWork unitOfWork, ItemRelation relation, IList<ItemRelation> modifieds) {
             InitializeComponent();
             _unitOfWork = unitOfWork;
+            _modifieds = modifieds;
             if (relation is null) {
                 MessageBox.Show ("Chi tiết truyền vào không tìm thấy", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Dispose ();
@@ -25,7 +27,17 @@ namespace Winform.Dialogs {
         }
 
         private void btnOk_Click (object sender, EventArgs e) {
+            var amount = (int) this.numberAmount.Value;
+            var check = MessageBox.Show ("Xác nhận số lượng nhập là " + amount + " ?", "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (check.Equals (DialogResult.Cancel)) return;
 
+            _model.Amount = amount;
+            var res = _modifieds.Where(m => m.ChildId.Equals(_model.ChildId));
+            if (res.Any()) res.First().Amount = amount;
+            else _modifieds.Add(_model);
+
+            this.DialogResult = DialogResult.OK;
+            this.Close ();
         }
 
         private void btnCancel_Click (object sender, EventArgs e) {

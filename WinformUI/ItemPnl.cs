@@ -89,16 +89,16 @@ namespace Winform {
             }
 
             this.gridItem.Columns["UnitPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.gridItem.Columns["UnitPrice"].DisplayIndex = 5;
+            this.gridItem.Columns["UnitPrice"].DisplayIndex = 4;
             this.gridItem.Columns["UnitPrice"].HeaderText = "Đơn giá";
             this.gridItem.Columns["UnitPrice"].Width = 120;
             this.gridItem.Columns["UnitPrice"].DefaultCellStyle.Format = "##,#";
 
-            this.gridItem.Columns["Description"].DisplayIndex = 6;
+            this.gridItem.Columns["Description"].DisplayIndex = 5;
             this.gridItem.Columns["Description"].HeaderText = "Mô tả";
 
             this.gridItem.Columns["StatusName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            this.gridItem.Columns["StatusName"].DisplayIndex = 7;
+            this.gridItem.Columns["StatusName"].DisplayIndex = 6;
             this.gridItem.Columns["StatusName"].HeaderText = "Trạng thái";
             this.gridItem.Columns["StatusName"].Width = 50;
 
@@ -110,6 +110,7 @@ namespace Winform {
 
             _itemSearch = _items.ToList ();
         }
+
         private void LoadGridItem (int selectedIndex = -1) {
             TblItem tbl = new TblItem (_itemSearch, _comboView);
 
@@ -120,6 +121,7 @@ namespace Winform {
             } else {
                 this.gridItem.Rows[selectedIndex].Selected = true;
             }
+            SetUpGridItem ();
         }
         private void LoadItemInfo () {
             if (this.gridItem.SelectedRows.Count > 0) {
@@ -142,7 +144,10 @@ namespace Winform {
                     var subItems = _model.ConsistOf;
                     LoadGridSubItem (subItems);
                 }
-            } else {
+            }
+            else
+            {
+                _selectedIndex = -1;
                 _model = null;
                 LoadModel (_model);
                 this.gridSubItem.DataSource = null;
@@ -186,7 +191,6 @@ namespace Winform {
             var priceFrom = this.numberFrom.Value;
             var priceTo = this.numberTo.Value;
             var types = this.checkedTypeBox.CheckedItems.OfType<ItemType> ().Select (m => m.Type).ToList ();
-            MessageBox.Show (priceFrom + " " + priceTo);
 
             _itemSearch = _searchSortService.Search (_items, search, types, priceFrom, priceTo);
         }
@@ -201,7 +205,7 @@ namespace Winform {
             LoadCheckBoxType ();
             LoadItemData ();
             LoadGridItem ();
-            SetUpGridItem ();
+            
 
             this.numberFrom.Minimum = 0;
             this.numberTo.Minimum = 0;
@@ -292,12 +296,12 @@ namespace Winform {
 
             if (check.Equals (DialogResult.OK)) {
                 MessageBox.Show ("Sửa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-            }
-            LoadItemData ();
+                LoadItemData ();
                 this.SearchItem ();
                 this.LoadGridItem (_selectedIndex);
                 this.LoadModel (_model);
+            }
+            
             dialog.Dispose ();
         }
 
@@ -306,12 +310,13 @@ namespace Winform {
             var check = dialog.ShowDialog ();
 
             if (check.Equals (DialogResult.OK)) {
-                MessageBox.Show ("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            LoadItemData ();
+                MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadItemData ();
                 this.SearchItem ();
                 this.LoadGridItem (_selectedIndex);
                 this.LoadModel (_model);
+            }
+            
             dialog.Dispose ();
         }
     }

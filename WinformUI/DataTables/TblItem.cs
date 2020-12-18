@@ -42,7 +42,7 @@ namespace Winform.DataTables {
                 if(simple){
                     this.Rows.Add(t.Id, t.Name, t.TypeName, t.UnitPrice, t.Description);
                 }
-                if (comboView) this.Rows.Add (t.Id, t.Name, t.TypeName, t.UnitPrice, t.Description, t.Status, "");
+                else if (comboView) this.Rows.Add (t.Id, t.Name, t.TypeName, t.UnitPrice, t.Description, t.Status, "");
                 else this.Rows.Add (t.Id, t.Name, t.TypeName, t.InStock,  t.UnitPrice, t.Description, t.Status, "");
             }
         }

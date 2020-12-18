@@ -163,14 +163,18 @@ namespace Winform.Dialogs {
                     }
                 }
                 } else {
-                    _unitOfWork.ItemRepos.Add (_model);
+                    _model = _unitOfWork.ItemRepos.Add(_model);
+                    foreach (ItemRelation rel in _relations)
+                    {
+                        rel.ParentId = _model.Id;
+                    }
                     _unitOfWork.ItemRepos.ItemRelationRepos.AddRange(_relations);
                 }
             } else {
                 if (_isEditMode) {
                     _unitOfWork.ItemRepos.Update (_model);
                 } else {
-                    _unitOfWork.ItemRepos.Add (_model);
+                    _model = _unitOfWork.ItemRepos.Add (_model);
                 }
             }
 
@@ -179,11 +183,29 @@ namespace Winform.Dialogs {
         }
 
         private void btnAdd_Click (object sender, EventArgs e) {
+            var dialog = new AddItemRelationDialog (_unitOfWork, _relations, _relationsModified);
+            var check = dialog.ShowDialog ();
 
+            if (check.Equals (DialogResult.OK)) {
+                MessageBox.Show ("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadGridSubItem(_relations, _selectedIndex);
+                SetUpGridSubItem();
+            }
+            
+            dialog.Dispose ();
         }
 
         private void btnEdit_Click (object sender, EventArgs e) {
+            var dialog = new EditItemRelationDialog (_unitOfWork, _selectedRelation, _relationsModified);
+            var check = dialog.ShowDialog ();
 
+            if (check.Equals (DialogResult.OK)) {
+                MessageBox.Show ("Sửa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadGridSubItem(_relations, _selectedIndex);
+                SetUpGridSubItem();
+            }
+            
+            dialog.Dispose ();
         }
 
         private void btnDelete_Click (object sender, EventArgs e) {
@@ -199,7 +221,8 @@ namespace Winform.Dialogs {
             }
             
             if(_isEditMode) _relations = _model.ConsistOf;
-            LoadGridSubItem (_relations);
+            LoadGridSubItem(_relations);
+            SetUpGridSubItem();
 
         }
 

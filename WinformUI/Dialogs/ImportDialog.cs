@@ -26,7 +26,7 @@ namespace Winform.Dialogs {
 
         private void btnOk_Click (object sender, EventArgs e) {
             var amount = (int) this.numberAmount.Value;
-            var check = MessageBox.Show ("Xác nhân số lượng nhập là " + amount + " ?", "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            var check = MessageBox.Show ("Xác nhận số lượng nhập là " + amount + " ?", "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (check.Equals (DialogResult.Cancel)) return;
 
             _unitOfWork.ImportRepos.Add (new Import (_model.Id, amount, DateTime.Today));
