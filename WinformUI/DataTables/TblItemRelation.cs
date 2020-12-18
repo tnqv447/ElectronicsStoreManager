@@ -13,10 +13,12 @@ namespace Winform.DataTables {
         public TblItemRelation () {
             this.Create ();
         }
-        public TblItemRelation (IUnitOfWork unit, IList<ItemRelation> arr) {
+        public TblItemRelation(IUnitOfWork unit, IList<ItemRelation> arr)
+        {
+            _unit = unit;
             this.Create ();
             this.Fill (arr);
-            _unit = unit;
+            
         }
 
         public void Create (bool comboView = false, bool simple = false) {  

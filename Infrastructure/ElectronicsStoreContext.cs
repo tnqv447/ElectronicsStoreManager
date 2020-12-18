@@ -18,8 +18,8 @@ namespace Infrastructure {
             base.OnModelCreating (builder);
         }
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder) {
-            var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\electronics.db";
-            //var db_path = "D:\\Code\\Visual Studio\\ElectronicsStoreManager\\electronics.db";
+            //var db_path = Path.GetDirectoryName (System.IO.Directory.GetCurrentDirectory ()) + "\\electronics.db";
+            var db_path = "D:\\Code\\Visual Studio\\ElectronicsStoreManager\\electronics.db";
             optionsBuilder.UseSqlite ($"Data Source=" + db_path)
                 .UseLazyLoadingProxies ();
 
